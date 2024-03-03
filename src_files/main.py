@@ -1,0 +1,18 @@
+from src_files.Environments_Visualization.Basic_Environment_Visualization import run_basic_environment_visualization
+from src_files.Evolutionary_Algorithms.Evolutionary_Strategies.Differential_Evolution import Differential_Evolution
+from src_files.Evolutionary_Algorithms.Evolutionary_Strategies.Evolutionary_Mutate_Population import Evolutionary_Mutate_Population
+from src_files.Evolutionary_Algorithms.Evolutionary_Strategies.Evolutionary_Strategy import Evolutionary_Strategy
+from src_files.Evolutionary_Algorithms.Genetic_Algorithm.Genetic_Algorithm import Genetic_Algorithm
+from src_files.constants import CONSTANTS_DICT
+
+
+# run this script from terminal, be in directory Stock_Agent and paste:
+# python -m src_files.main.py
+
+# policy_search_algorithm = Differential_Evolution(CONSTANTS_DICT)
+policy_search_algorithm = Evolutionary_Mutate_Population(CONSTANTS_DICT)
+# policy_search_algorithm = Evolutionary_Strategy(CONSTANTS_DICT)
+# policy_search_algorithm = Genetic_Algorithm(CONSTANTS_DICT)
+policy_search_algorithm.run()
+
+# run_basic_environment_visualization()
