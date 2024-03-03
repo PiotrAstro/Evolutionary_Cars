@@ -71,18 +71,14 @@ class Evolutionary_Mutate_Population:
         for generation in range(self.epochs):
             print(f"Generation {generation}")
 
-            mutated_population = [individual.copy() for individual in self.population]
-            for individual in mutated_population:
-                individual.mutate(self.mutation_factor)
-
             time_start = time.perf_counter()
             # multi-threading
             with ThreadPoolExecutor(max_workers=self.max_threads) as executor:
                 futures = [
-                    executor.submit(individual.get_fitness)
-                    for individual in mutated_population
+                    executor.submit(individual.copy_mutate_and_evaluate, self.mutation_factor)
+                    for individual in self.population
                 ]
-                results = [future.result() for future in futures]
+                mutated_population = [future.result() for future in futures]
             # for i in range(self.crosses_per_epoch):
             #     self.__perform_cross(indecies_randomized[i * 2], indecies_randomized[i * 2 + 1])
             # end of multi-threading

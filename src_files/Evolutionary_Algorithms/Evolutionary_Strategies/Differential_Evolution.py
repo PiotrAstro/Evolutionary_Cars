@@ -76,7 +76,7 @@ class Differential_Evolution:
             with ThreadPoolExecutor(max_workers=self.max_threads) as executor:
                 futures = []
                 for i in range(self.population_size):
-                    base_id, id1, id2 = np.random.choice([k for k in range(self.population_size) if k != i], 3, replace=False)
+                    base_id, id1, id2 = np.random.choice(self.population_size, 3, replace=False)
                     base_params = self.population[base_id].neural_network.get_parameters()
                     id1_params = self.population[id1].neural_network.get_parameters()
                     id2_params = self.population[id2].neural_network.get_parameters()

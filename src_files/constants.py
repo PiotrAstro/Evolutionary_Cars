@@ -1,10 +1,10 @@
 import numpy as np
 from PIL import Image
 
-map_image_path = r"C:\Piotr\AIProjects\Evolutionary_Cars\data\map2.png"
-car_image_path = r"C:\Piotr\AIProjects\Evolutionary_Cars\data\car.png"
+map_image_path = r"data\map2.png"
+car_image_path = r"data\car.png"
 
-map_image_path_2 = r"C:\Piotr\AIProjects\Evolutionary_Cars\data\map.png"
+map_image_path_2 = r"data\map.png"
 
 img = Image.open(map_image_path).convert('L')  # 'L' stands for luminance
 map_view = np.array(np.array(img) / 255, dtype=np.bool_)
@@ -100,7 +100,7 @@ CONSTANTS_DICT = {
         "logs_path": r"C:\Piotr\AIProjects\Evolutionary_Cars\logs",
     },
     "Evolutionary_Mutate_Population": {
-        "population": 2000,
+        "population": 200,
         "epochs": 10000,
         "mutation_factor": 0.05,
         "save_logs_every_n_epochs": 50,

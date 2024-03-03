@@ -67,6 +67,12 @@ class Individual:
         self.neural_network.set_parameters(params)
         self.is_fitness_calculated = False
 
+    def copy_mutate_and_evaluate(self, mutation_factor: float) -> 'Individual':
+        new_individual = self.copy()
+        new_individual.mutate(mutation_factor)
+        new_individual.get_fitness()
+        return new_individual
+
     def evolutionary_strategy_one_epoch(self, number_of_individuals: int, sigma_change: float, alpha_learning_rate: float, num_of_processes: int) -> np.ndarray:
         """
         It performs one step of evolutionary strategy, modifies self inplace
@@ -77,17 +83,13 @@ class Individual:
         :return: fitnesses of all mutated individuals
         """
 
-        individuals_mutated = [self.copy() for _ in range(number_of_individuals)]
-        for individual in individuals_mutated:
-            individual.mutate(sigma_change)
-
         # multi-threading
         with ThreadPoolExecutor(max_workers=num_of_processes) as executor:
             futures = [
-                executor.submit(individual.get_fitness)
-                for individual in individuals_mutated
+                executor.submit(self.copy_mutate_and_evaluate, sigma_change)
+                for _ in range(number_of_individuals)
             ]
-            results = [future.result() for future in futures]
+            individuals_mutated = [future.result() for future in futures]
         # end of multi-threading
 
         fitnesses = np.array([individual.get_fitness() for individual in individuals_mutated])
