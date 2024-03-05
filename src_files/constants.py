@@ -83,12 +83,12 @@ CONSTANTS_DICT = {
         "last_activation_function": "tanh",
     },
     "Genetic_Algorithm": {
-        "population": 200,
+        "population": 500,
         "epochs": 10000,
         "mutation_factor": 0.05,
         "crosses_per_epoch": 99,
         "new_individual_every_n_epochs": 2,
-        "save_logs_every_n_epochs": 50,
+        "save_logs_every_n_epochs": 10,
         "logs_path": r"C:\Piotr\AIProjects\Evolutionary_Cars\logs",
     },
     "Differential_Evolution": {
@@ -101,10 +101,10 @@ CONSTANTS_DICT = {
     },
     "Evolutionary_Mutate_Population": {
         "population": 200,
-        "epochs": 10000,
+        "epochs": 600,
         "mutation_factor": 0.05,
         "mutation_threshold": None,  # None - no scaled mutation, float - scaled mutation
-        "save_logs_every_n_epochs": 50,
+        "save_logs_every_n_epochs": 5,
         "logs_path": r"C:\Piotr\AIProjects\Evolutionary_Cars\logs",
     },
     "Evolutionary_Strategy": {

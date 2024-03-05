@@ -5,6 +5,7 @@ from concurrent.futures import ThreadPoolExecutor
 from typing import Dict, Any
 
 import numpy as np
+import pandas as pd
 
 from src_files.Environments.general_functions_provider import get_environment_class
 from src_files.Environments_Visualization.Basic_Environment_Visualization import run_basic_environment_visualization
@@ -50,7 +51,7 @@ class Evolutionary_Mutate_Population:
 
         # file handling
         self.log_directory = base_log_dir + "/" + "EvMuPop" + str(int(time.time())) + "/"
-        os.makedirs(self.log_directory, exist_ok=True)
+        # os.makedirs(self.log_directory, exist_ok=True)
 
         #self.logger = Timestamp_Logger(file_path=self.log_directory + "log.txt", log_mode='w', log_moment='a', separator='\t')
 
@@ -64,11 +65,15 @@ class Evolutionary_Mutate_Population:
         self.max_threads = os.cpu_count()
 
 
-    def run(self) -> None:
+    def run(self) -> pd.DataFrame:
         """
         Runs evolutionary algorithm
-        :return:
+        :return: pd.DataFrame with logs
         """
+        quantile = [0.25, 0.5, 0.75, 0.9, 0.99]
+        quantile_labels = [f"quantile_{q}" for q in quantile]
+        log_list = []
+
         for generation in range(self.epochs):
             print(f"Generation {generation}")
 
@@ -98,12 +103,22 @@ class Evolutionary_Mutate_Population:
                 self.best_individual = self.population[0].copy()
 
             fitnesses = np.array([individual.get_fitness() for individual in self.population])
-            quantile = [0.25, 0.5, 0.75, 0.9, 0.99]
             quantile_results = np.quantile(fitnesses, quantile)
             quantile_text = ", ".join([f"{quantile}: {quantile_results[i]}" for i, quantile in enumerate(quantile)])
             print(f"Mean fitness: {fitnesses.mean()}, best fitness: {self.best_individual.get_fitness()}")
             print(f"Quantiles: {quantile_text}\n\n")
 
             if generation % self.save_logs_every_n_epochs == 0:
-                model = self.best_individual.neural_network
-                run_basic_environment_visualization(model)
+                # model = self.best_individual.neural_network
+                # run_basic_environment_visualization(model)
+                log_list.append(
+                    {
+                        "generation": generation,
+                        "mean_fitness": fitnesses.mean(),
+                        "best_fitness": self.best_individual.get_fitness(),
+                        **{label: value for label, value in zip(quantile_labels, quantile_results)}
+                    }
+                )
+        log_data_frame = pd.DataFrame(log_list)
+
+        return log_data_frame
