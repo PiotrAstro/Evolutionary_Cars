@@ -1,8 +1,9 @@
 from concurrent.futures import ThreadPoolExecutor
-from typing import Mapping, Any, List, Dict, Type, Tuple
+from typing import Mapping, Any, List, Dict, Type, Tuple, Optional
 
 import numpy as np
 
+from src_files.MyMath import MyMath
 from src_files.Environments.Abstract_Environment.Abstract_Environment import Abstract_Environment
 from src_files.Environments.Abstract_Environment.Abstract_Environment_Iterator import Abstract_Environment_Iterator
 from src_files.Neural_Network.Raw_Numpy.Raw_Numpy_Models.Normal.Normal_model import Normal_model
@@ -61,17 +62,39 @@ class Individual:
         new_individual.neural_network.set_parameters(new_policy_params)
         return new_individual
 
-    def mutate(self, mutation_factor: float) -> None:
+    def mutate(self, mutation_factor: float, mutation_threshold: Optional[float] = None) -> None:
+        """
+        Mutates individual inplace, if mutation_threshold is not None, then it uses scaled mutation
+        :param mutation_factor:
+        :param mutation_threshold: None or float
+        :return:
+        """
         params = self.neural_network.get_parameters()
-        self.__permute_params_dict(params, mutation_factor)
+        self.__permute_params_dict(params, mutation_factor, mutation_threshold=mutation_threshold)
         self.neural_network.set_parameters(params)
         self.is_fitness_calculated = False
 
-    def copy_mutate_and_evaluate(self, mutation_factor: float) -> 'Individual':
+    def copy_mutate_and_evaluate(self, mutation_factor: float, mutation_threshold: Optional[float] = None) -> 'Individual':
+        """
+        Copies, mutates and evaluates individual
+        :param mutation_factor:
+        :param mutation_threshold: None or float - if not None, then it uses scaled mutation
+        :return:
+        """
         new_individual = self.copy()
-        new_individual.mutate(mutation_factor)
+        new_individual.mutate(mutation_factor, mutation_threshold=mutation_threshold)
         new_individual.get_fitness()
         return new_individual
+
+    def copy_mutate_and_evaluate_other_self(self, mutation_factor: float, mutation_threshold: Optional[float] = None) -> 'Individual':
+        """
+        Copies, mutates and evaluates individual, firstly self is evaluated, then mutated
+        :param mutation_factor:
+        :param mutation_threshold: None or float - if not None, then it uses scaled mutation
+        :return:
+        """
+        self.get_fitness()
+        return self.copy_mutate_and_evaluate(mutation_factor, mutation_threshold=mutation_threshold)
 
     def evolutionary_strategy_one_epoch(self, number_of_individuals: int, sigma_change: float, alpha_learning_rate: float, num_of_processes: int) -> np.ndarray:
         """
@@ -231,15 +254,19 @@ class Individual:
                 params2[key][mask] = value[mask]
                 params1[key][mask] = params_2_mask_copy
 
-    def __permute_params_dict(self, param_dict: Mapping[str, Any], sigma: float) -> None:
+    def __permute_params_dict(self, param_dict: Mapping[str, Any], sigma: float, mutation_threshold: Optional[float] = None) -> None:
         """
         Permutes parameters dictionary, used with __permute_policy
         :param param_dict:
         :param sigma: standard deviation of normal distribution
+        :param mutation_threshold: None or float - if not None, then it uses scaled mutation
         :return:
         """
         for key, value in param_dict.items():
             if isinstance(value, dict):
-                self.__permute_params_dict(value, sigma)
+                self.__permute_params_dict(value, sigma, mutation_threshold=mutation_threshold)
             elif isinstance(value, np.ndarray):
-                value += np.random.normal(0, sigma, value.shape)
+                if mutation_threshold is None:
+                    value += np.random.normal(0, sigma, value.shape)
+                else:
+                    MyMath.mutate_array_scaled(value, sigma, mutation_threshold)

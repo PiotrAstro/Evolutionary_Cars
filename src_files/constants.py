@@ -1,10 +1,10 @@
 import numpy as np
 from PIL import Image
 
-map_image_path = r"data\map2.png"
-car_image_path = r"data\car.png"
+map_image_path = r"C:\Piotr\AIProjects\Evolutionary_Cars\data\map2.png"
+car_image_path = r"C:\Piotr\AIProjects\Evolutionary_Cars\data\car.png"
 
-map_image_path_2 = r"data\map.png"
+map_image_path_2 = r"C:\Piotr\AIProjects\Evolutionary_Cars\data\map.png"
 
 img = Image.open(map_image_path).convert('L')  # 'L' stands for luminance
 map_view = np.array(np.array(img) / 255, dtype=np.bool_)
@@ -78,7 +78,7 @@ CONSTANTS_DICT = {
         "input_normal_size": 10,
         "out_actions_number": 4,
         "normal_hidden_layers": 2,
-        "normal_hidden_neurons": 128,
+        "normal_hidden_neurons": 64,
         "normal_activation_function": "relu",
         "last_activation_function": "tanh",
     },
@@ -103,6 +103,7 @@ CONSTANTS_DICT = {
         "population": 200,
         "epochs": 10000,
         "mutation_factor": 0.05,
+        "mutation_threshold": None,  # None - no scaled mutation, float - scaled mutation
         "save_logs_every_n_epochs": 50,
         "logs_path": r"C:\Piotr\AIProjects\Evolutionary_Cars\logs",
     },

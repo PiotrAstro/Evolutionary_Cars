@@ -28,6 +28,7 @@ class Evolutionary_Mutate_Population:
         self.population_size = constants_dict["Evolutionary_Mutate_Population"]["population"]
         self.epochs = constants_dict["Evolutionary_Mutate_Population"]["epochs"]
         self.mutation_factor = constants_dict["Evolutionary_Mutate_Population"]["mutation_factor"]
+        self.mutation_threshold = constants_dict["Evolutionary_Mutate_Population"]["mutation_threshold"]
         self.save_logs_every_n_epochs = constants_dict["Evolutionary_Mutate_Population"]["save_logs_every_n_epochs"]
         base_log_dir = constants_dict["Evolutionary_Mutate_Population"]["logs_path"]
 
@@ -75,12 +76,14 @@ class Evolutionary_Mutate_Population:
             # multi-threading
             with ThreadPoolExecutor(max_workers=self.max_threads) as executor:
                 futures = [
-                    executor.submit(individual.copy_mutate_and_evaluate, self.mutation_factor)
+                    executor.submit(individual.copy_mutate_and_evaluate_other_self, self.mutation_factor, self.mutation_threshold)
                     for individual in self.population
                 ]
                 mutated_population = [future.result() for future in futures]
-            # for i in range(self.crosses_per_epoch):
-            #     self.__perform_cross(indecies_randomized[i * 2], indecies_randomized[i * 2 + 1])
+            # mutated_population = [
+            #     individual.copy_mutate_and_evaluate_other_self(self.mutation_factor, self.mutation_threshold)
+            #     for individual in self.population
+            # ]
             # end of multi-threading
             time_end = time.perf_counter()
             print(f"Time: {time_end - time_start}, mean time: {(time_end - time_start) / self.population_size / 2}, mean time using one thread: {(time_end - time_start) / self.population_size / 2 * self.max_threads}")

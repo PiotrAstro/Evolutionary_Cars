@@ -1691,7 +1691,7 @@ struct __pyx_obj_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_E
 };
 
 
-/* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":178
+/* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":185
  * 
  * 
  * cdef class Car:             # <<<<<<<<<<<<<<
@@ -1826,7 +1826,7 @@ struct __pyx_vtabstruct_9src_files_12Environments_21Basic_Car_Environment_21Basi
 static struct __pyx_vtabstruct_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Basic_Car_Environment *__pyx_vtabptr_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Basic_Car_Environment;
 
 
-/* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":178
+/* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":185
  * 
  * 
  * cdef class Car:             # <<<<<<<<<<<<<<
@@ -20000,7 +20000,7 @@ static double __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_
 
 static double __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_21Basic_Car_Environment_react(struct __pyx_obj_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Basic_Car_Environment *__pyx_v_self, __Pyx_memviewslice __pyx_v_outputs) {
   double __pyx_v_result;
-  int __pyx_v_angle_change_index_action;
+  int __pyx_v_change_index_action;
   long __pyx_v_i;
   double __pyx_r;
   long __pyx_t_1;
@@ -20017,95 +20017,95 @@ static double __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_
   /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":153
  *         #self.car.change_angle(self.angle_max_change * outputs[0])
  *         cdef double result
- *         cdef int angle_change_index_action = 0;             # <<<<<<<<<<<<<<
+ *         cdef int change_index_action = 0             # <<<<<<<<<<<<<<
  *         for i in range(3):
- *             if outputs[i] > outputs[angle_change_index_action]:
+ *             if outputs[i] > outputs[change_index_action]:
  */
-  __pyx_v_angle_change_index_action = 0;
+  __pyx_v_change_index_action = 0;
 
   /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":154
  *         cdef double result
- *         cdef int angle_change_index_action = 0;
+ *         cdef int change_index_action = 0
  *         for i in range(3):             # <<<<<<<<<<<<<<
- *             if outputs[i] > outputs[angle_change_index_action]:
- *                 angle_change_index_action = i
+ *             if outputs[i] > outputs[change_index_action]:
+ *                 change_index_action = i
  */
   for (__pyx_t_1 = 0; __pyx_t_1 < 3; __pyx_t_1+=1) {
     __pyx_v_i = __pyx_t_1;
 
     /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":155
- *         cdef int angle_change_index_action = 0;
+ *         cdef int change_index_action = 0
  *         for i in range(3):
- *             if outputs[i] > outputs[angle_change_index_action]:             # <<<<<<<<<<<<<<
- *                 angle_change_index_action = i
- *         if angle_change_index_action == 1:
+ *             if outputs[i] > outputs[change_index_action]:             # <<<<<<<<<<<<<<
+ *                 change_index_action = i
+ *         if change_index_action == 1:
  */
     __pyx_t_2 = __pyx_v_i;
-    __pyx_t_3 = __pyx_v_angle_change_index_action;
+    __pyx_t_3 = __pyx_v_change_index_action;
     __pyx_t_4 = ((*((__pyx_t_9src_files_12Environments_20Abstract_Environment_20Abstract_Environment_real_t *) ( /* dim=0 */ ((char *) (((__pyx_t_9src_files_12Environments_20Abstract_Environment_20Abstract_Environment_real_t *) __pyx_v_outputs.data) + __pyx_t_2)) ))) > (*((__pyx_t_9src_files_12Environments_20Abstract_Environment_20Abstract_Environment_real_t *) ( /* dim=0 */ ((char *) (((__pyx_t_9src_files_12Environments_20Abstract_Environment_20Abstract_Environment_real_t *) __pyx_v_outputs.data) + __pyx_t_3)) ))));
     if (__pyx_t_4) {
 
       /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":156
  *         for i in range(3):
- *             if outputs[i] > outputs[angle_change_index_action]:
- *                 angle_change_index_action = i             # <<<<<<<<<<<<<<
- *         if angle_change_index_action == 1:
+ *             if outputs[i] > outputs[change_index_action]:
+ *                 change_index_action = i             # <<<<<<<<<<<<<<
+ *         if change_index_action == 1:
  *             self.car.change_angle(self.angle_max_change)
  */
-      __pyx_v_angle_change_index_action = __pyx_v_i;
+      __pyx_v_change_index_action = __pyx_v_i;
 
       /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":155
- *         cdef int angle_change_index_action = 0;
+ *         cdef int change_index_action = 0
  *         for i in range(3):
- *             if outputs[i] > outputs[angle_change_index_action]:             # <<<<<<<<<<<<<<
- *                 angle_change_index_action = i
- *         if angle_change_index_action == 1:
+ *             if outputs[i] > outputs[change_index_action]:             # <<<<<<<<<<<<<<
+ *                 change_index_action = i
+ *         if change_index_action == 1:
  */
     }
   }
 
   /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":157
- *             if outputs[i] > outputs[angle_change_index_action]:
- *                 angle_change_index_action = i
- *         if angle_change_index_action == 1:             # <<<<<<<<<<<<<<
+ *             if outputs[i] > outputs[change_index_action]:
+ *                 change_index_action = i
+ *         if change_index_action == 1:             # <<<<<<<<<<<<<<
  *             self.car.change_angle(self.angle_max_change)
- *         elif angle_change_index_action == 2:
+ *         elif change_index_action == 2:
  */
-  switch (__pyx_v_angle_change_index_action) {
+  switch (__pyx_v_change_index_action) {
     case 1:
 
     /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":158
- *                 angle_change_index_action = i
- *         if angle_change_index_action == 1:
+ *                 change_index_action = i
+ *         if change_index_action == 1:
  *             self.car.change_angle(self.angle_max_change)             # <<<<<<<<<<<<<<
- *         elif angle_change_index_action == 2:
+ *         elif change_index_action == 2:
  *             self.car.change_angle(-self.angle_max_change)
  */
     (void)(((struct __pyx_vtabstruct_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car *)__pyx_v_self->car->__pyx_vtab)->change_angle(__pyx_v_self->car, __pyx_v_self->angle_max_change));
 
     /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":157
- *             if outputs[i] > outputs[angle_change_index_action]:
- *                 angle_change_index_action = i
- *         if angle_change_index_action == 1:             # <<<<<<<<<<<<<<
+ *             if outputs[i] > outputs[change_index_action]:
+ *                 change_index_action = i
+ *         if change_index_action == 1:             # <<<<<<<<<<<<<<
  *             self.car.change_angle(self.angle_max_change)
- *         elif angle_change_index_action == 2:
+ *         elif change_index_action == 2:
  */
     break;
     case 2:
 
     /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":160
  *             self.car.change_angle(self.angle_max_change)
- *         elif angle_change_index_action == 2:
+ *         elif change_index_action == 2:
  *             self.car.change_angle(-self.angle_max_change)             # <<<<<<<<<<<<<<
  * 
- * 
+ *         # change_index_action = 3
  */
     (void)(((struct __pyx_vtabstruct_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car *)__pyx_v_self->car->__pyx_vtab)->change_angle(__pyx_v_self->car, (-__pyx_v_self->angle_max_change)));
 
     /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":159
- *         if angle_change_index_action == 1:
+ *         if change_index_action == 1:
  *             self.car.change_angle(self.angle_max_change)
- *         elif angle_change_index_action == 2:             # <<<<<<<<<<<<<<
+ *         elif change_index_action == 2:             # <<<<<<<<<<<<<<
  *             self.car.change_angle(-self.angle_max_change)
  * 
  */
@@ -20113,9 +20113,9 @@ static double __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_
     default: break;
   }
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":163
- * 
- * 
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":170
+ *         # elif change_index_action == 5:
+ *         #     self.car.change_speed(-self.speed_change)
  *         self.car.change_speed(self.speed_change * outputs[3])             # <<<<<<<<<<<<<<
  * 
  *         self.current_step += 1
@@ -20123,7 +20123,7 @@ static double __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_
   __pyx_t_3 = 3;
   (void)(((struct __pyx_vtabstruct_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car *)__pyx_v_self->car->__pyx_vtab)->change_speed(__pyx_v_self->car, (__pyx_v_self->speed_change * (*((__pyx_t_9src_files_12Environments_20Abstract_Environment_20Abstract_Environment_real_t *) ( /* dim=0 */ ((char *) (((__pyx_t_9src_files_12Environments_20Abstract_Environment_20Abstract_Environment_real_t *) __pyx_v_outputs.data) + __pyx_t_3)) ))))));
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":165
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":172
  *         self.car.change_speed(self.speed_change * outputs[3])
  * 
  *         self.current_step += 1             # <<<<<<<<<<<<<<
@@ -20132,7 +20132,7 @@ static double __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_
  */
   __pyx_v_self->current_step = (__pyx_v_self->current_step + 1);
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":166
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":173
  * 
  *         self.current_step += 1
  *         result = self.car.step()             # <<<<<<<<<<<<<<
@@ -20141,18 +20141,18 @@ static double __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_
  */
   __pyx_v_result = ((struct __pyx_vtabstruct_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car *)__pyx_v_self->car->__pyx_vtab)->step(__pyx_v_self->car);
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":167
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":174
  *         self.current_step += 1
  *         result = self.car.step()
  *         if self.car.does_collide(self.map_view):             # <<<<<<<<<<<<<<
  *             result += self.collision_reward
  *         return result
  */
-  if (unlikely(!__pyx_v_self->map_view.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 167, __pyx_L1_error)}
+  if (unlikely(!__pyx_v_self->map_view.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 174, __pyx_L1_error)}
   __pyx_t_4 = ((struct __pyx_vtabstruct_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car *)__pyx_v_self->car->__pyx_vtab)->does_collide(__pyx_v_self->car, __pyx_v_self->map_view);
   if (__pyx_t_4) {
 
-    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":168
+    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":175
  *         result = self.car.step()
  *         if self.car.does_collide(self.map_view):
  *             result += self.collision_reward             # <<<<<<<<<<<<<<
@@ -20161,7 +20161,7 @@ static double __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_
  */
     __pyx_v_result = (__pyx_v_result + __pyx_v_self->collision_reward);
 
-    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":167
+    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":174
  *         self.current_step += 1
  *         result = self.car.step()
  *         if self.car.does_collide(self.map_view):             # <<<<<<<<<<<<<<
@@ -20170,7 +20170,7 @@ static double __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_
  */
   }
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":169
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":176
  *         if self.car.does_collide(self.map_view):
  *             result += self.collision_reward
  *         return result             # <<<<<<<<<<<<<<
@@ -20202,7 +20202,7 @@ static double __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_
   return __pyx_r;
 }
 
-/* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":171
+/* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":178
  *         return result
  * 
  *     cdef bint is_alive(self) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -20221,7 +20221,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
   PyGILState_STATE __pyx_gilstate_save;
   #endif
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":172
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":179
  * 
  *     cdef bint is_alive(self) noexcept nogil:
  *         return self.current_step < self.max_steps and not self.car.does_collide(self.map_view)             # <<<<<<<<<<<<<<
@@ -20234,14 +20234,14 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
     __pyx_t_1 = __pyx_t_2;
     goto __pyx_L3_bool_binop_done;
   }
-  if (unlikely(!__pyx_v_self->map_view.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 172, __pyx_L1_error)}
+  if (unlikely(!__pyx_v_self->map_view.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 179, __pyx_L1_error)}
   __pyx_t_2 = (!((struct __pyx_vtabstruct_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car *)__pyx_v_self->car->__pyx_vtab)->does_collide(__pyx_v_self->car, __pyx_v_self->map_view));
   __pyx_t_1 = __pyx_t_2;
   __pyx_L3_bool_binop_done:;
   __pyx_r = __pyx_t_1;
   goto __pyx_L0;
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":171
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":178
  *         return result
  * 
  *     cdef bint is_alive(self) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -20263,7 +20263,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
   return __pyx_r;
 }
 
-/* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":174
+/* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":181
  *         return self.current_step < self.max_steps and not self.car.does_collide(self.map_view)
  * 
  *     cdef int get_state_length(self) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -20280,18 +20280,18 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
   PyGILState_STATE __pyx_gilstate_save;
   #endif
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":175
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":182
  * 
  *     cdef int get_state_length(self) noexcept nogil:
  *         return self.rays_degrees.shape[0] + 1             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  if (unlikely(!__pyx_v_self->rays_degrees.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 175, __pyx_L1_error)}
+  if (unlikely(!__pyx_v_self->rays_degrees.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 182, __pyx_L1_error)}
   __pyx_r = ((__pyx_v_self->rays_degrees.shape[0]) + 1);
   goto __pyx_L0;
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":174
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":181
  *         return self.current_step < self.max_steps and not self.car.does_collide(self.map_view)
  * 
  *     cdef int get_state_length(self) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -20804,7 +20804,7 @@ static PyObject *__pyx_pf_9src_files_12Environments_21Basic_Car_Environment_21Ba
   return __pyx_r;
 }
 
-/* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":193
+/* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":200
  *     cdef bint is_does_collide_actual
  * 
  *     def __init__(self,             # <<<<<<<<<<<<<<
@@ -20867,7 +20867,7 @@ static int __pyx_pw_9src_files_12Environments_21Basic_Car_Environment_21Basic_Ca
           (void)__Pyx_Arg_NewRef_VARARGS(values[0]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 193, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 200, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
         CYTHON_FALLTHROUGH;
         case  1:
@@ -20875,9 +20875,9 @@ static int __pyx_pw_9src_files_12Environments_21Basic_Car_Environment_21Basic_Ca
           (void)__Pyx_Arg_NewRef_VARARGS(values[1]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 193, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 200, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 6, 6, 1); __PYX_ERR(0, 193, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 6, 6, 1); __PYX_ERR(0, 200, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
@@ -20885,9 +20885,9 @@ static int __pyx_pw_9src_files_12Environments_21Basic_Car_Environment_21Basic_Ca
           (void)__Pyx_Arg_NewRef_VARARGS(values[2]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 193, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 200, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 6, 6, 2); __PYX_ERR(0, 193, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 6, 6, 2); __PYX_ERR(0, 200, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
@@ -20895,9 +20895,9 @@ static int __pyx_pw_9src_files_12Environments_21Basic_Car_Environment_21Basic_Ca
           (void)__Pyx_Arg_NewRef_VARARGS(values[3]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 193, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 200, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 6, 6, 3); __PYX_ERR(0, 193, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 6, 6, 3); __PYX_ERR(0, 200, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
@@ -20905,9 +20905,9 @@ static int __pyx_pw_9src_files_12Environments_21Basic_Car_Environment_21Basic_Ca
           (void)__Pyx_Arg_NewRef_VARARGS(values[4]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 193, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 200, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 6, 6, 4); __PYX_ERR(0, 193, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 6, 6, 4); __PYX_ERR(0, 200, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
@@ -20915,14 +20915,14 @@ static int __pyx_pw_9src_files_12Environments_21Basic_Car_Environment_21Basic_Ca
           (void)__Pyx_Arg_NewRef_VARARGS(values[5]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 193, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 200, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 6, 6, 5); __PYX_ERR(0, 193, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 6, 6, 5); __PYX_ERR(0, 200, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "__init__") < 0)) __PYX_ERR(0, 193, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "__init__") < 0)) __PYX_ERR(0, 200, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 6)) {
       goto __pyx_L5_argtuple_error;
@@ -20935,15 +20935,15 @@ static int __pyx_pw_9src_files_12Environments_21Basic_Car_Environment_21Basic_Ca
       values[5] = __Pyx_Arg_VARARGS(__pyx_args, 5);
     }
     __pyx_v_start_position = ((PyObject*)values[0]);
-    __pyx_v_angle = __pyx_PyFloat_AsDouble(values[1]); if (unlikely((__pyx_v_angle == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 195, __pyx_L3_error)
-    __pyx_v_car_dimensions = __pyx_convert__from_py___pyx_ctuple_double__and_double(values[2]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 196, __pyx_L3_error)
-    __pyx_v_speed = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_speed == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 197, __pyx_L3_error)
-    __pyx_v_min_speed = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_min_speed == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 198, __pyx_L3_error)
-    __pyx_v_max_speed = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_max_speed == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 199, __pyx_L3_error)
+    __pyx_v_angle = __pyx_PyFloat_AsDouble(values[1]); if (unlikely((__pyx_v_angle == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 202, __pyx_L3_error)
+    __pyx_v_car_dimensions = __pyx_convert__from_py___pyx_ctuple_double__and_double(values[2]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 203, __pyx_L3_error)
+    __pyx_v_speed = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_speed == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 204, __pyx_L3_error)
+    __pyx_v_min_speed = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_min_speed == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 205, __pyx_L3_error)
+    __pyx_v_max_speed = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_max_speed == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 206, __pyx_L3_error)
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 1, 6, 6, __pyx_nargs); __PYX_ERR(0, 193, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 1, 6, 6, __pyx_nargs); __PYX_ERR(0, 200, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -20957,7 +20957,7 @@ static int __pyx_pw_9src_files_12Environments_21Basic_Car_Environment_21Basic_Ca
   __Pyx_RefNannyFinishContext();
   return -1;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_start_position), (&PyTuple_Type), 0, "start_position", 1))) __PYX_ERR(0, 194, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_start_position), (&PyTuple_Type), 0, "start_position", 1))) __PYX_ERR(0, 201, __pyx_L1_error)
   __pyx_r = __pyx_pf_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_3Car___init__(((struct __pyx_obj_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car *)__pyx_v_self), __pyx_v_start_position, __pyx_v_angle, __pyx_v_car_dimensions, __pyx_v_speed, __pyx_v_min_speed, __pyx_v_max_speed);
 
   /* function exit code */
@@ -20992,33 +20992,33 @@ static int __pyx_pf_9src_files_12Environments_21Basic_Car_Environment_21Basic_Ca
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__init__", 1);
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":208
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":215
  *         :param speed: speed of the car, currently it is constant
  *         """
  *         self.x = start_position[0]             # <<<<<<<<<<<<<<
  *         self.y = start_position[1]
  *         self.angle = angle
  */
-  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v_start_position, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 208, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v_start_position, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 215, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_2 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 208, __pyx_L1_error)
+  __pyx_t_2 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_2 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 215, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_self->x = __pyx_t_2;
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":209
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":216
  *         """
  *         self.x = start_position[0]
  *         self.y = start_position[1]             # <<<<<<<<<<<<<<
  *         self.angle = angle
  *         self.speed = speed
  */
-  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v_start_position, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 209, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v_start_position, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 216, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_2 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 209, __pyx_L1_error)
+  __pyx_t_2 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_2 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 216, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_self->y = __pyx_t_2;
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":210
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":217
  *         self.x = start_position[0]
  *         self.y = start_position[1]
  *         self.angle = angle             # <<<<<<<<<<<<<<
@@ -21027,7 +21027,7 @@ static int __pyx_pf_9src_files_12Environments_21Basic_Car_Environment_21Basic_Ca
  */
   __pyx_v_self->angle = __pyx_v_angle;
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":211
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":218
  *         self.y = start_position[1]
  *         self.angle = angle
  *         self.speed = speed             # <<<<<<<<<<<<<<
@@ -21036,7 +21036,7 @@ static int __pyx_pf_9src_files_12Environments_21Basic_Car_Environment_21Basic_Ca
  */
   __pyx_v_self->speed = __pyx_v_speed;
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":212
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":219
  *         self.angle = angle
  *         self.speed = speed
  *         self.min_speed = min_speed             # <<<<<<<<<<<<<<
@@ -21045,7 +21045,7 @@ static int __pyx_pf_9src_files_12Environments_21Basic_Car_Environment_21Basic_Ca
  */
   __pyx_v_self->min_speed = __pyx_v_min_speed;
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":213
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":220
  *         self.speed = speed
  *         self.min_speed = min_speed
  *         self.max_speed = max_speed             # <<<<<<<<<<<<<<
@@ -21054,7 +21054,7 @@ static int __pyx_pf_9src_files_12Environments_21Basic_Car_Environment_21Basic_Ca
  */
   __pyx_v_self->max_speed = __pyx_v_max_speed;
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":214
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":221
  *         self.min_speed = min_speed
  *         self.max_speed = max_speed
  *         self.width = car_dimensions[0]             # <<<<<<<<<<<<<<
@@ -21063,7 +21063,7 @@ static int __pyx_pf_9src_files_12Environments_21Basic_Car_Environment_21Basic_Ca
  */
   __pyx_v_self->width = __pyx_v_car_dimensions.f0;
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":215
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":222
  *         self.max_speed = max_speed
  *         self.width = car_dimensions[0]
  *         self.height = car_dimensions[1]             # <<<<<<<<<<<<<<
@@ -21072,19 +21072,19 @@ static int __pyx_pf_9src_files_12Environments_21Basic_Car_Environment_21Basic_Ca
  */
   __pyx_v_self->height = __pyx_v_car_dimensions.f1;
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":216
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":223
  *         self.width = car_dimensions[0]
  *         self.height = car_dimensions[1]
  *         self.distance_center_corner = math.sqrt((self.width / 2) ** 2 + (self.height / 2) ** 2)             # <<<<<<<<<<<<<<
  *         self.angle_to_corner = math.degrees(math.atan2(self.width / 2, self.height / 2))
  *         self.is_does_collide_actual = False
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_math); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 216, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_math); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 223, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_sqrt); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 216, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_sqrt); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 223, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyFloat_FromDouble((pow((__pyx_v_self->width / 2.0), 2.0) + pow((__pyx_v_self->height / 2.0), 2.0))); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 216, __pyx_L1_error)
+  __pyx_t_3 = PyFloat_FromDouble((pow((__pyx_v_self->width / 2.0), 2.0) + pow((__pyx_v_self->height / 2.0), 2.0))); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 223, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_5 = NULL;
   __pyx_t_6 = 0;
@@ -21105,34 +21105,34 @@ static int __pyx_pf_9src_files_12Environments_21Basic_Car_Environment_21Basic_Ca
     __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_4, __pyx_callargs+1-__pyx_t_6, 1+__pyx_t_6);
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 216, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 223, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   }
-  __pyx_t_2 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_2 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 216, __pyx_L1_error)
+  __pyx_t_2 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_2 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 223, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_self->distance_center_corner = __pyx_t_2;
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":217
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":224
  *         self.height = car_dimensions[1]
  *         self.distance_center_corner = math.sqrt((self.width / 2) ** 2 + (self.height / 2) ** 2)
  *         self.angle_to_corner = math.degrees(math.atan2(self.width / 2, self.height / 2))             # <<<<<<<<<<<<<<
  *         self.is_does_collide_actual = False
  *         self.does_collide_memory = False
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_math); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 217, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_math); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 224, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_degrees); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 217, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_degrees); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 224, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_math); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 217, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_math); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 224, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_atan2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 217, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_atan2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 224, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = PyFloat_FromDouble((__pyx_v_self->width / 2.0)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 217, __pyx_L1_error)
+  __pyx_t_5 = PyFloat_FromDouble((__pyx_v_self->width / 2.0)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 224, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_8 = PyFloat_FromDouble((__pyx_v_self->height / 2.0)); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 217, __pyx_L1_error)
+  __pyx_t_8 = PyFloat_FromDouble((__pyx_v_self->height / 2.0)); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 224, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __pyx_t_9 = NULL;
   __pyx_t_6 = 0;
@@ -21154,7 +21154,7 @@ static int __pyx_pf_9src_files_12Environments_21Basic_Car_Environment_21Basic_Ca
     __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 217, __pyx_L1_error)
+    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 224, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   }
@@ -21177,15 +21177,15 @@ static int __pyx_pf_9src_files_12Environments_21Basic_Car_Environment_21Basic_Ca
     __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_3, __pyx_callargs+1-__pyx_t_6, 1+__pyx_t_6);
     __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 217, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 224, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   }
-  __pyx_t_2 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_2 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 217, __pyx_L1_error)
+  __pyx_t_2 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_2 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 224, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_self->angle_to_corner = __pyx_t_2;
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":218
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":225
  *         self.distance_center_corner = math.sqrt((self.width / 2) ** 2 + (self.height / 2) ** 2)
  *         self.angle_to_corner = math.degrees(math.atan2(self.width / 2, self.height / 2))
  *         self.is_does_collide_actual = False             # <<<<<<<<<<<<<<
@@ -21194,7 +21194,7 @@ static int __pyx_pf_9src_files_12Environments_21Basic_Car_Environment_21Basic_Ca
  */
   __pyx_v_self->is_does_collide_actual = 0;
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":219
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":226
  *         self.angle_to_corner = math.degrees(math.atan2(self.width / 2, self.height / 2))
  *         self.is_does_collide_actual = False
  *         self.does_collide_memory = False             # <<<<<<<<<<<<<<
@@ -21203,7 +21203,7 @@ static int __pyx_pf_9src_files_12Environments_21Basic_Car_Environment_21Basic_Ca
  */
   __pyx_v_self->does_collide_memory = 0;
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":193
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":200
  *     cdef bint is_does_collide_actual
  * 
  *     def __init__(self,             # <<<<<<<<<<<<<<
@@ -21229,7 +21229,7 @@ static int __pyx_pf_9src_files_12Environments_21Basic_Car_Environment_21Basic_Ca
   return __pyx_r;
 }
 
-/* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":221
+/* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":228
  *         self.does_collide_memory = False
  * 
  *     cdef int set_state(self, double x, double y, double angle, double speed) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -21240,7 +21240,7 @@ static int __pyx_pf_9src_files_12Environments_21Basic_Car_Environment_21Basic_Ca
 static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_3Car_set_state(struct __pyx_obj_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car *__pyx_v_self, double __pyx_v_x, double __pyx_v_y, double __pyx_v_angle, double __pyx_v_speed) {
   int __pyx_r;
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":222
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":229
  * 
  *     cdef int set_state(self, double x, double y, double angle, double speed) noexcept nogil:
  *         self.x = x             # <<<<<<<<<<<<<<
@@ -21249,7 +21249,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
  */
   __pyx_v_self->x = __pyx_v_x;
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":223
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":230
  *     cdef int set_state(self, double x, double y, double angle, double speed) noexcept nogil:
  *         self.x = x
  *         self.y = y             # <<<<<<<<<<<<<<
@@ -21258,7 +21258,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
  */
   __pyx_v_self->y = __pyx_v_y;
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":224
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":231
  *         self.x = x
  *         self.y = y
  *         self.angle = angle             # <<<<<<<<<<<<<<
@@ -21267,7 +21267,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
  */
   __pyx_v_self->angle = __pyx_v_angle;
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":225
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":232
  *         self.y = y
  *         self.angle = angle
  *         self.speed = speed             # <<<<<<<<<<<<<<
@@ -21276,7 +21276,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
  */
   __pyx_v_self->speed = __pyx_v_speed;
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":226
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":233
  *         self.angle = angle
  *         self.speed = speed
  *         self.is_does_collide_actual = False             # <<<<<<<<<<<<<<
@@ -21285,7 +21285,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
  */
   __pyx_v_self->is_does_collide_actual = 0;
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":227
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":234
  *         self.speed = speed
  *         self.is_does_collide_actual = False
  *         return 0             # <<<<<<<<<<<<<<
@@ -21295,7 +21295,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
   __pyx_r = 0;
   goto __pyx_L0;
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":221
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":228
  *         self.does_collide_memory = False
  * 
  *     cdef int set_state(self, double x, double y, double angle, double speed) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -21308,7 +21308,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
   return __pyx_r;
 }
 
-/* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":229
+/* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":236
  *         return 0
  * 
  *     cdef double step(self) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -21319,7 +21319,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
 static double __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_3Car_step(struct __pyx_obj_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car *__pyx_v_self) {
   double __pyx_r;
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":234
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":241
  *         """
  * 
  *         self.x += self.speed * degree_cos(self.angle)             # <<<<<<<<<<<<<<
@@ -21328,7 +21328,7 @@ static double __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_
  */
   __pyx_v_self->x = (__pyx_v_self->x + (__pyx_v_self->speed * __pyx_f_9src_files_6MyMath_6MyMath_degree_cos(__pyx_v_self->angle)));
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":235
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":242
  * 
  *         self.x += self.speed * degree_cos(self.angle)
  *         self.y -= self.speed * degree_sin(self.angle)             # <<<<<<<<<<<<<<
@@ -21337,7 +21337,7 @@ static double __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_
  */
   __pyx_v_self->y = (__pyx_v_self->y - (__pyx_v_self->speed * __pyx_f_9src_files_6MyMath_6MyMath_degree_sin(__pyx_v_self->angle)));
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":236
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":243
  *         self.x += self.speed * degree_cos(self.angle)
  *         self.y -= self.speed * degree_sin(self.angle)
  *         self.is_does_collide_actual = False             # <<<<<<<<<<<<<<
@@ -21346,7 +21346,7 @@ static double __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_
  */
   __pyx_v_self->is_does_collide_actual = 0;
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":238
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":245
  *         self.is_does_collide_actual = False
  * 
  *         return self.speed ** 2             # <<<<<<<<<<<<<<
@@ -21356,7 +21356,7 @@ static double __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_
   __pyx_r = pow(__pyx_v_self->speed, 2.0);
   goto __pyx_L0;
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":229
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":236
  *         return 0
  * 
  *     cdef double step(self) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -21369,7 +21369,7 @@ static double __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_
   return __pyx_r;
 }
 
-/* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":240
+/* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":247
  *         return self.speed ** 2
  * 
  *     cdef int change_speed(self, double speed_change) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -21382,7 +21382,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
   int __pyx_t_1;
   double __pyx_t_2;
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":244
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":251
  *         Changes speed of the car by the given amount
  *         """
  *         self.speed += speed_change             # <<<<<<<<<<<<<<
@@ -21391,7 +21391,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
  */
   __pyx_v_self->speed = (__pyx_v_self->speed + __pyx_v_speed_change);
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":245
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":252
  *         """
  *         self.speed += speed_change
  *         if self.speed < self.min_speed:             # <<<<<<<<<<<<<<
@@ -21401,7 +21401,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
   __pyx_t_1 = (__pyx_v_self->speed < __pyx_v_self->min_speed);
   if (__pyx_t_1) {
 
-    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":246
+    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":253
  *         self.speed += speed_change
  *         if self.speed < self.min_speed:
  *             self.speed = self.min_speed             # <<<<<<<<<<<<<<
@@ -21411,7 +21411,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
     __pyx_t_2 = __pyx_v_self->min_speed;
     __pyx_v_self->speed = __pyx_t_2;
 
-    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":245
+    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":252
  *         """
  *         self.speed += speed_change
  *         if self.speed < self.min_speed:             # <<<<<<<<<<<<<<
@@ -21421,7 +21421,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
     goto __pyx_L3;
   }
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":247
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":254
  *         if self.speed < self.min_speed:
  *             self.speed = self.min_speed
  *         elif self.speed > self.max_speed:             # <<<<<<<<<<<<<<
@@ -21431,7 +21431,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
   __pyx_t_1 = (__pyx_v_self->speed > __pyx_v_self->max_speed);
   if (__pyx_t_1) {
 
-    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":248
+    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":255
  *             self.speed = self.min_speed
  *         elif self.speed > self.max_speed:
  *             self.speed = self.max_speed             # <<<<<<<<<<<<<<
@@ -21441,7 +21441,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
     __pyx_t_2 = __pyx_v_self->max_speed;
     __pyx_v_self->speed = __pyx_t_2;
 
-    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":247
+    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":254
  *         if self.speed < self.min_speed:
  *             self.speed = self.min_speed
  *         elif self.speed > self.max_speed:             # <<<<<<<<<<<<<<
@@ -21451,7 +21451,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
   }
   __pyx_L3:;
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":249
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":256
  *         elif self.speed > self.max_speed:
  *             self.speed = self.max_speed
  *         return 0             # <<<<<<<<<<<<<<
@@ -21461,7 +21461,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
   __pyx_r = 0;
   goto __pyx_L0;
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":240
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":247
  *         return self.speed ** 2
  * 
  *     cdef int change_speed(self, double speed_change) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -21474,7 +21474,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
   return __pyx_r;
 }
 
-/* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":251
+/* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":258
  *         return 0
  * 
  *     cdef int change_angle(self, double angle) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -21486,7 +21486,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
   int __pyx_r;
   int __pyx_t_1;
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":255
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":262
  *         Changes angle of the car by the given amount
  *         """
  *         self.angle += angle             # <<<<<<<<<<<<<<
@@ -21495,7 +21495,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
  */
   __pyx_v_self->angle = (__pyx_v_self->angle + __pyx_v_angle);
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":256
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":263
  *         """
  *         self.angle += angle
  *         if self.angle < 0:             # <<<<<<<<<<<<<<
@@ -21505,7 +21505,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
   __pyx_t_1 = (__pyx_v_self->angle < 0.0);
   if (__pyx_t_1) {
 
-    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":257
+    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":264
  *         self.angle += angle
  *         if self.angle < 0:
  *             self.angle += 360             # <<<<<<<<<<<<<<
@@ -21514,7 +21514,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
  */
     __pyx_v_self->angle = (__pyx_v_self->angle + 360.0);
 
-    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":256
+    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":263
  *         """
  *         self.angle += angle
  *         if self.angle < 0:             # <<<<<<<<<<<<<<
@@ -21524,7 +21524,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
     goto __pyx_L3;
   }
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":258
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":265
  *         if self.angle < 0:
  *             self.angle += 360
  *         elif self.angle >= 360:             # <<<<<<<<<<<<<<
@@ -21534,7 +21534,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
   __pyx_t_1 = (__pyx_v_self->angle >= 360.0);
   if (__pyx_t_1) {
 
-    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":259
+    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":266
  *             self.angle += 360
  *         elif self.angle >= 360:
  *             self.angle -= 360             # <<<<<<<<<<<<<<
@@ -21543,7 +21543,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
  */
     __pyx_v_self->angle = (__pyx_v_self->angle - 360.0);
 
-    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":258
+    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":265
  *         if self.angle < 0:
  *             self.angle += 360
  *         elif self.angle >= 360:             # <<<<<<<<<<<<<<
@@ -21553,7 +21553,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
   }
   __pyx_L3:;
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":260
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":267
  *         elif self.angle >= 360:
  *             self.angle -= 360
  *         return 0             # <<<<<<<<<<<<<<
@@ -21563,7 +21563,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
   __pyx_r = 0;
   goto __pyx_L0;
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":251
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":258
  *         return 0
  * 
  *     cdef int change_angle(self, double angle) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -21576,7 +21576,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
   return __pyx_r;
 }
 
-/* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":262
+/* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":269
  *         return 0
  * 
  *     cdef bint does_collide(self, map_view_t[:, ::1] map_view) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -21589,7 +21589,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
   int __pyx_t_1;
   int __pyx_t_2;
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":263
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":270
  * 
  *     cdef bint does_collide(self, map_view_t[:, ::1] map_view) noexcept nogil:
  *         if not self.is_does_collide_actual:             # <<<<<<<<<<<<<<
@@ -21599,7 +21599,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
   __pyx_t_1 = (!__pyx_v_self->is_does_collide_actual);
   if (__pyx_t_1) {
 
-    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":264
+    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":271
  *     cdef bint does_collide(self, map_view_t[:, ::1] map_view) noexcept nogil:
  *         if not self.is_does_collide_actual:
  *             self.does_collide_memory = (self.does_collide_one(map_view, self.distance_center_corner, self.angle - self.angle_to_corner) or             # <<<<<<<<<<<<<<
@@ -21613,7 +21613,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
       goto __pyx_L4_bool_binop_done;
     }
 
-    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":265
+    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":272
  *         if not self.is_does_collide_actual:
  *             self.does_collide_memory = (self.does_collide_one(map_view, self.distance_center_corner, self.angle - self.angle_to_corner) or
  *                                         self.does_collide_one(map_view, self.distance_center_corner, self.angle + self.angle_to_corner) or             # <<<<<<<<<<<<<<
@@ -21627,7 +21627,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
       goto __pyx_L4_bool_binop_done;
     }
 
-    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":266
+    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":273
  *             self.does_collide_memory = (self.does_collide_one(map_view, self.distance_center_corner, self.angle - self.angle_to_corner) or
  *                                         self.does_collide_one(map_view, self.distance_center_corner, self.angle + self.angle_to_corner) or
  *                                         self.does_collide_one(map_view, self.distance_center_corner, 180 + self.angle - self.angle_to_corner) or             # <<<<<<<<<<<<<<
@@ -21641,7 +21641,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
       goto __pyx_L4_bool_binop_done;
     }
 
-    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":267
+    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":274
  *                                         self.does_collide_one(map_view, self.distance_center_corner, self.angle + self.angle_to_corner) or
  *                                         self.does_collide_one(map_view, self.distance_center_corner, 180 + self.angle - self.angle_to_corner) or
  *                                         self.does_collide_one(map_view, self.distance_center_corner, 180 + self.angle + self.angle_to_corner) or             # <<<<<<<<<<<<<<
@@ -21655,7 +21655,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
       goto __pyx_L4_bool_binop_done;
     }
 
-    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":268
+    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":275
  *                                         self.does_collide_one(map_view, self.distance_center_corner, 180 + self.angle - self.angle_to_corner) or
  *                                         self.does_collide_one(map_view, self.distance_center_corner, 180 + self.angle + self.angle_to_corner) or
  *                                         self.does_collide_one(map_view, self.width / 2, self.angle + 90) or             # <<<<<<<<<<<<<<
@@ -21669,7 +21669,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
       goto __pyx_L4_bool_binop_done;
     }
 
-    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":269
+    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":276
  *                                         self.does_collide_one(map_view, self.distance_center_corner, 180 + self.angle + self.angle_to_corner) or
  *                                         self.does_collide_one(map_view, self.width / 2, self.angle + 90) or
  *                                         self.does_collide_one(map_view, self.width / 2, self.angle - 90) or             # <<<<<<<<<<<<<<
@@ -21683,7 +21683,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
       goto __pyx_L4_bool_binop_done;
     }
 
-    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":270
+    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":277
  *                                         self.does_collide_one(map_view, self.width / 2, self.angle + 90) or
  *                                         self.does_collide_one(map_view, self.width / 2, self.angle - 90) or
  *                                         self.does_collide_one(map_view, self.height / 2, self.angle) or             # <<<<<<<<<<<<<<
@@ -21697,7 +21697,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
       goto __pyx_L4_bool_binop_done;
     }
 
-    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":271
+    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":278
  *                                         self.does_collide_one(map_view, self.width / 2, self.angle - 90) or
  *                                         self.does_collide_one(map_view, self.height / 2, self.angle) or
  *                                         self.does_collide_one(map_view, self.height / 2, self.angle + 180))             # <<<<<<<<<<<<<<
@@ -21708,7 +21708,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
     __pyx_t_1 = __pyx_t_2;
     __pyx_L4_bool_binop_done:;
 
-    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":264
+    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":271
  *     cdef bint does_collide(self, map_view_t[:, ::1] map_view) noexcept nogil:
  *         if not self.is_does_collide_actual:
  *             self.does_collide_memory = (self.does_collide_one(map_view, self.distance_center_corner, self.angle - self.angle_to_corner) or             # <<<<<<<<<<<<<<
@@ -21717,7 +21717,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
  */
     __pyx_v_self->does_collide_memory = __pyx_t_1;
 
-    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":272
+    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":279
  *                                         self.does_collide_one(map_view, self.height / 2, self.angle) or
  *                                         self.does_collide_one(map_view, self.height / 2, self.angle + 180))
  *             self.is_does_collide_actual = True             # <<<<<<<<<<<<<<
@@ -21726,7 +21726,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
  */
     __pyx_v_self->is_does_collide_actual = 1;
 
-    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":263
+    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":270
  * 
  *     cdef bint does_collide(self, map_view_t[:, ::1] map_view) noexcept nogil:
  *         if not self.is_does_collide_actual:             # <<<<<<<<<<<<<<
@@ -21735,7 +21735,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
  */
   }
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":273
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":280
  *                                         self.does_collide_one(map_view, self.height / 2, self.angle + 180))
  *             self.is_does_collide_actual = True
  *         return self.does_collide_memory             # <<<<<<<<<<<<<<
@@ -21745,7 +21745,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
   __pyx_r = __pyx_v_self->does_collide_memory;
   goto __pyx_L0;
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":262
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":269
  *         return 0
  * 
  *     cdef bint does_collide(self, map_view_t[:, ::1] map_view) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -21758,7 +21758,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
   return __pyx_r;
 }
 
-/* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":277
+/* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":284
  *     @cython.boundscheck(False)
  *     @cython.wraparound(False)
  *     cdef bint does_collide_one(self, map_view_t[:, ::1] map_view, double distance, double angle) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -21775,7 +21775,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
   Py_ssize_t __pyx_t_3;
   Py_ssize_t __pyx_t_4;
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":279
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":286
  *     cdef bint does_collide_one(self, map_view_t[:, ::1] map_view, double distance, double angle) noexcept nogil:
  *         cdef int check_x, check_y
  *         check_x = round_to_int(self.x + distance * degree_cos(angle))             # <<<<<<<<<<<<<<
@@ -21784,7 +21784,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
  */
   __pyx_v_check_x = __pyx_f_9src_files_6MyMath_6MyMath_round_to_int((__pyx_v_self->x + (__pyx_v_distance * __pyx_f_9src_files_6MyMath_6MyMath_degree_cos(__pyx_v_angle))));
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":280
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":287
  *         cdef int check_x, check_y
  *         check_x = round_to_int(self.x + distance * degree_cos(angle))
  *         check_y = round_to_int(self.y - distance * degree_sin(angle))             # <<<<<<<<<<<<<<
@@ -21793,7 +21793,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
  */
   __pyx_v_check_y = __pyx_f_9src_files_6MyMath_6MyMath_round_to_int((__pyx_v_self->y - (__pyx_v_distance * __pyx_f_9src_files_6MyMath_6MyMath_degree_sin(__pyx_v_angle))));
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":282
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":289
  *         check_y = round_to_int(self.y - distance * degree_sin(angle))
  * 
  *         if check_x < 0 or check_x >= map_view.shape[1]:             # <<<<<<<<<<<<<<
@@ -21811,7 +21811,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":283
+    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":290
  * 
  *         if check_x < 0 or check_x >= map_view.shape[1]:
  *             return True             # <<<<<<<<<<<<<<
@@ -21821,7 +21821,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
     __pyx_r = 1;
     goto __pyx_L0;
 
-    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":282
+    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":289
  *         check_y = round_to_int(self.y - distance * degree_sin(angle))
  * 
  *         if check_x < 0 or check_x >= map_view.shape[1]:             # <<<<<<<<<<<<<<
@@ -21830,7 +21830,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
  */
   }
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":284
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":291
  *         if check_x < 0 or check_x >= map_view.shape[1]:
  *             return True
  *         if check_y < 0 or check_y >= map_view.shape[0]:             # <<<<<<<<<<<<<<
@@ -21848,7 +21848,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
   __pyx_L7_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":285
+    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":292
  *             return True
  *         if check_y < 0 or check_y >= map_view.shape[0]:
  *             return True             # <<<<<<<<<<<<<<
@@ -21858,7 +21858,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
     __pyx_r = 1;
     goto __pyx_L0;
 
-    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":284
+    /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":291
  *         if check_x < 0 or check_x >= map_view.shape[1]:
  *             return True
  *         if check_y < 0 or check_y >= map_view.shape[0]:             # <<<<<<<<<<<<<<
@@ -21867,7 +21867,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
  */
   }
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":297
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":304
  *         #     place_in_code="collision check")
  * 
  *         return map_view[check_y, check_x] == 1             # <<<<<<<<<<<<<<
@@ -21877,7 +21877,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
   __pyx_r = ((*((__pyx_t_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_map_view_t *) ( /* dim=1 */ ((char *) (((__pyx_t_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_map_view_t *) ( /* dim=0 */ (__pyx_v_map_view.data + __pyx_t_3 * __pyx_v_map_view.strides[0]) )) + __pyx_t_4)) ))) == 1);
   goto __pyx_L0;
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":277
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":284
  *     @cython.boundscheck(False)
  *     @cython.wraparound(False)
  *     cdef bint does_collide_one(self, map_view_t[:, ::1] map_view, double distance, double angle) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -25362,15 +25362,15 @@ static int __Pyx_modinit_type_init_code(void) {
   __pyx_vtable_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car.does_collide = (int (*)(struct __pyx_obj_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car *, __Pyx_memviewslice))__pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_3Car_does_collide;
   __pyx_vtable_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car.does_collide_one = (int (*)(struct __pyx_obj_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car *, __Pyx_memviewslice, double, double))__pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_3Car_does_collide_one;
   #if CYTHON_USE_TYPE_SPECS
-  __pyx_ptype_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car_spec, NULL); if (unlikely(!__pyx_ptype_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car)) __PYX_ERR(0, 178, __pyx_L1_error)
-  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car_spec, __pyx_ptype_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car) < 0) __PYX_ERR(0, 178, __pyx_L1_error)
+  __pyx_ptype_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car_spec, NULL); if (unlikely(!__pyx_ptype_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car)) __PYX_ERR(0, 185, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car_spec, __pyx_ptype_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car) < 0) __PYX_ERR(0, 185, __pyx_L1_error)
   #else
   __pyx_ptype_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car = &__pyx_type_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car;
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
   #endif
   #if !CYTHON_USE_TYPE_SPECS
-  if (__Pyx_PyType_Ready(__pyx_ptype_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car) < 0) __PYX_ERR(0, 178, __pyx_L1_error)
+  if (__Pyx_PyType_Ready(__pyx_ptype_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car) < 0) __PYX_ERR(0, 185, __pyx_L1_error)
   #endif
   #if PY_MAJOR_VERSION < 3
   __pyx_ptype_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car->tp_print = 0;
@@ -25382,7 +25382,7 @@ static int __Pyx_modinit_type_init_code(void) {
   #endif
   #if CYTHON_UPDATE_DESCRIPTOR_DOC
   {
-    PyObject *wrapper = PyObject_GetAttrString((PyObject *)__pyx_ptype_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car, "__init__"); if (unlikely(!wrapper)) __PYX_ERR(0, 178, __pyx_L1_error)
+    PyObject *wrapper = PyObject_GetAttrString((PyObject *)__pyx_ptype_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car, "__init__"); if (unlikely(!wrapper)) __PYX_ERR(0, 185, __pyx_L1_error)
     if (__Pyx_IS_TYPE(wrapper, &PyWrapperDescr_Type)) {
       __pyx_wrapperbase_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_3Car___init__ = *((PyWrapperDescrObject *)wrapper)->d_base;
       __pyx_wrapperbase_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_3Car___init__.doc = __pyx_doc_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_3Car___init__;
@@ -25390,13 +25390,13 @@ static int __Pyx_modinit_type_init_code(void) {
     }
   }
   #endif
-  if (__Pyx_SetVtable(__pyx_ptype_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car, __pyx_vtabptr_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car) < 0) __PYX_ERR(0, 178, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_ptype_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car, __pyx_vtabptr_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car) < 0) __PYX_ERR(0, 185, __pyx_L1_error)
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if (__Pyx_MergeVtables(__pyx_ptype_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car) < 0) __PYX_ERR(0, 178, __pyx_L1_error)
+  if (__Pyx_MergeVtables(__pyx_ptype_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car) < 0) __PYX_ERR(0, 185, __pyx_L1_error)
   #endif
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_Car, (PyObject *) __pyx_ptype_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car) < 0) __PYX_ERR(0, 178, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_Car, (PyObject *) __pyx_ptype_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car) < 0) __PYX_ERR(0, 185, __pyx_L1_error)
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car) < 0) __PYX_ERR(0, 178, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_Car) < 0) __PYX_ERR(0, 185, __pyx_L1_error)
   #endif
   __pyx_vtabptr_array = &__pyx_vtable_array;
   __pyx_vtable_array.get_memview = (PyObject *(*)(struct __pyx_array_obj *))__pyx_array_get_memview;

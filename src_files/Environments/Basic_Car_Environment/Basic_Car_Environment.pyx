@@ -150,10 +150,10 @@ cdef class Basic_Car_Environment(Abstract_Environment):
     cdef double react(self, real_t[::1] outputs) noexcept nogil:
         #self.car.change_angle(self.angle_max_change * outputs[0])
         cdef double result
-        cdef int change_index_action = 0;
+        cdef int change_index_action = 0
         for i in range(3):
             if outputs[i] > outputs[change_index_action]:
-                angle_change_index_action = i
+                change_index_action = i
         if change_index_action == 1:
             self.car.change_angle(self.angle_max_change)
         elif change_index_action == 2:
