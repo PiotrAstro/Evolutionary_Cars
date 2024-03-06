@@ -2757,7 +2757,7 @@ static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_N
 /* Module declarations from "cython" */
 
 /* Module declarations from "src_files.MyMath.MyMath" */
-static double (*__pyx_f_9src_files_6MyMath_6MyMath_lookup_exp)(double); /*proto*/
+static double (*__pyx_f_9src_files_6MyMath_6MyMath_tanh)(double); /*proto*/
 
 /* Module declarations from "src_files.Neural_Network.Raw_Numpy.Raw_Numpy_Layers.Abstract_Layer.Abstract_Layer" */
 
@@ -17532,7 +17532,6 @@ static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_N
   int __pyx_v_cols;
   int __pyx_v_i;
   int __pyx_v_j;
-  double __pyx_v_exp_2x;
   __Pyx_memviewslice __pyx_r = { 0, 0, { 0 }, { 0 }, { 0 } };
   int __pyx_t_1;
   int __pyx_t_2;
@@ -17542,14 +17541,8 @@ static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_N
   int __pyx_t_6;
   Py_ssize_t __pyx_t_7;
   Py_ssize_t __pyx_t_8;
-  double __pyx_t_9;
-  double __pyx_t_10;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  #ifdef WITH_THREAD
-  PyGILState_STATE __pyx_gilstate_save;
-  #endif
+  Py_ssize_t __pyx_t_9;
+  Py_ssize_t __pyx_t_10;
 
   /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Tanh_Activation/Tanh_Activation.pyx":19
  *         :return:
@@ -17565,73 +17558,52 @@ static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_N
  *         cdef int rows = inputs.shape[0]
  *         cdef int cols = inputs.shape[1]             # <<<<<<<<<<<<<<
  *         cdef int i, j
- *         cdef double exp_2x
+ * 
  */
   __pyx_v_cols = (__pyx_v_inputs.shape[1]);
 
-  /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Tanh_Activation/Tanh_Activation.pyx":24
- *         cdef double exp_2x
+  /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Tanh_Activation/Tanh_Activation.pyx":23
+ *         cdef int i, j
  * 
  *         for i in range(rows):             # <<<<<<<<<<<<<<
  *             for j in range(cols):
- *                 exp_2x = lookup_exp(-2.0 * inputs[i, j])
+ *                 inputs[i, j] = tanh(inputs[i, j])
  */
   __pyx_t_1 = __pyx_v_rows;
   __pyx_t_2 = __pyx_t_1;
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Tanh_Activation/Tanh_Activation.pyx":25
+    /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Tanh_Activation/Tanh_Activation.pyx":24
  * 
  *         for i in range(rows):
  *             for j in range(cols):             # <<<<<<<<<<<<<<
- *                 exp_2x = lookup_exp(-2.0 * inputs[i, j])
- *                 inputs[i, j] = (1.0 - exp_2x) / (1.0 + exp_2x)
+ *                 inputs[i, j] = tanh(inputs[i, j])
+ *         return inputs
  */
     __pyx_t_4 = __pyx_v_cols;
     __pyx_t_5 = __pyx_t_4;
     for (__pyx_t_6 = 0; __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
       __pyx_v_j = __pyx_t_6;
 
-      /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Tanh_Activation/Tanh_Activation.pyx":26
+      /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Tanh_Activation/Tanh_Activation.pyx":25
  *         for i in range(rows):
  *             for j in range(cols):
- *                 exp_2x = lookup_exp(-2.0 * inputs[i, j])             # <<<<<<<<<<<<<<
- *                 inputs[i, j] = (1.0 - exp_2x) / (1.0 + exp_2x)
- *         return inputs
- */
-      __pyx_t_7 = __pyx_v_i;
-      __pyx_t_8 = __pyx_v_j;
-      __pyx_v_exp_2x = __pyx_f_9src_files_6MyMath_6MyMath_lookup_exp((-2.0 * (*((float *) ( /* dim=1 */ ((char *) (((float *) ( /* dim=0 */ (__pyx_v_inputs.data + __pyx_t_7 * __pyx_v_inputs.strides[0]) )) + __pyx_t_8)) )))));
-
-      /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Tanh_Activation/Tanh_Activation.pyx":27
- *             for j in range(cols):
- *                 exp_2x = lookup_exp(-2.0 * inputs[i, j])
- *                 inputs[i, j] = (1.0 - exp_2x) / (1.0 + exp_2x)             # <<<<<<<<<<<<<<
+ *                 inputs[i, j] = tanh(inputs[i, j])             # <<<<<<<<<<<<<<
  *         return inputs
  * 
  */
-      __pyx_t_9 = (1.0 - __pyx_v_exp_2x);
-      __pyx_t_10 = (1.0 + __pyx_v_exp_2x);
-      if (unlikely(__pyx_t_10 == 0)) {
-        #ifdef WITH_THREAD
-        PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
-        #endif
-        PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-        #ifdef WITH_THREAD
-        __Pyx_PyGILState_Release(__pyx_gilstate_save);
-        #endif
-        __PYX_ERR(0, 27, __pyx_L1_error)
-      }
-      __pyx_t_8 = __pyx_v_i;
-      __pyx_t_7 = __pyx_v_j;
-      *((float *) ( /* dim=1 */ ((char *) (((float *) ( /* dim=0 */ (__pyx_v_inputs.data + __pyx_t_8 * __pyx_v_inputs.strides[0]) )) + __pyx_t_7)) )) = (__pyx_t_9 / __pyx_t_10);
+      __pyx_t_7 = __pyx_v_i;
+      __pyx_t_8 = __pyx_v_j;
+      __pyx_t_9 = __pyx_v_i;
+      __pyx_t_10 = __pyx_v_j;
+      *((float *) ( /* dim=1 */ ((char *) (((float *) ( /* dim=0 */ (__pyx_v_inputs.data + __pyx_t_9 * __pyx_v_inputs.strides[0]) )) + __pyx_t_10)) )) = __pyx_f_9src_files_6MyMath_6MyMath_tanh((*((float *) ( /* dim=1 */ ((char *) (((float *) ( /* dim=0 */ (__pyx_v_inputs.data + __pyx_t_7 * __pyx_v_inputs.strides[0]) )) + __pyx_t_8)) ))));
     }
   }
 
-  /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Tanh_Activation/Tanh_Activation.pyx":28
- *                 exp_2x = lookup_exp(-2.0 * inputs[i, j])
- *                 inputs[i, j] = (1.0 - exp_2x) / (1.0 + exp_2x)
+  /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Tanh_Activation/Tanh_Activation.pyx":26
+ *             for j in range(cols):
+ *                 inputs[i, j] = tanh(inputs[i, j])
  *         return inputs             # <<<<<<<<<<<<<<
  * 
  *     def copy(self) -> 'Tanh_Activation':
@@ -17649,17 +17621,6 @@ static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_N
  */
 
   /* function exit code */
-  __pyx_L1_error:;
-  __pyx_r.data = NULL;
-  __pyx_r.memview = NULL;
-  #ifdef WITH_THREAD
-  __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
-  #endif
-  __Pyx_AddTraceback("src_files.Neural_Network.Raw_Numpy.Raw_Numpy_Layers.Tanh_Activation.Tanh_Activation.Tanh_Activation.forward", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  #ifdef WITH_THREAD
-  __Pyx_PyGILState_Release(__pyx_gilstate_save);
-  #endif
-  goto __pyx_L2;
   __pyx_L0:;
   if (unlikely(!__pyx_r.memview)) {
     #ifdef WITH_THREAD
@@ -17670,11 +17631,10 @@ static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_N
     __Pyx_PyGILState_Release(__pyx_gilstate_save);
     #endif
   }
-  __pyx_L2:;
   return __pyx_r;
 }
 
-/* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Tanh_Activation/Tanh_Activation.pyx":30
+/* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Tanh_Activation/Tanh_Activation.pyx":28
  *         return inputs
  * 
  *     def copy(self) -> 'Tanh_Activation':             # <<<<<<<<<<<<<<
@@ -17731,19 +17691,19 @@ static struct __pyx_obj_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layer
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("copy", 1);
 
-  /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Tanh_Activation/Tanh_Activation.pyx":31
+  /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Tanh_Activation/Tanh_Activation.pyx":29
  * 
  *     def copy(self) -> 'Tanh_Activation':
  *         return Tanh_Activation()             # <<<<<<<<<<<<<<
  */
   __Pyx_XDECREF((PyObject *)__pyx_r);
-  __pyx_t_1 = __Pyx_PyObject_CallNoArg(((PyObject *)__pyx_ptype_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_15Tanh_Activation_15Tanh_Activation_Tanh_Activation)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 31, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_CallNoArg(((PyObject *)__pyx_ptype_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_15Tanh_Activation_15Tanh_Activation_Tanh_Activation)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 29, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = ((struct __pyx_obj_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_15Tanh_Activation_15Tanh_Activation_Tanh_Activation *)__pyx_t_1);
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Tanh_Activation/Tanh_Activation.pyx":30
+  /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Tanh_Activation/Tanh_Activation.pyx":28
  *         return inputs
  * 
  *     def copy(self) -> 'Tanh_Activation':             # <<<<<<<<<<<<<<
@@ -19794,7 +19754,7 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
 }
 /* #### Code section: cached_builtins ### */
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 24, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 23, __pyx_L1_error)
   __pyx_builtin___import__ = __Pyx_GetBuiltinName(__pyx_n_s_import); if (!__pyx_builtin___import__) __PYX_ERR(1, 100, __pyx_L1_error)
   __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(1, 141, __pyx_L1_error)
   __pyx_builtin_MemoryError = __Pyx_GetBuiltinName(__pyx_n_s_MemoryError); if (!__pyx_builtin_MemoryError) __PYX_ERR(1, 156, __pyx_L1_error)
@@ -19954,16 +19914,16 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GIVEREF(__pyx_tuple__19);
   __pyx_codeobj__20 = (PyObject*)__Pyx_PyCode_New(3, 0, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__19, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_pyx_unpickle_Enum, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__20)) __PYX_ERR(1, 1, __pyx_L1_error)
 
-  /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Tanh_Activation/Tanh_Activation.pyx":30
+  /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Tanh_Activation/Tanh_Activation.pyx":28
  *         return inputs
  * 
  *     def copy(self) -> 'Tanh_Activation':             # <<<<<<<<<<<<<<
  *         return Tanh_Activation()
  */
-  __pyx_tuple__21 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__21)) __PYX_ERR(0, 30, __pyx_L1_error)
+  __pyx_tuple__21 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__21)) __PYX_ERR(0, 28, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__21);
   __Pyx_GIVEREF(__pyx_tuple__21);
-  __pyx_codeobj__22 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__21, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_src_files_Neural_Network_Raw_Num, __pyx_n_s_copy, 30, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__22)) __PYX_ERR(0, 30, __pyx_L1_error)
+  __pyx_codeobj__22 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__21, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_src_files_Neural_Network_Raw_Num, __pyx_n_s_copy, 28, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__22)) __PYX_ERR(0, 28, __pyx_L1_error)
 
   /* "(tree fragment)":1
  * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
@@ -20293,7 +20253,7 @@ static int __Pyx_modinit_function_import_code(void) {
   /*--- Function import code ---*/
   __pyx_t_1 = PyImport_ImportModule("src_files.MyMath.MyMath"); if (!__pyx_t_1) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (__Pyx_ImportFunction_3_0_8(__pyx_t_1, "lookup_exp", (void (**)(void))&__pyx_f_9src_files_6MyMath_6MyMath_lookup_exp, "double (double)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ImportFunction_3_0_8(__pyx_t_1, "tanh", (void (**)(void))&__pyx_f_9src_files_6MyMath_6MyMath_tanh, "double (double)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_RefNannyFinishContext();
   return 0;
@@ -21100,20 +21060,20 @@ if (!__Pyx_RefNanny) {
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_Enum, __pyx_t_7) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Tanh_Activation/Tanh_Activation.pyx":30
+  /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Tanh_Activation/Tanh_Activation.pyx":28
  *         return inputs
  * 
  *     def copy(self) -> 'Tanh_Activation':             # <<<<<<<<<<<<<<
  *         return Tanh_Activation()
  */
-  __pyx_t_7 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 30, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 28, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_return, __pyx_kp_s_Tanh_Activation_2) < 0) __PYX_ERR(0, 30, __pyx_L1_error)
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_15Tanh_Activation_15Tanh_Activation_15Tanh_Activation_3copy, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Tanh_Activation_copy, NULL, __pyx_n_s_src_files_Neural_Network_Raw_Num_2, __pyx_d, ((PyObject *)__pyx_codeobj__22)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 30, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_return, __pyx_kp_s_Tanh_Activation_2) < 0) __PYX_ERR(0, 28, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_15Tanh_Activation_15Tanh_Activation_15Tanh_Activation_3copy, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Tanh_Activation_copy, NULL, __pyx_n_s_src_files_Neural_Network_Raw_Num_2, __pyx_d, ((PyObject *)__pyx_codeobj__22)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 28, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_CyFunction_SetAnnotationsDict(__pyx_t_4, __pyx_t_7);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_15Tanh_Activation_15Tanh_Activation_Tanh_Activation, __pyx_n_s_copy, __pyx_t_4) < 0) __PYX_ERR(0, 30, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_15Tanh_Activation_15Tanh_Activation_Tanh_Activation, __pyx_n_s_copy, __pyx_t_4) < 0) __PYX_ERR(0, 28, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   PyType_Modified(__pyx_ptype_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_15Tanh_Activation_15Tanh_Activation_Tanh_Activation);
 
@@ -21153,7 +21113,7 @@ if (!__Pyx_RefNanny) {
   /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Tanh_Activation/Tanh_Activation.pyx":1
  * from libc.math cimport exp             # <<<<<<<<<<<<<<
  * import cython
- * from src_files.MyMath.MyMath cimport lookup_exp
+ * from src_files.MyMath.MyMath cimport tanh
  */
   __pyx_t_4 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);

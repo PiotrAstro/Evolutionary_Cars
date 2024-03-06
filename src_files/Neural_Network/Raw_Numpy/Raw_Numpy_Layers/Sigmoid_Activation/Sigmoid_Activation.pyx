@@ -2,7 +2,7 @@ from libc.math cimport exp
 
 import cython
 
-from src_files.MyMath.MyMath cimport lookup_exp
+from src_files.MyMath.MyMath cimport sigmoid
 from src_files.Neural_Network.Raw_Numpy.Raw_Numpy_Layers.Abstract_Layer.Abstract_Layer cimport Abstract_Layer
 
 
@@ -24,7 +24,7 @@ cdef class Sigmoid_Activation(Abstract_Layer):
 
         for i in range(rows):
             for j in range(cols):
-                inputs[i, j] = 1.0 / (1.0 + lookup_exp(-inputs[i, j]))
+                inputs[i, j] = sigmoid(inputs[i, j])
         return inputs
 
     def copy(self) -> 'Sigmoid_Activation':

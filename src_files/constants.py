@@ -100,17 +100,17 @@ CONSTANTS_DICT = {
         "logs_path": r"C:\Piotr\AIProjects\Evolutionary_Cars\logs",
     },
     "Evolutionary_Mutate_Population": {
-        "population": 200,
+        "population": 500,
         "epochs": 600,
         "mutation_factor": 0.05,
-        "mutation_threshold": None,  # None - no scaled mutation, float - scaled mutation
-        "save_logs_every_n_epochs": 5,
+        "mutation_threshold": 1,  # None - no scaled mutation, float - scaled mutation
+        "save_logs_every_n_epochs": 50,
         "logs_path": r"C:\Piotr\AIProjects\Evolutionary_Cars\logs",
     },
     "Evolutionary_Strategy": {
         "permutations": 1000,
         "epochs": 10000,
-        "sigma_change": 0.05,
+        "sigma_change": 0.0,
         "learning_rate": 0.1,
         "save_logs_every_n_epochs": 50,
         "logs_path": r"C:\Piotr\AIProjects\Evolutionary_Cars\logs",

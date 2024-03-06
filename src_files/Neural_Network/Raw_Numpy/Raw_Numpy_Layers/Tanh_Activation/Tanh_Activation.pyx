@@ -1,6 +1,6 @@
 from libc.math cimport exp
 import cython
-from src_files.MyMath.MyMath cimport lookup_exp
+from src_files.MyMath.MyMath cimport tanh
 
 from src_files.Neural_Network.Raw_Numpy.Raw_Numpy_Layers.Abstract_Layer.Abstract_Layer cimport Abstract_Layer
 
@@ -19,12 +19,10 @@ cdef class Tanh_Activation(Abstract_Layer):
         cdef int rows = inputs.shape[0]
         cdef int cols = inputs.shape[1]
         cdef int i, j
-        cdef double exp_2x
 
         for i in range(rows):
             for j in range(cols):
-                exp_2x = lookup_exp(-2.0 * inputs[i, j])
-                inputs[i, j] = (1.0 - exp_2x) / (1.0 + exp_2x)
+                inputs[i, j] = tanh(inputs[i, j])
         return inputs
 
     def copy(self) -> 'Tanh_Activation':

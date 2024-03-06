@@ -2745,10 +2745,13 @@ static double __pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_DEGREE_RESOLUTION;
 static double __pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_EXP_RESOLUTION;
 static double __pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_EXP_BOUNDS;
 static double __pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_NORMAL_DISTRIBUTION_RESOLUTION;
+static double __pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_LN_BOUNDS;
+static double __pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_LN_RESOLUTION;
 static __Pyx_memviewslice __pyx_v_9src_files_6MyMath_6MyMath_lookup_sin_degrees = { 0, 0, { 0 }, { 0 }, { 0 } };
 static __Pyx_memviewslice __pyx_v_9src_files_6MyMath_6MyMath_lookup_cos_degrees = { 0, 0, { 0 }, { 0 }, { 0 } };
 static __Pyx_memviewslice __pyx_v_9src_files_6MyMath_6MyMath_lookup_exp_array = { 0, 0, { 0 }, { 0 }, { 0 } };
 static __Pyx_memviewslice __pyx_v_9src_files_6MyMath_6MyMath_lookup_normal_distribution_array = { 0, 0, { 0 }, { 0 }, { 0 } };
+static __Pyx_memviewslice __pyx_v_9src_files_6MyMath_6MyMath_lookup_ln_array = { 0, 0, { 0 }, { 0 }, { 0 } };
 static double __pyx_v_9src_files_6MyMath_6MyMath_exp_lookup_shift;
 static PyObject *__pyx_collections_abc_Sequence = 0;
 static PyObject *generic = 0;
@@ -2758,6 +2761,8 @@ static PyObject *contiguous = 0;
 static PyObject *indirect_contiguous = 0;
 static int __pyx_memoryview_thread_locks_used;
 static PyThread_type_lock __pyx_memoryview_thread_locks[8];
+static double __pyx_f_9src_files_6MyMath_6MyMath_lookup_exp(double); /*proto*/
+static CYTHON_INLINE double __pyx_f_9src_files_6MyMath_6MyMath_sigmoid(double); /*proto*/
 static CYTHON_INLINE double __pyx_f_9src_files_6MyMath_6MyMath_lookup_normal_distribution(double); /*proto*/
 static int __pyx_array_allocate_buffer(struct __pyx_array_obj *); /*proto*/
 static struct __pyx_array_obj *__pyx_array_new(PyObject *, Py_ssize_t, char *, char *, char *); /*proto*/
@@ -2833,6 +2838,7 @@ static const char __pyx_k_and[] = " and ";
 static const char __pyx_k_cos[] = "cos";
 static const char __pyx_k_exp[] = "exp";
 static const char __pyx_k_got[] = " (got ";
+static const char __pyx_k_log[] = "log";
 static const char __pyx_k_new[] = "__new__";
 static const char __pyx_k_obj[] = "obj";
 static const char __pyx_k_ppf[] = "ppf";
@@ -2845,6 +2851,7 @@ static const char __pyx_k_cols[] = "cols";
 static const char __pyx_k_dict[] = "__dict__";
 static const char __pyx_k_main[] = "__main__";
 static const char __pyx_k_math[] = "math";
+static const char __pyx_k_mean[] = "mean";
 static const char __pyx_k_mode[] = "mode";
 static const char __pyx_k_name[] = "name";
 static const char __pyx_k_ndim[] = "ndim";
@@ -2883,16 +2890,19 @@ static const char __pyx_k_return[] = "return";
 static const char __pyx_k_struct[] = "struct";
 static const char __pyx_k_unpack[] = "unpack";
 static const char __pyx_k_update[] = "update";
+static const char __pyx_k_c_scale[] = "c_scale";
 static const char __pyx_k_disable[] = "disable";
 static const char __pyx_k_float64[] = "float64";
 static const char __pyx_k_fortran[] = "fortran";
 static const char __pyx_k_memview[] = "memview";
 static const char __pyx_k_radians[] = "radians";
+static const char __pyx_k_std_dev[] = "std_dev";
 static const char __pyx_k_uniform[] = "uniform";
 static const char __pyx_k_Ellipsis[] = "Ellipsis";
 static const char __pyx_k_Sequence[] = "Sequence";
 static const char __pyx_k_getstate[] = "__getstate__";
 static const char __pyx_k_itemsize[] = "itemsize";
+static const char __pyx_k_ln_range[] = "ln_range";
 static const char __pyx_k_pyx_type[] = "__pyx_type";
 static const char __pyx_k_register[] = "register";
 static const char __pyx_k_setstate[] = "__setstate__";
@@ -3111,6 +3121,7 @@ typedef struct {
   PyObject *__pyx_n_s_base;
   PyObject *__pyx_n_s_c;
   PyObject *__pyx_n_u_c;
+  PyObject *__pyx_n_s_c_scale;
   PyObject *__pyx_n_s_ceil;
   PyObject *__pyx_n_s_class;
   PyObject *__pyx_n_s_class_getitem;
@@ -3152,8 +3163,11 @@ typedef struct {
   PyObject *__pyx_n_s_itemsize;
   PyObject *__pyx_kp_s_itemsize_0_for_cython_array;
   PyObject *__pyx_n_s_j;
+  PyObject *__pyx_n_s_ln_range;
+  PyObject *__pyx_n_s_log;
   PyObject *__pyx_n_s_main;
   PyObject *__pyx_n_s_math;
+  PyObject *__pyx_n_s_mean;
   PyObject *__pyx_n_s_memview;
   PyObject *__pyx_n_s_mode;
   PyObject *__pyx_n_s_mutate_array_scaled;
@@ -3202,6 +3216,7 @@ typedef struct {
   PyObject *__pyx_kp_s_src_files_MyMath_MyMath_pyx;
   PyObject *__pyx_n_s_src_files_MyMath_cython_debug_he;
   PyObject *__pyx_n_s_start;
+  PyObject *__pyx_n_s_std_dev;
   PyObject *__pyx_n_s_step;
   PyObject *__pyx_n_s_stop;
   PyObject *__pyx_kp_s_strided_and_direct;
@@ -3223,6 +3238,7 @@ typedef struct {
   PyObject *__pyx_float_0_0;
   PyObject *__pyx_float_0_0000001;
   PyObject *__pyx_float_0_9999999;
+  PyObject *__pyx_float_0_00000001;
   PyObject *__pyx_int_0;
   PyObject *__pyx_int_1;
   PyObject *__pyx_int_3;
@@ -3347,6 +3363,7 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_base);
   Py_CLEAR(clear_module_state->__pyx_n_s_c);
   Py_CLEAR(clear_module_state->__pyx_n_u_c);
+  Py_CLEAR(clear_module_state->__pyx_n_s_c_scale);
   Py_CLEAR(clear_module_state->__pyx_n_s_ceil);
   Py_CLEAR(clear_module_state->__pyx_n_s_class);
   Py_CLEAR(clear_module_state->__pyx_n_s_class_getitem);
@@ -3388,8 +3405,11 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_itemsize);
   Py_CLEAR(clear_module_state->__pyx_kp_s_itemsize_0_for_cython_array);
   Py_CLEAR(clear_module_state->__pyx_n_s_j);
+  Py_CLEAR(clear_module_state->__pyx_n_s_ln_range);
+  Py_CLEAR(clear_module_state->__pyx_n_s_log);
   Py_CLEAR(clear_module_state->__pyx_n_s_main);
   Py_CLEAR(clear_module_state->__pyx_n_s_math);
+  Py_CLEAR(clear_module_state->__pyx_n_s_mean);
   Py_CLEAR(clear_module_state->__pyx_n_s_memview);
   Py_CLEAR(clear_module_state->__pyx_n_s_mode);
   Py_CLEAR(clear_module_state->__pyx_n_s_mutate_array_scaled);
@@ -3438,6 +3458,7 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_kp_s_src_files_MyMath_MyMath_pyx);
   Py_CLEAR(clear_module_state->__pyx_n_s_src_files_MyMath_cython_debug_he);
   Py_CLEAR(clear_module_state->__pyx_n_s_start);
+  Py_CLEAR(clear_module_state->__pyx_n_s_std_dev);
   Py_CLEAR(clear_module_state->__pyx_n_s_step);
   Py_CLEAR(clear_module_state->__pyx_n_s_stop);
   Py_CLEAR(clear_module_state->__pyx_kp_s_strided_and_direct);
@@ -3459,6 +3480,7 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_float_0_0);
   Py_CLEAR(clear_module_state->__pyx_float_0_0000001);
   Py_CLEAR(clear_module_state->__pyx_float_0_9999999);
+  Py_CLEAR(clear_module_state->__pyx_float_0_00000001);
   Py_CLEAR(clear_module_state->__pyx_int_0);
   Py_CLEAR(clear_module_state->__pyx_int_1);
   Py_CLEAR(clear_module_state->__pyx_int_3);
@@ -3561,6 +3583,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_base);
   Py_VISIT(traverse_module_state->__pyx_n_s_c);
   Py_VISIT(traverse_module_state->__pyx_n_u_c);
+  Py_VISIT(traverse_module_state->__pyx_n_s_c_scale);
   Py_VISIT(traverse_module_state->__pyx_n_s_ceil);
   Py_VISIT(traverse_module_state->__pyx_n_s_class);
   Py_VISIT(traverse_module_state->__pyx_n_s_class_getitem);
@@ -3602,8 +3625,11 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_itemsize);
   Py_VISIT(traverse_module_state->__pyx_kp_s_itemsize_0_for_cython_array);
   Py_VISIT(traverse_module_state->__pyx_n_s_j);
+  Py_VISIT(traverse_module_state->__pyx_n_s_ln_range);
+  Py_VISIT(traverse_module_state->__pyx_n_s_log);
   Py_VISIT(traverse_module_state->__pyx_n_s_main);
   Py_VISIT(traverse_module_state->__pyx_n_s_math);
+  Py_VISIT(traverse_module_state->__pyx_n_s_mean);
   Py_VISIT(traverse_module_state->__pyx_n_s_memview);
   Py_VISIT(traverse_module_state->__pyx_n_s_mode);
   Py_VISIT(traverse_module_state->__pyx_n_s_mutate_array_scaled);
@@ -3652,6 +3678,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_kp_s_src_files_MyMath_MyMath_pyx);
   Py_VISIT(traverse_module_state->__pyx_n_s_src_files_MyMath_cython_debug_he);
   Py_VISIT(traverse_module_state->__pyx_n_s_start);
+  Py_VISIT(traverse_module_state->__pyx_n_s_std_dev);
   Py_VISIT(traverse_module_state->__pyx_n_s_step);
   Py_VISIT(traverse_module_state->__pyx_n_s_stop);
   Py_VISIT(traverse_module_state->__pyx_kp_s_strided_and_direct);
@@ -3673,6 +3700,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_float_0_0);
   Py_VISIT(traverse_module_state->__pyx_float_0_0000001);
   Py_VISIT(traverse_module_state->__pyx_float_0_9999999);
+  Py_VISIT(traverse_module_state->__pyx_float_0_00000001);
   Py_VISIT(traverse_module_state->__pyx_int_0);
   Py_VISIT(traverse_module_state->__pyx_int_1);
   Py_VISIT(traverse_module_state->__pyx_int_3);
@@ -3793,6 +3821,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_base __pyx_mstate_global->__pyx_n_s_base
 #define __pyx_n_s_c __pyx_mstate_global->__pyx_n_s_c
 #define __pyx_n_u_c __pyx_mstate_global->__pyx_n_u_c
+#define __pyx_n_s_c_scale __pyx_mstate_global->__pyx_n_s_c_scale
 #define __pyx_n_s_ceil __pyx_mstate_global->__pyx_n_s_ceil
 #define __pyx_n_s_class __pyx_mstate_global->__pyx_n_s_class
 #define __pyx_n_s_class_getitem __pyx_mstate_global->__pyx_n_s_class_getitem
@@ -3834,8 +3863,11 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_itemsize __pyx_mstate_global->__pyx_n_s_itemsize
 #define __pyx_kp_s_itemsize_0_for_cython_array __pyx_mstate_global->__pyx_kp_s_itemsize_0_for_cython_array
 #define __pyx_n_s_j __pyx_mstate_global->__pyx_n_s_j
+#define __pyx_n_s_ln_range __pyx_mstate_global->__pyx_n_s_ln_range
+#define __pyx_n_s_log __pyx_mstate_global->__pyx_n_s_log
 #define __pyx_n_s_main __pyx_mstate_global->__pyx_n_s_main
 #define __pyx_n_s_math __pyx_mstate_global->__pyx_n_s_math
+#define __pyx_n_s_mean __pyx_mstate_global->__pyx_n_s_mean
 #define __pyx_n_s_memview __pyx_mstate_global->__pyx_n_s_memview
 #define __pyx_n_s_mode __pyx_mstate_global->__pyx_n_s_mode
 #define __pyx_n_s_mutate_array_scaled __pyx_mstate_global->__pyx_n_s_mutate_array_scaled
@@ -3884,6 +3916,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_kp_s_src_files_MyMath_MyMath_pyx __pyx_mstate_global->__pyx_kp_s_src_files_MyMath_MyMath_pyx
 #define __pyx_n_s_src_files_MyMath_cython_debug_he __pyx_mstate_global->__pyx_n_s_src_files_MyMath_cython_debug_he
 #define __pyx_n_s_start __pyx_mstate_global->__pyx_n_s_start
+#define __pyx_n_s_std_dev __pyx_mstate_global->__pyx_n_s_std_dev
 #define __pyx_n_s_step __pyx_mstate_global->__pyx_n_s_step
 #define __pyx_n_s_stop __pyx_mstate_global->__pyx_n_s_stop
 #define __pyx_kp_s_strided_and_direct __pyx_mstate_global->__pyx_kp_s_strided_and_direct
@@ -3905,6 +3938,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_float_0_0 __pyx_mstate_global->__pyx_float_0_0
 #define __pyx_float_0_0000001 __pyx_mstate_global->__pyx_float_0_0000001
 #define __pyx_float_0_9999999 __pyx_mstate_global->__pyx_float_0_9999999
+#define __pyx_float_0_00000001 __pyx_mstate_global->__pyx_float_0_00000001
 #define __pyx_int_0 __pyx_mstate_global->__pyx_int_0
 #define __pyx_int_1 __pyx_mstate_global->__pyx_int_1
 #define __pyx_int_3 __pyx_mstate_global->__pyx_int_3
@@ -17558,7 +17592,7 @@ static PyObject *__pyx_unpickle_Enum__set_state(struct __pyx_MemviewEnum_obj *__
   return __pyx_r;
 }
 
-/* "src_files/MyMath/MyMath.pyx":47
+/* "src_files/MyMath/MyMath.pyx":52
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef double lookup_exp(double value) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -17578,7 +17612,7 @@ static double __pyx_f_9src_files_6MyMath_6MyMath_lookup_exp(double __pyx_v_value
   PyGILState_STATE __pyx_gilstate_save;
   #endif
 
-  /* "src_files/MyMath/MyMath.pyx":48
+  /* "src_files/MyMath/MyMath.pyx":53
  * @cython.wraparound(False)
  * cdef double lookup_exp(double value) noexcept nogil:
  *     if value >= LOOKUP_EXP_BOUNDS or value <= -LOOKUP_EXP_BOUNDS:             # <<<<<<<<<<<<<<
@@ -17596,7 +17630,7 @@ static double __pyx_f_9src_files_6MyMath_6MyMath_lookup_exp(double __pyx_v_value
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "src_files/MyMath/MyMath.pyx":49
+    /* "src_files/MyMath/MyMath.pyx":54
  * cdef double lookup_exp(double value) noexcept nogil:
  *     if value >= LOOKUP_EXP_BOUNDS or value <= -LOOKUP_EXP_BOUNDS:
  *         return exp(value)             # <<<<<<<<<<<<<<
@@ -17606,7 +17640,7 @@ static double __pyx_f_9src_files_6MyMath_6MyMath_lookup_exp(double __pyx_v_value
     __pyx_r = exp(__pyx_v_value);
     goto __pyx_L0;
 
-    /* "src_files/MyMath/MyMath.pyx":48
+    /* "src_files/MyMath/MyMath.pyx":53
  * @cython.wraparound(False)
  * cdef double lookup_exp(double value) noexcept nogil:
  *     if value >= LOOKUP_EXP_BOUNDS or value <= -LOOKUP_EXP_BOUNDS:             # <<<<<<<<<<<<<<
@@ -17615,7 +17649,7 @@ static double __pyx_f_9src_files_6MyMath_6MyMath_lookup_exp(double __pyx_v_value
  */
   }
 
-  /* "src_files/MyMath/MyMath.pyx":51
+  /* "src_files/MyMath/MyMath.pyx":56
  *         return exp(value)
  *     else:
  *         return lookup_exp_array[<int>(value / LOOKUP_EXP_RESOLUTION + exp_lookup_shift + 0.5)]             # <<<<<<<<<<<<<<
@@ -17623,7 +17657,7 @@ static double __pyx_f_9src_files_6MyMath_6MyMath_lookup_exp(double __pyx_v_value
  * @cython.boundscheck(False)
  */
   /*else*/ {
-    if (unlikely(!__pyx_v_9src_files_6MyMath_6MyMath_lookup_exp_array.memview)) { __Pyx_RaiseUnboundMemoryviewSliceNogil("lookup_exp_array"); __PYX_ERR(0, 51, __pyx_L1_error) }
+    if (unlikely(!__pyx_v_9src_files_6MyMath_6MyMath_lookup_exp_array.memview)) { __Pyx_RaiseUnboundMemoryviewSliceNogil("lookup_exp_array"); __PYX_ERR(0, 56, __pyx_L1_error) }
     if (unlikely(__pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_EXP_RESOLUTION == 0)) {
       #ifdef WITH_THREAD
       PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
@@ -17632,14 +17666,14 @@ static double __pyx_f_9src_files_6MyMath_6MyMath_lookup_exp(double __pyx_v_value
       #ifdef WITH_THREAD
       __Pyx_PyGILState_Release(__pyx_gilstate_save);
       #endif
-      __PYX_ERR(0, 51, __pyx_L1_error)
+      __PYX_ERR(0, 56, __pyx_L1_error)
     }
     __pyx_t_3 = ((int)(((__pyx_v_value / __pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_EXP_RESOLUTION) + __pyx_v_9src_files_6MyMath_6MyMath_exp_lookup_shift) + 0.5));
     __pyx_r = (*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_9src_files_6MyMath_6MyMath_lookup_exp_array.data) + __pyx_t_3)) )));
     goto __pyx_L0;
   }
 
-  /* "src_files/MyMath/MyMath.pyx":47
+  /* "src_files/MyMath/MyMath.pyx":52
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef double lookup_exp(double value) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -17661,7 +17695,130 @@ static double __pyx_f_9src_files_6MyMath_6MyMath_lookup_exp(double __pyx_v_value
   return __pyx_r;
 }
 
-/* "src_files/MyMath/MyMath.pyx":55
+/* "src_files/MyMath/MyMath.pyx":60
+ * @cython.boundscheck(False)
+ * @cython.wraparound(False)
+ * cdef double lookup_ln(double value) noexcept nogil:             # <<<<<<<<<<<<<<
+ *     if value <= 0:
+ *         return -1000
+ */
+
+static double __pyx_f_9src_files_6MyMath_6MyMath_lookup_ln(double __pyx_v_value) {
+  double __pyx_r;
+  int __pyx_t_1;
+  Py_ssize_t __pyx_t_2;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  #ifdef WITH_THREAD
+  PyGILState_STATE __pyx_gilstate_save;
+  #endif
+
+  /* "src_files/MyMath/MyMath.pyx":61
+ * @cython.wraparound(False)
+ * cdef double lookup_ln(double value) noexcept nogil:
+ *     if value <= 0:             # <<<<<<<<<<<<<<
+ *         return -1000
+ *     elif value >= LOOKUP_LN_BOUNDS:
+ */
+  __pyx_t_1 = (__pyx_v_value <= 0.0);
+  if (__pyx_t_1) {
+
+    /* "src_files/MyMath/MyMath.pyx":62
+ * cdef double lookup_ln(double value) noexcept nogil:
+ *     if value <= 0:
+ *         return -1000             # <<<<<<<<<<<<<<
+ *     elif value >= LOOKUP_LN_BOUNDS:
+ *         return log(value)
+ */
+    __pyx_r = -1000.0;
+    goto __pyx_L0;
+
+    /* "src_files/MyMath/MyMath.pyx":61
+ * @cython.wraparound(False)
+ * cdef double lookup_ln(double value) noexcept nogil:
+ *     if value <= 0:             # <<<<<<<<<<<<<<
+ *         return -1000
+ *     elif value >= LOOKUP_LN_BOUNDS:
+ */
+  }
+
+  /* "src_files/MyMath/MyMath.pyx":63
+ *     if value <= 0:
+ *         return -1000
+ *     elif value >= LOOKUP_LN_BOUNDS:             # <<<<<<<<<<<<<<
+ *         return log(value)
+ *     else:
+ */
+  __pyx_t_1 = (__pyx_v_value >= __pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_LN_BOUNDS);
+  if (__pyx_t_1) {
+
+    /* "src_files/MyMath/MyMath.pyx":64
+ *         return -1000
+ *     elif value >= LOOKUP_LN_BOUNDS:
+ *         return log(value)             # <<<<<<<<<<<<<<
+ *     else:
+ *         return lookup_ln_array[<int>(value / LOOKUP_LN_RESOLUTION + 0.5)]
+ */
+    __pyx_r = log(__pyx_v_value);
+    goto __pyx_L0;
+
+    /* "src_files/MyMath/MyMath.pyx":63
+ *     if value <= 0:
+ *         return -1000
+ *     elif value >= LOOKUP_LN_BOUNDS:             # <<<<<<<<<<<<<<
+ *         return log(value)
+ *     else:
+ */
+  }
+
+  /* "src_files/MyMath/MyMath.pyx":66
+ *         return log(value)
+ *     else:
+ *         return lookup_ln_array[<int>(value / LOOKUP_LN_RESOLUTION + 0.5)]             # <<<<<<<<<<<<<<
+ * 
+ * @cython.boundscheck(False)
+ */
+  /*else*/ {
+    if (unlikely(!__pyx_v_9src_files_6MyMath_6MyMath_lookup_ln_array.memview)) { __Pyx_RaiseUnboundMemoryviewSliceNogil("lookup_ln_array"); __PYX_ERR(0, 66, __pyx_L1_error) }
+    if (unlikely(__pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_LN_RESOLUTION == 0)) {
+      #ifdef WITH_THREAD
+      PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+      #endif
+      PyErr_SetString(PyExc_ZeroDivisionError, "float division");
+      #ifdef WITH_THREAD
+      __Pyx_PyGILState_Release(__pyx_gilstate_save);
+      #endif
+      __PYX_ERR(0, 66, __pyx_L1_error)
+    }
+    __pyx_t_2 = ((int)((__pyx_v_value / __pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_LN_RESOLUTION) + 0.5));
+    __pyx_r = (*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_9src_files_6MyMath_6MyMath_lookup_ln_array.data) + __pyx_t_2)) )));
+    goto __pyx_L0;
+  }
+
+  /* "src_files/MyMath/MyMath.pyx":60
+ * @cython.boundscheck(False)
+ * @cython.wraparound(False)
+ * cdef double lookup_ln(double value) noexcept nogil:             # <<<<<<<<<<<<<<
+ *     if value <= 0:
+ *         return -1000
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  #ifdef WITH_THREAD
+  __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+  #endif
+  __Pyx_WriteUnraisable("src_files.MyMath.MyMath.lookup_ln", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __pyx_r = 0;
+  #ifdef WITH_THREAD
+  __Pyx_PyGILState_Release(__pyx_gilstate_save);
+  #endif
+  __pyx_L0:;
+  return __pyx_r;
+}
+
+/* "src_files/MyMath/MyMath.pyx":70
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef inline double degree_sin(double degree) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -17679,7 +17836,7 @@ static CYTHON_INLINE double __pyx_f_9src_files_6MyMath_6MyMath_degree_sin(double
   PyGILState_STATE __pyx_gilstate_save;
   #endif
 
-  /* "src_files/MyMath/MyMath.pyx":61
+  /* "src_files/MyMath/MyMath.pyx":76
  *     I do not check the input range because of performance!
  *     """
  *     degree = degree % 360             # <<<<<<<<<<<<<<
@@ -17688,14 +17845,14 @@ static CYTHON_INLINE double __pyx_f_9src_files_6MyMath_6MyMath_degree_sin(double
  */
   __pyx_v_degree = __Pyx_mod_double(__pyx_v_degree, 360.0);
 
-  /* "src_files/MyMath/MyMath.pyx":62
+  /* "src_files/MyMath/MyMath.pyx":77
  *     """
  *     degree = degree % 360
  *     return lookup_sin_degrees[<int>(degree / LOOKUP_DEGREE_RESOLUTION + 0.5)]             # <<<<<<<<<<<<<<
  * 
  * @cython.boundscheck(False)
  */
-  if (unlikely(!__pyx_v_9src_files_6MyMath_6MyMath_lookup_sin_degrees.memview)) { __Pyx_RaiseUnboundMemoryviewSliceNogil("lookup_sin_degrees"); __PYX_ERR(0, 62, __pyx_L1_error) }
+  if (unlikely(!__pyx_v_9src_files_6MyMath_6MyMath_lookup_sin_degrees.memview)) { __Pyx_RaiseUnboundMemoryviewSliceNogil("lookup_sin_degrees"); __PYX_ERR(0, 77, __pyx_L1_error) }
   if (unlikely(__pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_DEGREE_RESOLUTION == 0)) {
     #ifdef WITH_THREAD
     PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
@@ -17704,13 +17861,13 @@ static CYTHON_INLINE double __pyx_f_9src_files_6MyMath_6MyMath_degree_sin(double
     #ifdef WITH_THREAD
     __Pyx_PyGILState_Release(__pyx_gilstate_save);
     #endif
-    __PYX_ERR(0, 62, __pyx_L1_error)
+    __PYX_ERR(0, 77, __pyx_L1_error)
   }
   __pyx_t_1 = ((int)((__pyx_v_degree / __pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_DEGREE_RESOLUTION) + 0.5));
   __pyx_r = (*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_9src_files_6MyMath_6MyMath_lookup_sin_degrees.data) + __pyx_t_1)) )));
   goto __pyx_L0;
 
-  /* "src_files/MyMath/MyMath.pyx":55
+  /* "src_files/MyMath/MyMath.pyx":70
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef inline double degree_sin(double degree) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -17732,7 +17889,7 @@ static CYTHON_INLINE double __pyx_f_9src_files_6MyMath_6MyMath_degree_sin(double
   return __pyx_r;
 }
 
-/* "src_files/MyMath/MyMath.pyx":66
+/* "src_files/MyMath/MyMath.pyx":81
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef inline double degree_cos(double degree) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -17750,7 +17907,7 @@ static CYTHON_INLINE double __pyx_f_9src_files_6MyMath_6MyMath_degree_cos(double
   PyGILState_STATE __pyx_gilstate_save;
   #endif
 
-  /* "src_files/MyMath/MyMath.pyx":72
+  /* "src_files/MyMath/MyMath.pyx":87
  *     I do not check the input range because of performance!
  *     """
  *     degree = degree % 360             # <<<<<<<<<<<<<<
@@ -17759,14 +17916,14 @@ static CYTHON_INLINE double __pyx_f_9src_files_6MyMath_6MyMath_degree_cos(double
  */
   __pyx_v_degree = __Pyx_mod_double(__pyx_v_degree, 360.0);
 
-  /* "src_files/MyMath/MyMath.pyx":73
+  /* "src_files/MyMath/MyMath.pyx":88
  *     """
  *     degree = degree % 360
  *     return lookup_cos_degrees[<int>(degree / LOOKUP_DEGREE_RESOLUTION + 0.5)]             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  if (unlikely(!__pyx_v_9src_files_6MyMath_6MyMath_lookup_cos_degrees.memview)) { __Pyx_RaiseUnboundMemoryviewSliceNogil("lookup_cos_degrees"); __PYX_ERR(0, 73, __pyx_L1_error) }
+  if (unlikely(!__pyx_v_9src_files_6MyMath_6MyMath_lookup_cos_degrees.memview)) { __Pyx_RaiseUnboundMemoryviewSliceNogil("lookup_cos_degrees"); __PYX_ERR(0, 88, __pyx_L1_error) }
   if (unlikely(__pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_DEGREE_RESOLUTION == 0)) {
     #ifdef WITH_THREAD
     PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
@@ -17775,13 +17932,13 @@ static CYTHON_INLINE double __pyx_f_9src_files_6MyMath_6MyMath_degree_cos(double
     #ifdef WITH_THREAD
     __Pyx_PyGILState_Release(__pyx_gilstate_save);
     #endif
-    __PYX_ERR(0, 73, __pyx_L1_error)
+    __PYX_ERR(0, 88, __pyx_L1_error)
   }
   __pyx_t_1 = ((int)((__pyx_v_degree / __pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_DEGREE_RESOLUTION) + 0.5));
   __pyx_r = (*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_9src_files_6MyMath_6MyMath_lookup_cos_degrees.data) + __pyx_t_1)) )));
   goto __pyx_L0;
 
-  /* "src_files/MyMath/MyMath.pyx":66
+  /* "src_files/MyMath/MyMath.pyx":81
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef inline double degree_cos(double degree) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -17803,7 +17960,7 @@ static CYTHON_INLINE double __pyx_f_9src_files_6MyMath_6MyMath_degree_cos(double
   return __pyx_r;
 }
 
-/* "src_files/MyMath/MyMath.pyx":76
+/* "src_files/MyMath/MyMath.pyx":91
  * 
  * 
  * cdef inline int round_to_int(double value) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -17814,7 +17971,7 @@ static CYTHON_INLINE double __pyx_f_9src_files_6MyMath_6MyMath_degree_cos(double
 static CYTHON_INLINE int __pyx_f_9src_files_6MyMath_6MyMath_round_to_int(double __pyx_v_value) {
   int __pyx_r;
 
-  /* "src_files/MyMath/MyMath.pyx":80
+  /* "src_files/MyMath/MyMath.pyx":95
  *     Round the given value to the nearest integer.
  *     """
  *     return <int>(value + 0.5)             # <<<<<<<<<<<<<<
@@ -17824,7 +17981,7 @@ static CYTHON_INLINE int __pyx_f_9src_files_6MyMath_6MyMath_round_to_int(double 
   __pyx_r = ((int)(__pyx_v_value + 0.5));
   goto __pyx_L0;
 
-  /* "src_files/MyMath/MyMath.pyx":76
+  /* "src_files/MyMath/MyMath.pyx":91
  * 
  * 
  * cdef inline int round_to_int(double value) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -17837,7 +17994,7 @@ static CYTHON_INLINE int __pyx_f_9src_files_6MyMath_6MyMath_round_to_int(double 
   return __pyx_r;
 }
 
-/* "src_files/MyMath/MyMath.pyx":84
+/* "src_files/MyMath/MyMath.pyx":99
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef inline double lookup_normal_distribution(double value) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -17855,14 +18012,14 @@ static CYTHON_INLINE double __pyx_f_9src_files_6MyMath_6MyMath_lookup_normal_dis
   PyGILState_STATE __pyx_gilstate_save;
   #endif
 
-  /* "src_files/MyMath/MyMath.pyx":89
+  /* "src_files/MyMath/MyMath.pyx":104
  *     :param value: double in range [0, 1)
  *     """
  *     return lookup_normal_distribution_array[<int>(value / LOOKUP_NORMAL_DISTRIBUTION_RESOLUTION)]             # <<<<<<<<<<<<<<
  * 
- * @cython.boundscheck(False)
+ * cdef inline double tanh(double value) noexcept nogil:
  */
-  if (unlikely(!__pyx_v_9src_files_6MyMath_6MyMath_lookup_normal_distribution_array.memview)) { __Pyx_RaiseUnboundMemoryviewSliceNogil("lookup_normal_distribution_array"); __PYX_ERR(0, 89, __pyx_L1_error) }
+  if (unlikely(!__pyx_v_9src_files_6MyMath_6MyMath_lookup_normal_distribution_array.memview)) { __Pyx_RaiseUnboundMemoryviewSliceNogil("lookup_normal_distribution_array"); __PYX_ERR(0, 104, __pyx_L1_error) }
   if (unlikely(__pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_NORMAL_DISTRIBUTION_RESOLUTION == 0)) {
     #ifdef WITH_THREAD
     PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
@@ -17871,13 +18028,13 @@ static CYTHON_INLINE double __pyx_f_9src_files_6MyMath_6MyMath_lookup_normal_dis
     #ifdef WITH_THREAD
     __Pyx_PyGILState_Release(__pyx_gilstate_save);
     #endif
-    __PYX_ERR(0, 89, __pyx_L1_error)
+    __PYX_ERR(0, 104, __pyx_L1_error)
   }
   __pyx_t_1 = ((int)(__pyx_v_value / __pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_NORMAL_DISTRIBUTION_RESOLUTION));
   __pyx_r = (*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_9src_files_6MyMath_6MyMath_lookup_normal_distribution_array.data) + __pyx_t_1)) )));
   goto __pyx_L0;
 
-  /* "src_files/MyMath/MyMath.pyx":84
+  /* "src_files/MyMath/MyMath.pyx":99
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef inline double lookup_normal_distribution(double value) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -17899,8 +18056,142 @@ static CYTHON_INLINE double __pyx_f_9src_files_6MyMath_6MyMath_lookup_normal_dis
   return __pyx_r;
 }
 
-/* "src_files/MyMath/MyMath.pyx":91
+/* "src_files/MyMath/MyMath.pyx":106
  *     return lookup_normal_distribution_array[<int>(value / LOOKUP_NORMAL_DISTRIBUTION_RESOLUTION)]
+ * 
+ * cdef inline double tanh(double value) noexcept nogil:             # <<<<<<<<<<<<<<
+ *     """
+ *     Return the hyperbolic tangent of the given value.
+ */
+
+static CYTHON_INLINE double __pyx_f_9src_files_6MyMath_6MyMath_tanh(double __pyx_v_value) {
+  double __pyx_v_exp_2x;
+  double __pyx_r;
+  double __pyx_t_1;
+  double __pyx_t_2;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  #ifdef WITH_THREAD
+  PyGILState_STATE __pyx_gilstate_save;
+  #endif
+
+  /* "src_files/MyMath/MyMath.pyx":110
+ *     Return the hyperbolic tangent of the given value.
+ *     """
+ *     cdef double exp_2x = lookup_exp(2.0 * value)             # <<<<<<<<<<<<<<
+ *     return (exp_2x - 1.0) / (exp_2x + 1.0)
+ * 
+ */
+  __pyx_v_exp_2x = __pyx_f_9src_files_6MyMath_6MyMath_lookup_exp((2.0 * __pyx_v_value));
+
+  /* "src_files/MyMath/MyMath.pyx":111
+ *     """
+ *     cdef double exp_2x = lookup_exp(2.0 * value)
+ *     return (exp_2x - 1.0) / (exp_2x + 1.0)             # <<<<<<<<<<<<<<
+ * 
+ * cdef inline double sigmoid(double value) noexcept nogil:
+ */
+  __pyx_t_1 = (__pyx_v_exp_2x - 1.0);
+  __pyx_t_2 = (__pyx_v_exp_2x + 1.0);
+  if (unlikely(__pyx_t_2 == 0)) {
+    #ifdef WITH_THREAD
+    PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+    #endif
+    PyErr_SetString(PyExc_ZeroDivisionError, "float division");
+    #ifdef WITH_THREAD
+    __Pyx_PyGILState_Release(__pyx_gilstate_save);
+    #endif
+    __PYX_ERR(0, 111, __pyx_L1_error)
+  }
+  __pyx_r = (__pyx_t_1 / __pyx_t_2);
+  goto __pyx_L0;
+
+  /* "src_files/MyMath/MyMath.pyx":106
+ *     return lookup_normal_distribution_array[<int>(value / LOOKUP_NORMAL_DISTRIBUTION_RESOLUTION)]
+ * 
+ * cdef inline double tanh(double value) noexcept nogil:             # <<<<<<<<<<<<<<
+ *     """
+ *     Return the hyperbolic tangent of the given value.
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  #ifdef WITH_THREAD
+  __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+  #endif
+  __Pyx_WriteUnraisable("src_files.MyMath.MyMath.tanh", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __pyx_r = 0;
+  #ifdef WITH_THREAD
+  __Pyx_PyGILState_Release(__pyx_gilstate_save);
+  #endif
+  __pyx_L0:;
+  return __pyx_r;
+}
+
+/* "src_files/MyMath/MyMath.pyx":113
+ *     return (exp_2x - 1.0) / (exp_2x + 1.0)
+ * 
+ * cdef inline double sigmoid(double value) noexcept nogil:             # <<<<<<<<<<<<<<
+ *     """
+ *     Return the sigmoid of the given value.
+ */
+
+static CYTHON_INLINE double __pyx_f_9src_files_6MyMath_6MyMath_sigmoid(double __pyx_v_value) {
+  double __pyx_r;
+  double __pyx_t_1;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  #ifdef WITH_THREAD
+  PyGILState_STATE __pyx_gilstate_save;
+  #endif
+
+  /* "src_files/MyMath/MyMath.pyx":117
+ *     Return the sigmoid of the given value.
+ *     """
+ *     return 1.0 / (1.0 + lookup_exp(-value))             # <<<<<<<<<<<<<<
+ * 
+ * @cython.boundscheck(False)
+ */
+  __pyx_t_1 = (1.0 + __pyx_f_9src_files_6MyMath_6MyMath_lookup_exp((-__pyx_v_value)));
+  if (unlikely(__pyx_t_1 == 0)) {
+    #ifdef WITH_THREAD
+    PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+    #endif
+    PyErr_SetString(PyExc_ZeroDivisionError, "float division");
+    #ifdef WITH_THREAD
+    __Pyx_PyGILState_Release(__pyx_gilstate_save);
+    #endif
+    __PYX_ERR(0, 117, __pyx_L1_error)
+  }
+  __pyx_r = (1.0 / __pyx_t_1);
+  goto __pyx_L0;
+
+  /* "src_files/MyMath/MyMath.pyx":113
+ *     return (exp_2x - 1.0) / (exp_2x + 1.0)
+ * 
+ * cdef inline double sigmoid(double value) noexcept nogil:             # <<<<<<<<<<<<<<
+ *     """
+ *     Return the sigmoid of the given value.
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  #ifdef WITH_THREAD
+  __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+  #endif
+  __Pyx_WriteUnraisable("src_files.MyMath.MyMath.sigmoid", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __pyx_r = 0;
+  #ifdef WITH_THREAD
+  __Pyx_PyGILState_Release(__pyx_gilstate_save);
+  #endif
+  __pyx_L0:;
+  return __pyx_r;
+}
+
+/* "src_files/MyMath/MyMath.pyx":119
+ *     return 1.0 / (1.0 + lookup_exp(-value))
  * 
  * @cython.boundscheck(False)             # <<<<<<<<<<<<<<
  * @cython.wraparound(False)
@@ -17915,7 +18206,7 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-PyDoc_STRVAR(__pyx_doc_9src_files_6MyMath_6MyMath_mutate_array_scaled, "\n    Mutate the given array by adding random values to each element. Works in place.\n    algorithm:\n\n    for value in array_modified:\n        scale_here = scale\n        if abs(value) > treshold:\n            scale_here *= abs(value)\n        else:\n            scale_here *= treshold\n        value += lookup_normal_distribution(uniform(0, 1)) * scale_here\n\n    Random values are taken from numpy, so one can take care of seed globally.\n\n    :param array_modified: 1d or 2d numpy array, modified in place, float32\n    :param scale: basic scale, like sigma of normal distribution, scales everything, e.g. 0.1\n    :param threshold: threshold for scaling, if value is bigger than threshold, scale is multiplied by value, else by threshold\n    :return: None, modifies the array in place\n    ");
+PyDoc_STRVAR(__pyx_doc_9src_files_6MyMath_6MyMath_mutate_array_scaled, "\n    Mutate the given array by adding random values to each element. Works in place.\n    Random values are taken from numpy, so one can take care of seed globally.\n\n    :param array_modified: 1d or 2d numpy array, modified in place, float32\n    :param scale: basic scale, like sigma of normal distribution, scales everything, e.g. 0.1\n    :param threshold: threshold for scaling, if value is bigger than threshold, scale is multiplied by value, else by threshold\n    :return: None, modifies the array in place\n    ");
 static PyMethodDef __pyx_mdef_9src_files_6MyMath_6MyMath_1mutate_array_scaled = {"mutate_array_scaled", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9src_files_6MyMath_6MyMath_1mutate_array_scaled, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_9src_files_6MyMath_6MyMath_mutate_array_scaled};
 static PyObject *__pyx_pw_9src_files_6MyMath_6MyMath_1mutate_array_scaled(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
@@ -17967,7 +18258,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[0]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 91, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 119, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
         CYTHON_FALLTHROUGH;
         case  1:
@@ -17975,9 +18266,9 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[1]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 91, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 119, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("mutate_array_scaled", 1, 3, 3, 1); __PYX_ERR(0, 91, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("mutate_array_scaled", 1, 3, 3, 1); __PYX_ERR(0, 119, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
@@ -17985,14 +18276,14 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[2]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 91, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 119, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("mutate_array_scaled", 1, 3, 3, 2); __PYX_ERR(0, 91, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("mutate_array_scaled", 1, 3, 3, 2); __PYX_ERR(0, 119, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "mutate_array_scaled") < 0)) __PYX_ERR(0, 91, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "mutate_array_scaled") < 0)) __PYX_ERR(0, 119, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 3)) {
       goto __pyx_L5_argtuple_error;
@@ -18002,12 +18293,12 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       values[2] = __Pyx_Arg_FASTCALL(__pyx_args, 2);
     }
     __pyx_v_array_modified = values[0];
-    __pyx_v_scale = __pyx_PyFloat_AsDouble(values[1]); if (unlikely((__pyx_v_scale == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 93, __pyx_L3_error)
-    __pyx_v_threshold = __pyx_PyFloat_AsDouble(values[2]); if (unlikely((__pyx_v_threshold == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 93, __pyx_L3_error)
+    __pyx_v_scale = __pyx_PyFloat_AsDouble(values[1]); if (unlikely((__pyx_v_scale == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 121, __pyx_L3_error)
+    __pyx_v_threshold = __pyx_PyFloat_AsDouble(values[2]); if (unlikely((__pyx_v_threshold == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 121, __pyx_L3_error)
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("mutate_array_scaled", 1, 3, 3, __pyx_nargs); __PYX_ERR(0, 91, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("mutate_array_scaled", 1, 3, 3, __pyx_nargs); __PYX_ERR(0, 119, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -18042,6 +18333,9 @@ static PyObject *__pyx_pf_9src_files_6MyMath_6MyMath_mutate_array_scaled(CYTHON_
   int __pyx_v_rows;
   int __pyx_v_cols;
   double __pyx_v_scale_here;
+  double __pyx_v_mean;
+  double __pyx_v_std_dev;
+  double __pyx_v_c_scale;
   double __pyx_v_threshold_here;
   double __pyx_v_tmp_modified_value;
   PyObject *__pyx_r = NULL;
@@ -18069,71 +18363,80 @@ static PyObject *__pyx_pf_9src_files_6MyMath_6MyMath_mutate_array_scaled(CYTHON_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("mutate_array_scaled", 1);
 
-  /* "src_files/MyMath/MyMath.pyx":121
- *     cdef int cols
- *     cdef double scale_here
+  /* "src_files/MyMath/MyMath.pyx":141
+ *     cdef double mean
+ *     cdef double std_dev
+ *     cdef double c_scale = scale             # <<<<<<<<<<<<<<
+ *     cdef double threshold_here = threshold
+ *     cdef double tmp_modified_value
+ */
+  __pyx_v_c_scale = __pyx_v_scale;
+
+  /* "src_files/MyMath/MyMath.pyx":142
+ *     cdef double std_dev
+ *     cdef double c_scale = scale
  *     cdef double threshold_here = threshold             # <<<<<<<<<<<<<<
  *     cdef double tmp_modified_value
  * 
  */
   __pyx_v_threshold_here = __pyx_v_threshold;
 
-  /* "src_files/MyMath/MyMath.pyx":124
+  /* "src_files/MyMath/MyMath.pyx":145
  *     cdef double tmp_modified_value
  * 
  *     if len(array_modified.shape) == 1:             # <<<<<<<<<<<<<<
  *         array_modified_view = array_modified[None, :]
  *         random_values = np.random.uniform(0, 1, (1, array_modified.shape[0]))
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_array_modified, __pyx_n_s_shape); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 124, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_array_modified, __pyx_n_s_shape); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 145, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyObject_Length(__pyx_t_1); if (unlikely(__pyx_t_2 == ((Py_ssize_t)-1))) __PYX_ERR(0, 124, __pyx_L1_error)
+  __pyx_t_2 = PyObject_Length(__pyx_t_1); if (unlikely(__pyx_t_2 == ((Py_ssize_t)-1))) __PYX_ERR(0, 145, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_3 = (__pyx_t_2 == 1);
   if (__pyx_t_3) {
 
-    /* "src_files/MyMath/MyMath.pyx":125
+    /* "src_files/MyMath/MyMath.pyx":146
  * 
  *     if len(array_modified.shape) == 1:
  *         array_modified_view = array_modified[None, :]             # <<<<<<<<<<<<<<
  *         random_values = np.random.uniform(0, 1, (1, array_modified.shape[0]))
  *     else:
  */
-    __pyx_t_1 = __Pyx_PyObject_GetItem(__pyx_v_array_modified, __pyx_tuple__9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 125, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_GetItem(__pyx_v_array_modified, __pyx_tuple__9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 146, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_4 = __Pyx_PyObject_to_MemoryviewSlice_d_dc_float(__pyx_t_1, PyBUF_WRITABLE); if (unlikely(!__pyx_t_4.memview)) __PYX_ERR(0, 125, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_to_MemoryviewSlice_d_dc_float(__pyx_t_1, PyBUF_WRITABLE); if (unlikely(!__pyx_t_4.memview)) __PYX_ERR(0, 146, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __pyx_v_array_modified_view = __pyx_t_4;
     __pyx_t_4.memview = NULL;
     __pyx_t_4.data = NULL;
 
-    /* "src_files/MyMath/MyMath.pyx":126
+    /* "src_files/MyMath/MyMath.pyx":147
  *     if len(array_modified.shape) == 1:
  *         array_modified_view = array_modified[None, :]
  *         random_values = np.random.uniform(0, 1, (1, array_modified.shape[0]))             # <<<<<<<<<<<<<<
  *     else:
  *         array_modified_view = array_modified
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 126, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 147, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_random); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 126, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_random); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 147, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_uniform); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 126, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_uniform); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 147, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_array_modified, __pyx_n_s_shape); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 126, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_array_modified, __pyx_n_s_shape); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 147, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_7 = __Pyx_GetItemInt(__pyx_t_6, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 126, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_GetItemInt(__pyx_t_6, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 147, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 126, __pyx_L1_error)
+    __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 147, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_INCREF(__pyx_int_1);
     __Pyx_GIVEREF(__pyx_int_1);
-    if (__Pyx_PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_int_1)) __PYX_ERR(0, 126, __pyx_L1_error);
+    if (__Pyx_PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_int_1)) __PYX_ERR(0, 147, __pyx_L1_error);
     __Pyx_GIVEREF(__pyx_t_7);
-    if (__Pyx_PyTuple_SET_ITEM(__pyx_t_6, 1, __pyx_t_7)) __PYX_ERR(0, 126, __pyx_L1_error);
+    if (__Pyx_PyTuple_SET_ITEM(__pyx_t_6, 1, __pyx_t_7)) __PYX_ERR(0, 147, __pyx_L1_error);
     __pyx_t_7 = 0;
     __pyx_t_7 = NULL;
     __pyx_t_8 = 0;
@@ -18154,17 +18457,17 @@ static PyObject *__pyx_pf_9src_files_6MyMath_6MyMath_mutate_array_scaled(CYTHON_
       __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_5, __pyx_callargs+1-__pyx_t_8, 3+__pyx_t_8);
       __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 126, __pyx_L1_error)
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 147, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     }
-    __pyx_t_9 = __Pyx_PyObject_to_MemoryviewSlice_d_dc_double(__pyx_t_1, PyBUF_WRITABLE); if (unlikely(!__pyx_t_9.memview)) __PYX_ERR(0, 126, __pyx_L1_error)
+    __pyx_t_9 = __Pyx_PyObject_to_MemoryviewSlice_d_dc_double(__pyx_t_1, PyBUF_WRITABLE); if (unlikely(!__pyx_t_9.memview)) __PYX_ERR(0, 147, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __pyx_v_random_values = __pyx_t_9;
     __pyx_t_9.memview = NULL;
     __pyx_t_9.data = NULL;
 
-    /* "src_files/MyMath/MyMath.pyx":124
+    /* "src_files/MyMath/MyMath.pyx":145
  *     cdef double tmp_modified_value
  * 
  *     if len(array_modified.shape) == 1:             # <<<<<<<<<<<<<<
@@ -18174,7 +18477,7 @@ static PyObject *__pyx_pf_9src_files_6MyMath_6MyMath_mutate_array_scaled(CYTHON_
     goto __pyx_L3;
   }
 
-  /* "src_files/MyMath/MyMath.pyx":128
+  /* "src_files/MyMath/MyMath.pyx":149
  *         random_values = np.random.uniform(0, 1, (1, array_modified.shape[0]))
  *     else:
  *         array_modified_view = array_modified             # <<<<<<<<<<<<<<
@@ -18182,27 +18485,27 @@ static PyObject *__pyx_pf_9src_files_6MyMath_6MyMath_mutate_array_scaled(CYTHON_
  *     rows = array_modified_view.shape[0]
  */
   /*else*/ {
-    __pyx_t_4 = __Pyx_PyObject_to_MemoryviewSlice_d_dc_float(__pyx_v_array_modified, PyBUF_WRITABLE); if (unlikely(!__pyx_t_4.memview)) __PYX_ERR(0, 128, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_to_MemoryviewSlice_d_dc_float(__pyx_v_array_modified, PyBUF_WRITABLE); if (unlikely(!__pyx_t_4.memview)) __PYX_ERR(0, 149, __pyx_L1_error)
     __pyx_v_array_modified_view = __pyx_t_4;
     __pyx_t_4.memview = NULL;
     __pyx_t_4.data = NULL;
 
-    /* "src_files/MyMath/MyMath.pyx":129
+    /* "src_files/MyMath/MyMath.pyx":150
  *     else:
  *         array_modified_view = array_modified
  *         random_values = np.random.uniform(0, 1, array_modified.shape)             # <<<<<<<<<<<<<<
  *     rows = array_modified_view.shape[0]
  *     cols = array_modified_view.shape[1]
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 129, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 150, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_random); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 129, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_random); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 150, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_uniform); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 129, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_uniform); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 150, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_array_modified, __pyx_n_s_shape); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 129, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_array_modified, __pyx_n_s_shape); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 150, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __pyx_t_7 = NULL;
     __pyx_t_8 = 0;
@@ -18223,11 +18526,11 @@ static PyObject *__pyx_pf_9src_files_6MyMath_6MyMath_mutate_array_scaled(CYTHON_
       __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_5, __pyx_callargs+1-__pyx_t_8, 3+__pyx_t_8);
       __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 129, __pyx_L1_error)
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 150, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     }
-    __pyx_t_9 = __Pyx_PyObject_to_MemoryviewSlice_d_dc_double(__pyx_t_1, PyBUF_WRITABLE); if (unlikely(!__pyx_t_9.memview)) __PYX_ERR(0, 129, __pyx_L1_error)
+    __pyx_t_9 = __Pyx_PyObject_to_MemoryviewSlice_d_dc_double(__pyx_t_1, PyBUF_WRITABLE); if (unlikely(!__pyx_t_9.memview)) __PYX_ERR(0, 150, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __pyx_v_random_values = __pyx_t_9;
     __pyx_t_9.memview = NULL;
@@ -18235,7 +18538,7 @@ static PyObject *__pyx_pf_9src_files_6MyMath_6MyMath_mutate_array_scaled(CYTHON_
   }
   __pyx_L3:;
 
-  /* "src_files/MyMath/MyMath.pyx":130
+  /* "src_files/MyMath/MyMath.pyx":151
  *         array_modified_view = array_modified
  *         random_values = np.random.uniform(0, 1, array_modified.shape)
  *     rows = array_modified_view.shape[0]             # <<<<<<<<<<<<<<
@@ -18244,7 +18547,7 @@ static PyObject *__pyx_pf_9src_files_6MyMath_6MyMath_mutate_array_scaled(CYTHON_
  */
   __pyx_v_rows = (__pyx_v_array_modified_view.shape[0]);
 
-  /* "src_files/MyMath/MyMath.pyx":131
+  /* "src_files/MyMath/MyMath.pyx":152
  *         random_values = np.random.uniform(0, 1, array_modified.shape)
  *     rows = array_modified_view.shape[0]
  *     cols = array_modified_view.shape[1]             # <<<<<<<<<<<<<<
@@ -18253,12 +18556,12 @@ static PyObject *__pyx_pf_9src_files_6MyMath_6MyMath_mutate_array_scaled(CYTHON_
  */
   __pyx_v_cols = (__pyx_v_array_modified_view.shape[1]);
 
-  /* "src_files/MyMath/MyMath.pyx":133
+  /* "src_files/MyMath/MyMath.pyx":154
  *     cols = array_modified_view.shape[1]
  * 
  *     with nogil:             # <<<<<<<<<<<<<<
- *         for i in range(rows):
- *             for j in range(cols):
+ *         for j in range(cols):
+ *             mean = 0.0
  */
   {
       #ifdef WITH_THREAD
@@ -18269,142 +18572,263 @@ static PyObject *__pyx_pf_9src_files_6MyMath_6MyMath_mutate_array_scaled(CYTHON_
       #endif
       /*try:*/ {
 
-        /* "src_files/MyMath/MyMath.pyx":134
+        /* "src_files/MyMath/MyMath.pyx":155
  * 
  *     with nogil:
- *         for i in range(rows):             # <<<<<<<<<<<<<<
- *             for j in range(cols):
- *                 tmp_modified_value = array_modified_view[i, j]
+ *         for j in range(cols):             # <<<<<<<<<<<<<<
+ *             mean = 0.0
+ *             std_dev = 0.0
  */
-        __pyx_t_8 = __pyx_v_rows;
+        __pyx_t_8 = __pyx_v_cols;
         __pyx_t_10 = __pyx_t_8;
         for (__pyx_t_11 = 0; __pyx_t_11 < __pyx_t_10; __pyx_t_11+=1) {
-          __pyx_v_i = __pyx_t_11;
+          __pyx_v_j = __pyx_t_11;
 
-          /* "src_files/MyMath/MyMath.pyx":135
+          /* "src_files/MyMath/MyMath.pyx":156
  *     with nogil:
- *         for i in range(rows):
- *             for j in range(cols):             # <<<<<<<<<<<<<<
- *                 tmp_modified_value = array_modified_view[i, j]
- *                 scale_here = scale
+ *         for j in range(cols):
+ *             mean = 0.0             # <<<<<<<<<<<<<<
+ *             std_dev = 0.0
+ *             for i in range(rows):
  */
-          __pyx_t_12 = __pyx_v_cols;
+          __pyx_v_mean = 0.0;
+
+          /* "src_files/MyMath/MyMath.pyx":157
+ *         for j in range(cols):
+ *             mean = 0.0
+ *             std_dev = 0.0             # <<<<<<<<<<<<<<
+ *             for i in range(rows):
+ *                 tmp_modified_value = array_modified_view[i, j]
+ */
+          __pyx_v_std_dev = 0.0;
+
+          /* "src_files/MyMath/MyMath.pyx":158
+ *             mean = 0.0
+ *             std_dev = 0.0
+ *             for i in range(rows):             # <<<<<<<<<<<<<<
+ *                 tmp_modified_value = array_modified_view[i, j]
+ *                 std_dev += tmp_modified_value**2
+ */
+          __pyx_t_12 = __pyx_v_rows;
           __pyx_t_13 = __pyx_t_12;
           for (__pyx_t_14 = 0; __pyx_t_14 < __pyx_t_13; __pyx_t_14+=1) {
-            __pyx_v_j = __pyx_t_14;
+            __pyx_v_i = __pyx_t_14;
 
-            /* "src_files/MyMath/MyMath.pyx":136
- *         for i in range(rows):
- *             for j in range(cols):
+            /* "src_files/MyMath/MyMath.pyx":159
+ *             std_dev = 0.0
+ *             for i in range(rows):
  *                 tmp_modified_value = array_modified_view[i, j]             # <<<<<<<<<<<<<<
- *                 scale_here = scale
- *                 if tmp_modified_value > threshold_here:
+ *                 std_dev += tmp_modified_value**2
+ *                 mean += tmp_modified_value
  */
             __pyx_t_15 = __pyx_v_i;
             __pyx_t_16 = __pyx_v_j;
             __pyx_v_tmp_modified_value = (*((float *) ( /* dim=1 */ ((char *) (((float *) ( /* dim=0 */ (__pyx_v_array_modified_view.data + __pyx_t_15 * __pyx_v_array_modified_view.strides[0]) )) + __pyx_t_16)) )));
 
-            /* "src_files/MyMath/MyMath.pyx":137
- *             for j in range(cols):
+            /* "src_files/MyMath/MyMath.pyx":160
+ *             for i in range(rows):
  *                 tmp_modified_value = array_modified_view[i, j]
- *                 scale_here = scale             # <<<<<<<<<<<<<<
- *                 if tmp_modified_value > threshold_here:
- *                     scale_here *= tmp_modified_value
+ *                 std_dev += tmp_modified_value**2             # <<<<<<<<<<<<<<
+ *                 mean += tmp_modified_value
+ *             mean /= rows
  */
-            __pyx_v_scale_here = __pyx_v_scale;
+            __pyx_v_std_dev = (__pyx_v_std_dev + pow(__pyx_v_tmp_modified_value, 2.0));
 
-            /* "src_files/MyMath/MyMath.pyx":138
+            /* "src_files/MyMath/MyMath.pyx":161
  *                 tmp_modified_value = array_modified_view[i, j]
- *                 scale_here = scale
- *                 if tmp_modified_value > threshold_here:             # <<<<<<<<<<<<<<
- *                     scale_here *= tmp_modified_value
- *                 elif tmp_modified_value < -threshold_here:
+ *                 std_dev += tmp_modified_value**2
+ *                 mean += tmp_modified_value             # <<<<<<<<<<<<<<
+ *             mean /= rows
+ *             std_dev = sqrt(std_dev / rows - mean**2)
  */
-            __pyx_t_3 = (__pyx_v_tmp_modified_value > __pyx_v_threshold_here);
-            if (__pyx_t_3) {
+            __pyx_v_mean = (__pyx_v_mean + __pyx_v_tmp_modified_value);
+          }
 
-              /* "src_files/MyMath/MyMath.pyx":139
- *                 scale_here = scale
- *                 if tmp_modified_value > threshold_here:
- *                     scale_here *= tmp_modified_value             # <<<<<<<<<<<<<<
- *                 elif tmp_modified_value < -threshold_here:
- *                     scale_here *= -tmp_modified_value
+          /* "src_files/MyMath/MyMath.pyx":162
+ *                 std_dev += tmp_modified_value**2
+ *                 mean += tmp_modified_value
+ *             mean /= rows             # <<<<<<<<<<<<<<
+ *             std_dev = sqrt(std_dev / rows - mean**2)
+ * 
  */
-              __pyx_v_scale_here = (__pyx_v_scale_here * __pyx_v_tmp_modified_value);
+          if (unlikely(__pyx_v_rows == 0)) {
+            #ifdef WITH_THREAD
+            PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+            #endif
+            PyErr_SetString(PyExc_ZeroDivisionError, "float division");
+            #ifdef WITH_THREAD
+            __Pyx_PyGILState_Release(__pyx_gilstate_save);
+            #endif
+            __PYX_ERR(0, 162, __pyx_L5_error)
+          }
+          __pyx_v_mean = (__pyx_v_mean / __pyx_v_rows);
 
-              /* "src_files/MyMath/MyMath.pyx":138
+          /* "src_files/MyMath/MyMath.pyx":163
+ *                 mean += tmp_modified_value
+ *             mean /= rows
+ *             std_dev = sqrt(std_dev / rows - mean**2)             # <<<<<<<<<<<<<<
+ * 
+ *             for i in range(rows):
+ */
+          if (unlikely(__pyx_v_rows == 0)) {
+            #ifdef WITH_THREAD
+            PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+            #endif
+            PyErr_SetString(PyExc_ZeroDivisionError, "float division");
+            #ifdef WITH_THREAD
+            __Pyx_PyGILState_Release(__pyx_gilstate_save);
+            #endif
+            __PYX_ERR(0, 163, __pyx_L5_error)
+          }
+          __pyx_v_std_dev = sqrt(((__pyx_v_std_dev / ((double)__pyx_v_rows)) - pow(__pyx_v_mean, 2.0)));
+
+          /* "src_files/MyMath/MyMath.pyx":165
+ *             std_dev = sqrt(std_dev / rows - mean**2)
+ * 
+ *             for i in range(rows):             # <<<<<<<<<<<<<<
  *                 tmp_modified_value = array_modified_view[i, j]
- *                 scale_here = scale
- *                 if tmp_modified_value > threshold_here:             # <<<<<<<<<<<<<<
- *                     scale_here *= tmp_modified_value
- *                 elif tmp_modified_value < -threshold_here:
- */
-              goto __pyx_L11;
-            }
-
-            /* "src_files/MyMath/MyMath.pyx":140
- *                 if tmp_modified_value > threshold_here:
- *                     scale_here *= tmp_modified_value
- *                 elif tmp_modified_value < -threshold_here:             # <<<<<<<<<<<<<<
- *                     scale_here *= -tmp_modified_value
- *                 else:
- */
-            __pyx_t_3 = (__pyx_v_tmp_modified_value < (-__pyx_v_threshold_here));
-            if (__pyx_t_3) {
-
-              /* "src_files/MyMath/MyMath.pyx":141
- *                     scale_here *= tmp_modified_value
- *                 elif tmp_modified_value < -threshold_here:
- *                     scale_here *= -tmp_modified_value             # <<<<<<<<<<<<<<
- *                 else:
- *                     scale_here *= threshold_here
- */
-              __pyx_v_scale_here = (__pyx_v_scale_here * (-__pyx_v_tmp_modified_value));
-
-              /* "src_files/MyMath/MyMath.pyx":140
- *                 if tmp_modified_value > threshold_here:
- *                     scale_here *= tmp_modified_value
- *                 elif tmp_modified_value < -threshold_here:             # <<<<<<<<<<<<<<
- *                     scale_here *= -tmp_modified_value
- *                 else:
- */
-              goto __pyx_L11;
-            }
-
-            /* "src_files/MyMath/MyMath.pyx":143
- *                     scale_here *= -tmp_modified_value
- *                 else:
- *                     scale_here *= threshold_here             # <<<<<<<<<<<<<<
  * 
- *                 array_modified_view[i, j] = tmp_modified_value + lookup_normal_distribution(random_values[i, j]) * scale_here
  */
-            /*else*/ {
-              __pyx_v_scale_here = (__pyx_v_scale_here * __pyx_v_threshold_here);
-            }
-            __pyx_L11:;
+          __pyx_t_12 = __pyx_v_rows;
+          __pyx_t_13 = __pyx_t_12;
+          for (__pyx_t_14 = 0; __pyx_t_14 < __pyx_t_13; __pyx_t_14+=1) {
+            __pyx_v_i = __pyx_t_14;
 
-            /* "src_files/MyMath/MyMath.pyx":145
- *                     scale_here *= threshold_here
+            /* "src_files/MyMath/MyMath.pyx":166
  * 
- *                 array_modified_view[i, j] = tmp_modified_value + lookup_normal_distribution(random_values[i, j]) * scale_here             # <<<<<<<<<<<<<<
+ *             for i in range(rows):
+ *                 tmp_modified_value = array_modified_view[i, j]             # <<<<<<<<<<<<<<
  * 
- *     # values_from_normal_distribution = np.zeros_like(random_values)
+ *                 if std_dev == 0:
  */
             __pyx_t_16 = __pyx_v_i;
             __pyx_t_15 = __pyx_v_j;
+            __pyx_v_tmp_modified_value = (*((float *) ( /* dim=1 */ ((char *) (((float *) ( /* dim=0 */ (__pyx_v_array_modified_view.data + __pyx_t_16 * __pyx_v_array_modified_view.strides[0]) )) + __pyx_t_15)) )));
+
+            /* "src_files/MyMath/MyMath.pyx":168
+ *                 tmp_modified_value = array_modified_view[i, j]
+ * 
+ *                 if std_dev == 0:             # <<<<<<<<<<<<<<
+ *                     std_dev = 1
+ *                 tmp_modified_value /= std_dev
+ */
+            __pyx_t_3 = (__pyx_v_std_dev == 0.0);
+            if (__pyx_t_3) {
+
+              /* "src_files/MyMath/MyMath.pyx":169
+ * 
+ *                 if std_dev == 0:
+ *                     std_dev = 1             # <<<<<<<<<<<<<<
+ *                 tmp_modified_value /= std_dev
+ * 
+ */
+              __pyx_v_std_dev = 1.0;
+
+              /* "src_files/MyMath/MyMath.pyx":168
+ *                 tmp_modified_value = array_modified_view[i, j]
+ * 
+ *                 if std_dev == 0:             # <<<<<<<<<<<<<<
+ *                     std_dev = 1
+ *                 tmp_modified_value /= std_dev
+ */
+            }
+
+            /* "src_files/MyMath/MyMath.pyx":170
+ *                 if std_dev == 0:
+ *                     std_dev = 1
+ *                 tmp_modified_value /= std_dev             # <<<<<<<<<<<<<<
+ * 
+ *                 if tmp_modified_value < 0:
+ */
+            if (unlikely(__pyx_v_std_dev == 0)) {
+              #ifdef WITH_THREAD
+              PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+              #endif
+              PyErr_SetString(PyExc_ZeroDivisionError, "float division");
+              #ifdef WITH_THREAD
+              __Pyx_PyGILState_Release(__pyx_gilstate_save);
+              #endif
+              __PYX_ERR(0, 170, __pyx_L5_error)
+            }
+            __pyx_v_tmp_modified_value = (__pyx_v_tmp_modified_value / __pyx_v_std_dev);
+
+            /* "src_files/MyMath/MyMath.pyx":172
+ *                 tmp_modified_value /= std_dev
+ * 
+ *                 if tmp_modified_value < 0:             # <<<<<<<<<<<<<<
+ *                     tmp_modified_value = -tmp_modified_value
+ * 
+ */
+            __pyx_t_3 = (__pyx_v_tmp_modified_value < 0.0);
+            if (__pyx_t_3) {
+
+              /* "src_files/MyMath/MyMath.pyx":173
+ * 
+ *                 if tmp_modified_value < 0:
+ *                     tmp_modified_value = -tmp_modified_value             # <<<<<<<<<<<<<<
+ * 
+ *                 tmp_modified_value = 3 * (tmp_modified_value - 1)
+ */
+              __pyx_v_tmp_modified_value = (-__pyx_v_tmp_modified_value);
+
+              /* "src_files/MyMath/MyMath.pyx":172
+ *                 tmp_modified_value /= std_dev
+ * 
+ *                 if tmp_modified_value < 0:             # <<<<<<<<<<<<<<
+ *                     tmp_modified_value = -tmp_modified_value
+ * 
+ */
+            }
+
+            /* "src_files/MyMath/MyMath.pyx":175
+ *                     tmp_modified_value = -tmp_modified_value
+ * 
+ *                 tmp_modified_value = 3 * (tmp_modified_value - 1)             # <<<<<<<<<<<<<<
+ *                 scale_here = 1 + threshold_here * sigmoid(tmp_modified_value)
+ *                 scale_here *= c_scale
+ */
+            __pyx_v_tmp_modified_value = (3.0 * (__pyx_v_tmp_modified_value - 1.0));
+
+            /* "src_files/MyMath/MyMath.pyx":176
+ * 
+ *                 tmp_modified_value = 3 * (tmp_modified_value - 1)
+ *                 scale_here = 1 + threshold_here * sigmoid(tmp_modified_value)             # <<<<<<<<<<<<<<
+ *                 scale_here *= c_scale
+ *                 array_modified_view[i, j] += lookup_normal_distribution(random_values[i, j]) * scale_here
+ */
+            __pyx_v_scale_here = (1.0 + (__pyx_v_threshold_here * __pyx_f_9src_files_6MyMath_6MyMath_sigmoid(__pyx_v_tmp_modified_value)));
+
+            /* "src_files/MyMath/MyMath.pyx":177
+ *                 tmp_modified_value = 3 * (tmp_modified_value - 1)
+ *                 scale_here = 1 + threshold_here * sigmoid(tmp_modified_value)
+ *                 scale_here *= c_scale             # <<<<<<<<<<<<<<
+ *                 array_modified_view[i, j] += lookup_normal_distribution(random_values[i, j]) * scale_here
+ * 
+ */
+            __pyx_v_scale_here = (__pyx_v_scale_here * __pyx_v_c_scale);
+
+            /* "src_files/MyMath/MyMath.pyx":178
+ *                 scale_here = 1 + threshold_here * sigmoid(tmp_modified_value)
+ *                 scale_here *= c_scale
+ *                 array_modified_view[i, j] += lookup_normal_distribution(random_values[i, j]) * scale_here             # <<<<<<<<<<<<<<
+ * 
+ *         # for i in range(rows):
+ */
+            __pyx_t_15 = __pyx_v_i;
+            __pyx_t_16 = __pyx_v_j;
             __pyx_t_17 = __pyx_v_i;
             __pyx_t_18 = __pyx_v_j;
-            *((float *) ( /* dim=1 */ ((char *) (((float *) ( /* dim=0 */ (__pyx_v_array_modified_view.data + __pyx_t_17 * __pyx_v_array_modified_view.strides[0]) )) + __pyx_t_18)) )) = (__pyx_v_tmp_modified_value + (__pyx_f_9src_files_6MyMath_6MyMath_lookup_normal_distribution((*((double *) ( /* dim=1 */ ((char *) (((double *) ( /* dim=0 */ (__pyx_v_random_values.data + __pyx_t_16 * __pyx_v_random_values.strides[0]) )) + __pyx_t_15)) )))) * __pyx_v_scale_here));
+            *((float *) ( /* dim=1 */ ((char *) (((float *) ( /* dim=0 */ (__pyx_v_array_modified_view.data + __pyx_t_17 * __pyx_v_array_modified_view.strides[0]) )) + __pyx_t_18)) )) += (__pyx_f_9src_files_6MyMath_6MyMath_lookup_normal_distribution((*((double *) ( /* dim=1 */ ((char *) (((double *) ( /* dim=0 */ (__pyx_v_random_values.data + __pyx_t_15 * __pyx_v_random_values.strides[0]) )) + __pyx_t_16)) )))) * __pyx_v_scale_here);
           }
         }
       }
 
-      /* "src_files/MyMath/MyMath.pyx":133
+      /* "src_files/MyMath/MyMath.pyx":154
  *     cols = array_modified_view.shape[1]
  * 
  *     with nogil:             # <<<<<<<<<<<<<<
- *         for i in range(rows):
- *             for j in range(cols):
+ *         for j in range(cols):
+ *             mean = 0.0
  */
       /*finally:*/ {
         /*normal exit:*/{
@@ -18414,12 +18838,19 @@ static PyObject *__pyx_pf_9src_files_6MyMath_6MyMath_mutate_array_scaled(CYTHON_
           #endif
           goto __pyx_L6;
         }
+        __pyx_L5_error: {
+          #ifdef WITH_THREAD
+          __Pyx_FastGIL_Forget();
+          Py_BLOCK_THREADS
+          #endif
+          goto __pyx_L1_error;
+        }
         __pyx_L6:;
       }
   }
 
-  /* "src_files/MyMath/MyMath.pyx":91
- *     return lookup_normal_distribution_array[<int>(value / LOOKUP_NORMAL_DISTRIBUTION_RESOLUTION)]
+  /* "src_files/MyMath/MyMath.pyx":119
+ *     return 1.0 / (1.0 + lookup_exp(-value))
  * 
  * @cython.boundscheck(False)             # <<<<<<<<<<<<<<
  * @cython.wraparound(False)
@@ -19457,6 +19888,7 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_base, __pyx_k_base, sizeof(__pyx_k_base), 0, 0, 1, 1},
     {&__pyx_n_s_c, __pyx_k_c, sizeof(__pyx_k_c), 0, 0, 1, 1},
     {&__pyx_n_u_c, __pyx_k_c, sizeof(__pyx_k_c), 0, 1, 0, 1},
+    {&__pyx_n_s_c_scale, __pyx_k_c_scale, sizeof(__pyx_k_c_scale), 0, 0, 1, 1},
     {&__pyx_n_s_ceil, __pyx_k_ceil, sizeof(__pyx_k_ceil), 0, 0, 1, 1},
     {&__pyx_n_s_class, __pyx_k_class, sizeof(__pyx_k_class), 0, 0, 1, 1},
     {&__pyx_n_s_class_getitem, __pyx_k_class_getitem, sizeof(__pyx_k_class_getitem), 0, 0, 1, 1},
@@ -19498,8 +19930,11 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_itemsize, __pyx_k_itemsize, sizeof(__pyx_k_itemsize), 0, 0, 1, 1},
     {&__pyx_kp_s_itemsize_0_for_cython_array, __pyx_k_itemsize_0_for_cython_array, sizeof(__pyx_k_itemsize_0_for_cython_array), 0, 0, 1, 0},
     {&__pyx_n_s_j, __pyx_k_j, sizeof(__pyx_k_j), 0, 0, 1, 1},
+    {&__pyx_n_s_ln_range, __pyx_k_ln_range, sizeof(__pyx_k_ln_range), 0, 0, 1, 1},
+    {&__pyx_n_s_log, __pyx_k_log, sizeof(__pyx_k_log), 0, 0, 1, 1},
     {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
     {&__pyx_n_s_math, __pyx_k_math, sizeof(__pyx_k_math), 0, 0, 1, 1},
+    {&__pyx_n_s_mean, __pyx_k_mean, sizeof(__pyx_k_mean), 0, 0, 1, 1},
     {&__pyx_n_s_memview, __pyx_k_memview, sizeof(__pyx_k_memview), 0, 0, 1, 1},
     {&__pyx_n_s_mode, __pyx_k_mode, sizeof(__pyx_k_mode), 0, 0, 1, 1},
     {&__pyx_n_s_mutate_array_scaled, __pyx_k_mutate_array_scaled, sizeof(__pyx_k_mutate_array_scaled), 0, 0, 1, 1},
@@ -19548,6 +19983,7 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_kp_s_src_files_MyMath_MyMath_pyx, __pyx_k_src_files_MyMath_MyMath_pyx, sizeof(__pyx_k_src_files_MyMath_MyMath_pyx), 0, 0, 1, 0},
     {&__pyx_n_s_src_files_MyMath_cython_debug_he, __pyx_k_src_files_MyMath_cython_debug_he, sizeof(__pyx_k_src_files_MyMath_cython_debug_he), 0, 0, 1, 1},
     {&__pyx_n_s_start, __pyx_k_start, sizeof(__pyx_k_start), 0, 0, 1, 1},
+    {&__pyx_n_s_std_dev, __pyx_k_std_dev, sizeof(__pyx_k_std_dev), 0, 0, 1, 1},
     {&__pyx_n_s_step, __pyx_k_step, sizeof(__pyx_k_step), 0, 0, 1, 1},
     {&__pyx_n_s_stop, __pyx_k_stop, sizeof(__pyx_k_stop), 0, 0, 1, 1},
     {&__pyx_kp_s_strided_and_direct, __pyx_k_strided_and_direct, sizeof(__pyx_k_strided_and_direct), 0, 0, 1, 0},
@@ -19572,7 +20008,7 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
 }
 /* #### Code section: cached_builtins ### */
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 20, __pyx_L1_error)
   __pyx_builtin___import__ = __Pyx_GetBuiltinName(__pyx_n_s_import); if (!__pyx_builtin___import__) __PYX_ERR(1, 100, __pyx_L1_error)
   __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(1, 141, __pyx_L1_error)
   __pyx_builtin_MemoryError = __Pyx_GetBuiltinName(__pyx_n_s_MemoryError); if (!__pyx_builtin_MemoryError) __PYX_ERR(1, 156, __pyx_L1_error)
@@ -19628,14 +20064,14 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__8);
   __Pyx_GIVEREF(__pyx_tuple__8);
 
-  /* "src_files/MyMath/MyMath.pyx":125
+  /* "src_files/MyMath/MyMath.pyx":146
  * 
  *     if len(array_modified.shape) == 1:
  *         array_modified_view = array_modified[None, :]             # <<<<<<<<<<<<<<
  *         random_values = np.random.uniform(0, 1, (1, array_modified.shape[0]))
  *     else:
  */
-  __pyx_tuple__9 = PyTuple_Pack(2, Py_None, __pyx_slice__5); if (unlikely(!__pyx_tuple__9)) __PYX_ERR(0, 125, __pyx_L1_error)
+  __pyx_tuple__9 = PyTuple_Pack(2, Py_None, __pyx_slice__5); if (unlikely(!__pyx_tuple__9)) __PYX_ERR(0, 146, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__9);
   __Pyx_GIVEREF(__pyx_tuple__9);
 
@@ -19740,17 +20176,17 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GIVEREF(__pyx_tuple__19);
   __pyx_codeobj__20 = (PyObject*)__Pyx_PyCode_New(3, 0, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__19, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_pyx_unpickle_Enum, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__20)) __PYX_ERR(1, 1, __pyx_L1_error)
 
-  /* "src_files/MyMath/MyMath.pyx":91
- *     return lookup_normal_distribution_array[<int>(value / LOOKUP_NORMAL_DISTRIBUTION_RESOLUTION)]
+  /* "src_files/MyMath/MyMath.pyx":119
+ *     return 1.0 / (1.0 + lookup_exp(-value))
  * 
  * @cython.boundscheck(False)             # <<<<<<<<<<<<<<
  * @cython.wraparound(False)
  * def mutate_array_scaled(array_modified: np.ndarray, scale: float, threshold: float) -> None:
  */
-  __pyx_tuple__21 = PyTuple_Pack(12, __pyx_n_s_array_modified, __pyx_n_s_scale, __pyx_n_s_threshold, __pyx_n_s_array_modified_view, __pyx_n_s_random_values, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_rows, __pyx_n_s_cols, __pyx_n_s_scale_here, __pyx_n_s_threshold_here, __pyx_n_s_tmp_modified_value); if (unlikely(!__pyx_tuple__21)) __PYX_ERR(0, 91, __pyx_L1_error)
+  __pyx_tuple__21 = PyTuple_Pack(15, __pyx_n_s_array_modified, __pyx_n_s_scale, __pyx_n_s_threshold, __pyx_n_s_array_modified_view, __pyx_n_s_random_values, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_rows, __pyx_n_s_cols, __pyx_n_s_scale_here, __pyx_n_s_mean, __pyx_n_s_std_dev, __pyx_n_s_c_scale, __pyx_n_s_threshold_here, __pyx_n_s_tmp_modified_value); if (unlikely(!__pyx_tuple__21)) __PYX_ERR(0, 119, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__21);
   __Pyx_GIVEREF(__pyx_tuple__21);
-  __pyx_codeobj__22 = (PyObject*)__Pyx_PyCode_New(3, 0, 0, 12, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__21, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_src_files_MyMath_MyMath_pyx, __pyx_n_s_mutate_array_scaled, 91, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__22)) __PYX_ERR(0, 91, __pyx_L1_error)
+  __pyx_codeobj__22 = (PyObject*)__Pyx_PyCode_New(3, 0, 0, 15, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__21, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_src_files_MyMath_MyMath_pyx, __pyx_n_s_mutate_array_scaled, 119, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__22)) __PYX_ERR(0, 119, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -19764,6 +20200,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitConstants(void) {
   __pyx_float_0_0 = PyFloat_FromDouble(0.0); if (unlikely(!__pyx_float_0_0)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_float_0_0000001 = PyFloat_FromDouble(0.0000001); if (unlikely(!__pyx_float_0_0000001)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_float_0_9999999 = PyFloat_FromDouble(0.9999999); if (unlikely(!__pyx_float_0_9999999)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_float_0_00000001 = PyFloat_FromDouble(0.00000001); if (unlikely(!__pyx_float_0_00000001)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_0 = PyInt_FromLong(0); if (unlikely(!__pyx_int_0)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_1 = PyInt_FromLong(1); if (unlikely(!__pyx_int_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_3 = PyInt_FromLong(3); if (unlikely(!__pyx_int_3)) __PYX_ERR(0, 1, __pyx_L1_error)
@@ -19831,6 +20268,9 @@ static int __Pyx_modinit_function_export_code(void) {
   if (__Pyx_ExportFunction("degree_cos", (void (*)(void))__pyx_f_9src_files_6MyMath_6MyMath_degree_cos, "double (double)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   if (__Pyx_ExportFunction("lookup_exp", (void (*)(void))__pyx_f_9src_files_6MyMath_6MyMath_lookup_exp, "double (double)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   if (__Pyx_ExportFunction("round_to_int", (void (*)(void))__pyx_f_9src_files_6MyMath_6MyMath_round_to_int, "int (double)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("lookup_ln", (void (*)(void))__pyx_f_9src_files_6MyMath_6MyMath_lookup_ln, "double (double)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("tanh", (void (*)(void))__pyx_f_9src_files_6MyMath_6MyMath_tanh, "double (double)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("sigmoid", (void (*)(void))__pyx_f_9src_files_6MyMath_6MyMath_sigmoid, "double (double)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   if (__Pyx_ExportFunction("lookup_normal_distribution", (void (*)(void))__pyx_f_9src_files_6MyMath_6MyMath_lookup_normal_distribution, "double (double)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
@@ -20834,7 +21274,7 @@ if (!__Pyx_RefNanny) {
  * import cython
  * import numpy as np             # <<<<<<<<<<<<<<
  * 
- * from libc.math cimport exp
+ * from libc.math cimport exp, log, sqrt
  */
   __pyx_t_7 = __Pyx_ImportDottedModule(__pyx_n_s_numpy, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 3, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
@@ -20843,7 +21283,7 @@ if (!__Pyx_RefNanny) {
 
   /* "src_files/MyMath/MyMath.pyx":6
  * 
- * from libc.math cimport exp
+ * from libc.math cimport exp, log, sqrt
  * from scipy.stats import norm             # <<<<<<<<<<<<<<
  * 
  * from src_files.MyMath.cython_debug_helper import cython_debug_call
@@ -20906,7 +21346,7 @@ if (!__Pyx_RefNanny) {
  * cdef double LOOKUP_EXP_RESOLUTION = 0.001
  * cdef double LOOKUP_EXP_BOUNDS = 8             # <<<<<<<<<<<<<<
  * cdef double LOOKUP_NORMAL_DISTRIBUTION_RESOLUTION = 0.001
- * 
+ * cdef double LOOKUP_LN_BOUNDS = 10
  */
   __pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_EXP_BOUNDS = 8.0;
 
@@ -20914,394 +21354,495 @@ if (!__Pyx_RefNanny) {
  * cdef double LOOKUP_EXP_RESOLUTION = 0.001
  * cdef double LOOKUP_EXP_BOUNDS = 8
  * cdef double LOOKUP_NORMAL_DISTRIBUTION_RESOLUTION = 0.001             # <<<<<<<<<<<<<<
- * 
- * # important parts
+ * cdef double LOOKUP_LN_BOUNDS = 10
+ * cdef double LOOKUP_LN_RESOLUTION = 0.001
  */
   __pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_NORMAL_DISTRIBUTION_RESOLUTION = 0.001;
 
-  /* "src_files/MyMath/MyMath.pyx":17
+  /* "src_files/MyMath/MyMath.pyx":15
+ * cdef double LOOKUP_EXP_BOUNDS = 8
+ * cdef double LOOKUP_NORMAL_DISTRIBUTION_RESOLUTION = 0.001
+ * cdef double LOOKUP_LN_BOUNDS = 10             # <<<<<<<<<<<<<<
+ * cdef double LOOKUP_LN_RESOLUTION = 0.001
+ * 
+ */
+  __pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_LN_BOUNDS = 10.0;
+
+  /* "src_files/MyMath/MyMath.pyx":16
+ * cdef double LOOKUP_NORMAL_DISTRIBUTION_RESOLUTION = 0.001
+ * cdef double LOOKUP_LN_BOUNDS = 10
+ * cdef double LOOKUP_LN_RESOLUTION = 0.001             # <<<<<<<<<<<<<<
+ * 
+ * # important parts
+ */
+  __pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_LN_RESOLUTION = 0.001;
+
+  /* "src_files/MyMath/MyMath.pyx":19
  * 
  * # important parts
  * radians = np.array(             # <<<<<<<<<<<<<<
  *     range(0, math.ceil(360 / LOOKUP_DEGREE_RESOLUTION) + 1),
  * ) * LOOKUP_DEGREE_RESOLUTION * math.pi / 180
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_np); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 17, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_np); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 19, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_array); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 17, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_array); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 19, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "src_files/MyMath/MyMath.pyx":18
+  /* "src_files/MyMath/MyMath.pyx":20
  * # important parts
  * radians = np.array(
  *     range(0, math.ceil(360 / LOOKUP_DEGREE_RESOLUTION) + 1),             # <<<<<<<<<<<<<<
  * ) * LOOKUP_DEGREE_RESOLUTION * math.pi / 180
  * exp_range = np.arange(-LOOKUP_EXP_BOUNDS, LOOKUP_EXP_BOUNDS + LOOKUP_EXP_RESOLUTION, LOOKUP_EXP_RESOLUTION)
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_math); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_math); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_ceil); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_ceil); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   if (unlikely(__pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_DEGREE_RESOLUTION == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 18, __pyx_L1_error)
+    __PYX_ERR(0, 20, __pyx_L1_error)
   }
-  __pyx_t_7 = PyFloat_FromDouble((360.0 / __pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_DEGREE_RESOLUTION)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_t_7 = PyFloat_FromDouble((360.0 / __pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_DEGREE_RESOLUTION)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_9 = __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_7); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_7); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = __Pyx_PyInt_AddObjC(__pyx_t_9, __pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_AddObjC(__pyx_t_9, __pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-  __pyx_t_9 = PyTuple_New(2); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_t_9 = PyTuple_New(2); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
   __Pyx_INCREF(__pyx_int_0);
   __Pyx_GIVEREF(__pyx_int_0);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_int_0)) __PYX_ERR(0, 18, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_int_0)) __PYX_ERR(0, 20, __pyx_L1_error);
   __Pyx_GIVEREF(__pyx_t_7);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_9, 1, __pyx_t_7)) __PYX_ERR(0, 18, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_9, 1, __pyx_t_7)) __PYX_ERR(0, 20, __pyx_L1_error);
   __pyx_t_7 = 0;
-  __pyx_t_7 = __Pyx_PyObject_Call(__pyx_builtin_range, __pyx_t_9, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_Call(__pyx_builtin_range, __pyx_t_9, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
 
-  /* "src_files/MyMath/MyMath.pyx":17
+  /* "src_files/MyMath/MyMath.pyx":19
  * 
  * # important parts
  * radians = np.array(             # <<<<<<<<<<<<<<
  *     range(0, math.ceil(360 / LOOKUP_DEGREE_RESOLUTION) + 1),
  * ) * LOOKUP_DEGREE_RESOLUTION * math.pi / 180
  */
-  __pyx_t_9 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_7); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 17, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_7); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 19, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "src_files/MyMath/MyMath.pyx":19
+  /* "src_files/MyMath/MyMath.pyx":21
  * radians = np.array(
  *     range(0, math.ceil(360 / LOOKUP_DEGREE_RESOLUTION) + 1),
  * ) * LOOKUP_DEGREE_RESOLUTION * math.pi / 180             # <<<<<<<<<<<<<<
  * exp_range = np.arange(-LOOKUP_EXP_BOUNDS, LOOKUP_EXP_BOUNDS + LOOKUP_EXP_RESOLUTION, LOOKUP_EXP_RESOLUTION)
- * normal_distribution_range = np.arange(0.0, 1.0 + LOOKUP_NORMAL_DISTRIBUTION_RESOLUTION, LOOKUP_NORMAL_DISTRIBUTION_RESOLUTION)
+ * ln_range = np.arange(0, LOOKUP_LN_BOUNDS + LOOKUP_LN_RESOLUTION, LOOKUP_LN_RESOLUTION)
  */
-  __pyx_t_7 = PyFloat_FromDouble(__pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_DEGREE_RESOLUTION); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __pyx_t_7 = PyFloat_FromDouble(__pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_DEGREE_RESOLUTION); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 21, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_4 = PyNumber_Multiply(__pyx_t_9, __pyx_t_7); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __pyx_t_4 = PyNumber_Multiply(__pyx_t_9, __pyx_t_7); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 21, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_math); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_math); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 21, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_pi); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_pi); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 21, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = PyNumber_Multiply(__pyx_t_4, __pyx_t_9); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __pyx_t_7 = PyNumber_Multiply(__pyx_t_4, __pyx_t_9); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 21, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-  __pyx_t_9 = __Pyx_PyInt_TrueDivideObjC(__pyx_t_7, __pyx_int_180, 0xB4, 0, 0); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyInt_TrueDivideObjC(__pyx_t_7, __pyx_int_180, 0xB4, 0, 0); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 21, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_radians, __pyx_t_9) < 0) __PYX_ERR(0, 17, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_radians, __pyx_t_9) < 0) __PYX_ERR(0, 19, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
 
-  /* "src_files/MyMath/MyMath.pyx":20
+  /* "src_files/MyMath/MyMath.pyx":22
  *     range(0, math.ceil(360 / LOOKUP_DEGREE_RESOLUTION) + 1),
  * ) * LOOKUP_DEGREE_RESOLUTION * math.pi / 180
  * exp_range = np.arange(-LOOKUP_EXP_BOUNDS, LOOKUP_EXP_BOUNDS + LOOKUP_EXP_RESOLUTION, LOOKUP_EXP_RESOLUTION)             # <<<<<<<<<<<<<<
- * normal_distribution_range = np.arange(0.0, 1.0 + LOOKUP_NORMAL_DISTRIBUTION_RESOLUTION, LOOKUP_NORMAL_DISTRIBUTION_RESOLUTION)
- * normal_distribution_range[0] = 0.0000001
+ * ln_range = np.arange(0, LOOKUP_LN_BOUNDS + LOOKUP_LN_RESOLUTION, LOOKUP_LN_RESOLUTION)
+ * ln_range[0] = 0.00000001
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_np); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 20, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_np); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 22, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
-  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_arange); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 20, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_arange); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 22, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-  __pyx_t_9 = PyFloat_FromDouble((-__pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_EXP_BOUNDS)); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 20, __pyx_L1_error)
+  __pyx_t_9 = PyFloat_FromDouble((-__pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_EXP_BOUNDS)); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 22, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
-  __pyx_t_4 = PyFloat_FromDouble((__pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_EXP_BOUNDS + __pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_EXP_RESOLUTION)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 20, __pyx_L1_error)
+  __pyx_t_4 = PyFloat_FromDouble((__pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_EXP_BOUNDS + __pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_EXP_RESOLUTION)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 22, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = PyFloat_FromDouble(__pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_EXP_RESOLUTION); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 20, __pyx_L1_error)
+  __pyx_t_5 = PyFloat_FromDouble(__pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_EXP_RESOLUTION); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 22, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_10 = PyTuple_New(3); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 20, __pyx_L1_error)
+  __pyx_t_10 = PyTuple_New(3); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 22, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_10);
   __Pyx_GIVEREF(__pyx_t_9);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_10, 0, __pyx_t_9)) __PYX_ERR(0, 20, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_10, 0, __pyx_t_9)) __PYX_ERR(0, 22, __pyx_L1_error);
   __Pyx_GIVEREF(__pyx_t_4);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_10, 1, __pyx_t_4)) __PYX_ERR(0, 20, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_10, 1, __pyx_t_4)) __PYX_ERR(0, 22, __pyx_L1_error);
   __Pyx_GIVEREF(__pyx_t_5);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_10, 2, __pyx_t_5)) __PYX_ERR(0, 20, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_10, 2, __pyx_t_5)) __PYX_ERR(0, 22, __pyx_L1_error);
   __pyx_t_9 = 0;
   __pyx_t_4 = 0;
   __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_10, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 20, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_10, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 22, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_exp_range, __pyx_t_5) < 0) __PYX_ERR(0, 20, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_exp_range, __pyx_t_5) < 0) __PYX_ERR(0, 22, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-  /* "src_files/MyMath/MyMath.pyx":21
+  /* "src_files/MyMath/MyMath.pyx":23
  * ) * LOOKUP_DEGREE_RESOLUTION * math.pi / 180
  * exp_range = np.arange(-LOOKUP_EXP_BOUNDS, LOOKUP_EXP_BOUNDS + LOOKUP_EXP_RESOLUTION, LOOKUP_EXP_RESOLUTION)
+ * ln_range = np.arange(0, LOOKUP_LN_BOUNDS + LOOKUP_LN_RESOLUTION, LOOKUP_LN_RESOLUTION)             # <<<<<<<<<<<<<<
+ * ln_range[0] = 0.00000001
+ * normal_distribution_range = np.arange(0.0, 1.0 + LOOKUP_NORMAL_DISTRIBUTION_RESOLUTION, LOOKUP_NORMAL_DISTRIBUTION_RESOLUTION)
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_arange); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_10);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = PyFloat_FromDouble((__pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_LN_BOUNDS + __pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_LN_RESOLUTION)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_7 = PyFloat_FromDouble(__pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_LN_RESOLUTION); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __pyx_t_4 = PyTuple_New(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_INCREF(__pyx_int_0);
+  __Pyx_GIVEREF(__pyx_int_0);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_int_0)) __PYX_ERR(0, 23, __pyx_L1_error);
+  __Pyx_GIVEREF(__pyx_t_5);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_5)) __PYX_ERR(0, 23, __pyx_L1_error);
+  __Pyx_GIVEREF(__pyx_t_7);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 2, __pyx_t_7)) __PYX_ERR(0, 23, __pyx_L1_error);
+  __pyx_t_5 = 0;
+  __pyx_t_7 = 0;
+  __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_t_4, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_ln_range, __pyx_t_7) < 0) __PYX_ERR(0, 23, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+
+  /* "src_files/MyMath/MyMath.pyx":24
+ * exp_range = np.arange(-LOOKUP_EXP_BOUNDS, LOOKUP_EXP_BOUNDS + LOOKUP_EXP_RESOLUTION, LOOKUP_EXP_RESOLUTION)
+ * ln_range = np.arange(0, LOOKUP_LN_BOUNDS + LOOKUP_LN_RESOLUTION, LOOKUP_LN_RESOLUTION)
+ * ln_range[0] = 0.00000001             # <<<<<<<<<<<<<<
+ * normal_distribution_range = np.arange(0.0, 1.0 + LOOKUP_NORMAL_DISTRIBUTION_RESOLUTION, LOOKUP_NORMAL_DISTRIBUTION_RESOLUTION)
+ * normal_distribution_range[0] = 0.0000001
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_ln_range); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 24, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  if (unlikely((__Pyx_SetItemInt(__pyx_t_7, 0, __pyx_float_0_00000001, long, 1, __Pyx_PyInt_From_long, 0, 0, 1) < 0))) __PYX_ERR(0, 24, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+
+  /* "src_files/MyMath/MyMath.pyx":25
+ * ln_range = np.arange(0, LOOKUP_LN_BOUNDS + LOOKUP_LN_RESOLUTION, LOOKUP_LN_RESOLUTION)
+ * ln_range[0] = 0.00000001
  * normal_distribution_range = np.arange(0.0, 1.0 + LOOKUP_NORMAL_DISTRIBUTION_RESOLUTION, LOOKUP_NORMAL_DISTRIBUTION_RESOLUTION)             # <<<<<<<<<<<<<<
  * normal_distribution_range[0] = 0.0000001
  * normal_distribution_range[-1] = 0.9999999
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 21, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_arange); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 21, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_10);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = PyFloat_FromDouble((1.0 + __pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_NORMAL_DISTRIBUTION_RESOLUTION)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 21, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_7 = PyFloat_FromDouble(__pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_NORMAL_DISTRIBUTION_RESOLUTION); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_np); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 25, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_4 = PyTuple_New(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_arange); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 25, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __pyx_t_7 = PyFloat_FromDouble((1.0 + __pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_NORMAL_DISTRIBUTION_RESOLUTION)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 25, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __pyx_t_10 = PyFloat_FromDouble(__pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_NORMAL_DISTRIBUTION_RESOLUTION); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 25, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_10);
+  __pyx_t_5 = PyTuple_New(3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 25, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
   __Pyx_INCREF(__pyx_float_0_0);
   __Pyx_GIVEREF(__pyx_float_0_0);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_float_0_0)) __PYX_ERR(0, 21, __pyx_L1_error);
-  __Pyx_GIVEREF(__pyx_t_5);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_5)) __PYX_ERR(0, 21, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_float_0_0)) __PYX_ERR(0, 25, __pyx_L1_error);
   __Pyx_GIVEREF(__pyx_t_7);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 2, __pyx_t_7)) __PYX_ERR(0, 21, __pyx_L1_error);
-  __pyx_t_5 = 0;
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_t_7)) __PYX_ERR(0, 25, __pyx_L1_error);
+  __Pyx_GIVEREF(__pyx_t_10);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_5, 2, __pyx_t_10)) __PYX_ERR(0, 25, __pyx_L1_error);
   __pyx_t_7 = 0;
-  __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_t_4, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 21, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+  __pyx_t_10 = 0;
+  __pyx_t_10 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_5, NULL); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 25, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_10);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_normal_distribution_range, __pyx_t_7) < 0) __PYX_ERR(0, 21, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_normal_distribution_range, __pyx_t_10) < 0) __PYX_ERR(0, 25, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
 
-  /* "src_files/MyMath/MyMath.pyx":22
- * exp_range = np.arange(-LOOKUP_EXP_BOUNDS, LOOKUP_EXP_BOUNDS + LOOKUP_EXP_RESOLUTION, LOOKUP_EXP_RESOLUTION)
+  /* "src_files/MyMath/MyMath.pyx":26
+ * ln_range[0] = 0.00000001
  * normal_distribution_range = np.arange(0.0, 1.0 + LOOKUP_NORMAL_DISTRIBUTION_RESOLUTION, LOOKUP_NORMAL_DISTRIBUTION_RESOLUTION)
  * normal_distribution_range[0] = 0.0000001             # <<<<<<<<<<<<<<
  * normal_distribution_range[-1] = 0.9999999
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_normal_distribution_range); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 22, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  if (unlikely((__Pyx_SetItemInt(__pyx_t_7, 0, __pyx_float_0_0000001, long, 1, __Pyx_PyInt_From_long, 0, 0, 1) < 0))) __PYX_ERR(0, 22, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_normal_distribution_range); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 26, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_10);
+  if (unlikely((__Pyx_SetItemInt(__pyx_t_10, 0, __pyx_float_0_0000001, long, 1, __Pyx_PyInt_From_long, 0, 0, 1) < 0))) __PYX_ERR(0, 26, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
 
-  /* "src_files/MyMath/MyMath.pyx":23
+  /* "src_files/MyMath/MyMath.pyx":27
  * normal_distribution_range = np.arange(0.0, 1.0 + LOOKUP_NORMAL_DISTRIBUTION_RESOLUTION, LOOKUP_NORMAL_DISTRIBUTION_RESOLUTION)
  * normal_distribution_range[0] = 0.0000001
  * normal_distribution_range[-1] = 0.9999999             # <<<<<<<<<<<<<<
  * 
  * cdef double[::1] lookup_sin_degrees = np.sin(radians).astype(np.float64)
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_normal_distribution_range); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 23, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  if (unlikely((__Pyx_SetItemInt(__pyx_t_7, -1L, __pyx_float_0_9999999, long, 1, __Pyx_PyInt_From_long, 0, 1, 1) < 0))) __PYX_ERR(0, 23, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_normal_distribution_range); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 27, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_10);
+  if (unlikely((__Pyx_SetItemInt(__pyx_t_10, -1L, __pyx_float_0_9999999, long, 1, __Pyx_PyInt_From_long, 0, 1, 1) < 0))) __PYX_ERR(0, 27, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
 
-  /* "src_files/MyMath/MyMath.pyx":25
+  /* "src_files/MyMath/MyMath.pyx":29
  * normal_distribution_range[-1] = 0.9999999
  * 
  * cdef double[::1] lookup_sin_degrees = np.sin(radians).astype(np.float64)             # <<<<<<<<<<<<<<
  * cdef double[::1] lookup_cos_degrees = np.cos(radians).astype(np.float64)
  * cdef double[::1] lookup_exp_array = np.exp(exp_range).astype(np.float64)
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_np); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 25, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_sin); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 25, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_np); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 29, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_10);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_sin); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 29, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+  __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_radians); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 29, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_10);
+  __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_10); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 29, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_radians); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 25, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_10 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_7); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 25, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+  __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_astype); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 29, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_10);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_astype); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 25, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-  __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_np); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 25, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_10);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_float64); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 25, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 29, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_float64); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 29, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_10, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 29, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-  __pyx_t_10 = __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_t_4); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 25, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_10);
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_11 = __Pyx_PyObject_to_MemoryviewSlice_dc_double(__pyx_t_4, PyBUF_WRITABLE); if (unlikely(!__pyx_t_11.memview)) __PYX_ERR(0, 29, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_11 = __Pyx_PyObject_to_MemoryviewSlice_dc_double(__pyx_t_10, PyBUF_WRITABLE); if (unlikely(!__pyx_t_11.memview)) __PYX_ERR(0, 25, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
   __PYX_XCLEAR_MEMVIEW(&__pyx_v_9src_files_6MyMath_6MyMath_lookup_sin_degrees, 1);
   __pyx_v_9src_files_6MyMath_6MyMath_lookup_sin_degrees = __pyx_t_11;
   __pyx_t_11.memview = NULL;
   __pyx_t_11.data = NULL;
 
-  /* "src_files/MyMath/MyMath.pyx":26
+  /* "src_files/MyMath/MyMath.pyx":30
  * 
  * cdef double[::1] lookup_sin_degrees = np.sin(radians).astype(np.float64)
  * cdef double[::1] lookup_cos_degrees = np.cos(radians).astype(np.float64)             # <<<<<<<<<<<<<<
  * cdef double[::1] lookup_exp_array = np.exp(exp_range).astype(np.float64)
  * cdef double[::1] lookup_normal_distribution_array = np.array(norm.ppf(normal_distribution_range)).astype(np.float64)
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_np); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 26, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 30, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_cos); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 30, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_radians); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 30, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_10 = __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_4); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 30, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_10);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_cos); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 26, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_astype); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 30, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-  __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_radians); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 26, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_np); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 30, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_10);
-  __pyx_t_7 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_10); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 26, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_float64); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 30, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-  __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_astype); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 26, __pyx_L1_error)
+  __pyx_t_10 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_5); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 30, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_10);
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_np); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 26, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_float64); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 26, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = __Pyx_PyObject_CallOneArg(__pyx_t_10, __pyx_t_4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 26, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_11 = __Pyx_PyObject_to_MemoryviewSlice_dc_double(__pyx_t_7, PyBUF_WRITABLE); if (unlikely(!__pyx_t_11.memview)) __PYX_ERR(0, 26, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_11 = __Pyx_PyObject_to_MemoryviewSlice_dc_double(__pyx_t_10, PyBUF_WRITABLE); if (unlikely(!__pyx_t_11.memview)) __PYX_ERR(0, 30, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
   __PYX_XCLEAR_MEMVIEW(&__pyx_v_9src_files_6MyMath_6MyMath_lookup_cos_degrees, 1);
   __pyx_v_9src_files_6MyMath_6MyMath_lookup_cos_degrees = __pyx_t_11;
   __pyx_t_11.memview = NULL;
   __pyx_t_11.data = NULL;
 
-  /* "src_files/MyMath/MyMath.pyx":27
+  /* "src_files/MyMath/MyMath.pyx":31
  * cdef double[::1] lookup_sin_degrees = np.sin(radians).astype(np.float64)
  * cdef double[::1] lookup_cos_degrees = np.cos(radians).astype(np.float64)
  * cdef double[::1] lookup_exp_array = np.exp(exp_range).astype(np.float64)             # <<<<<<<<<<<<<<
  * cdef double[::1] lookup_normal_distribution_array = np.array(norm.ppf(normal_distribution_range)).astype(np.float64)
- * cdef double exp_lookup_shift = LOOKUP_EXP_BOUNDS / LOOKUP_EXP_RESOLUTION
+ * cdef double[::1] lookup_ln_array = np.log(ln_range).astype(np.float64)
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_np); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 27, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_exp); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 27, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_np); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 31, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_10);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_exp); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 31, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+  __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_exp_range); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 31, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_10);
+  __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_10); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 31, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_exp_range); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 27, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_10 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_7); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 27, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+  __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_astype); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 31, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_10);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_astype); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 27, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-  __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_np); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 27, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_10);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_float64); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 27, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 31, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_float64); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 31, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_10, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 31, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-  __pyx_t_10 = __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_t_4); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 27, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_10);
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_11 = __Pyx_PyObject_to_MemoryviewSlice_dc_double(__pyx_t_4, PyBUF_WRITABLE); if (unlikely(!__pyx_t_11.memview)) __PYX_ERR(0, 31, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_11 = __Pyx_PyObject_to_MemoryviewSlice_dc_double(__pyx_t_10, PyBUF_WRITABLE); if (unlikely(!__pyx_t_11.memview)) __PYX_ERR(0, 27, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
   __PYX_XCLEAR_MEMVIEW(&__pyx_v_9src_files_6MyMath_6MyMath_lookup_exp_array, 1);
   __pyx_v_9src_files_6MyMath_6MyMath_lookup_exp_array = __pyx_t_11;
   __pyx_t_11.memview = NULL;
   __pyx_t_11.data = NULL;
 
-  /* "src_files/MyMath/MyMath.pyx":28
+  /* "src_files/MyMath/MyMath.pyx":32
  * cdef double[::1] lookup_cos_degrees = np.cos(radians).astype(np.float64)
  * cdef double[::1] lookup_exp_array = np.exp(exp_range).astype(np.float64)
  * cdef double[::1] lookup_normal_distribution_array = np.array(norm.ppf(normal_distribution_range)).astype(np.float64)             # <<<<<<<<<<<<<<
+ * cdef double[::1] lookup_ln_array = np.log(ln_range).astype(np.float64)
  * cdef double exp_lookup_shift = LOOKUP_EXP_BOUNDS / LOOKUP_EXP_RESOLUTION
- * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_np); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 28, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_10);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_array); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 28, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 32, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-  __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_norm); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 28, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_array); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_norm); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_ppf); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 32, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_10);
-  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_ppf); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 28, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_normal_distribution_range); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_7 = __Pyx_PyObject_CallOneArg(__pyx_t_10, __pyx_t_4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 32, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-  __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_normal_distribution_range); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 28, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_10);
-  __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_t_10); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 28, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-  __pyx_t_10 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_5); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 28, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_10);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_astype); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 28, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-  __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_np); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 28, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_10);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_float64); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 28, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_7); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 32, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-  __pyx_t_10 = __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_4); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 28, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_10);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_astype); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_11 = __Pyx_PyObject_to_MemoryviewSlice_dc_double(__pyx_t_10, PyBUF_WRITABLE); if (unlikely(!__pyx_t_11.memview)) __PYX_ERR(0, 28, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_float64); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_11 = __Pyx_PyObject_to_MemoryviewSlice_dc_double(__pyx_t_4, PyBUF_WRITABLE); if (unlikely(!__pyx_t_11.memview)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __PYX_XCLEAR_MEMVIEW(&__pyx_v_9src_files_6MyMath_6MyMath_lookup_normal_distribution_array, 1);
   __pyx_v_9src_files_6MyMath_6MyMath_lookup_normal_distribution_array = __pyx_t_11;
   __pyx_t_11.memview = NULL;
   __pyx_t_11.data = NULL;
 
-  /* "src_files/MyMath/MyMath.pyx":29
+  /* "src_files/MyMath/MyMath.pyx":33
  * cdef double[::1] lookup_exp_array = np.exp(exp_range).astype(np.float64)
  * cdef double[::1] lookup_normal_distribution_array = np.array(norm.ppf(normal_distribution_range)).astype(np.float64)
+ * cdef double[::1] lookup_ln_array = np.log(ln_range).astype(np.float64)             # <<<<<<<<<<<<<<
+ * cdef double exp_lookup_shift = LOOKUP_EXP_BOUNDS / LOOKUP_EXP_RESOLUTION
+ * 
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_log); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_ln_range); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_7 = __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_astype); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_np); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_float64); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __pyx_t_7 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_5); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_11 = __Pyx_PyObject_to_MemoryviewSlice_dc_double(__pyx_t_7, PyBUF_WRITABLE); if (unlikely(!__pyx_t_11.memview)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __PYX_XCLEAR_MEMVIEW(&__pyx_v_9src_files_6MyMath_6MyMath_lookup_ln_array, 1);
+  __pyx_v_9src_files_6MyMath_6MyMath_lookup_ln_array = __pyx_t_11;
+  __pyx_t_11.memview = NULL;
+  __pyx_t_11.data = NULL;
+
+  /* "src_files/MyMath/MyMath.pyx":34
+ * cdef double[::1] lookup_normal_distribution_array = np.array(norm.ppf(normal_distribution_range)).astype(np.float64)
+ * cdef double[::1] lookup_ln_array = np.log(ln_range).astype(np.float64)
  * cdef double exp_lookup_shift = LOOKUP_EXP_BOUNDS / LOOKUP_EXP_RESOLUTION             # <<<<<<<<<<<<<<
  * 
  * 
  */
   if (unlikely(__pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_EXP_RESOLUTION == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 29, __pyx_L1_error)
+    __PYX_ERR(0, 34, __pyx_L1_error)
   }
   __pyx_v_9src_files_6MyMath_6MyMath_exp_lookup_shift = (__pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_EXP_BOUNDS / __pyx_v_9src_files_6MyMath_6MyMath_LOOKUP_EXP_RESOLUTION);
 
-  /* "src_files/MyMath/MyMath.pyx":91
- *     return lookup_normal_distribution_array[<int>(value / LOOKUP_NORMAL_DISTRIBUTION_RESOLUTION)]
+  /* "src_files/MyMath/MyMath.pyx":119
+ *     return 1.0 / (1.0 + lookup_exp(-value))
  * 
  * @cython.boundscheck(False)             # <<<<<<<<<<<<<<
  * @cython.wraparound(False)
  * def mutate_array_scaled(array_modified: np.ndarray, scale: float, threshold: float) -> None:
  */
-  __pyx_t_10 = __Pyx_PyDict_NewPresized(4); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 91, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_10);
-  if (PyDict_SetItem(__pyx_t_10, __pyx_n_s_array_modified, __pyx_kp_s_np_ndarray) < 0) __PYX_ERR(0, 91, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_10, __pyx_n_s_scale, __pyx_n_s_float) < 0) __PYX_ERR(0, 91, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_10, __pyx_n_s_threshold, __pyx_n_s_float) < 0) __PYX_ERR(0, 91, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_10, __pyx_n_s_return, __pyx_n_s_None) < 0) __PYX_ERR(0, 91, __pyx_L1_error)
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_9src_files_6MyMath_6MyMath_1mutate_array_scaled, 0, __pyx_n_s_mutate_array_scaled, NULL, __pyx_n_s_src_files_MyMath_MyMath, __pyx_d, ((PyObject *)__pyx_codeobj__22)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 91, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_CyFunction_SetAnnotationsDict(__pyx_t_4, __pyx_t_10);
-  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_mutate_array_scaled, __pyx_t_4) < 0) __PYX_ERR(0, 91, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_7 = __Pyx_PyDict_NewPresized(4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 119, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_array_modified, __pyx_kp_s_np_ndarray) < 0) __PYX_ERR(0, 119, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_scale, __pyx_n_s_float) < 0) __PYX_ERR(0, 119, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_threshold, __pyx_n_s_float) < 0) __PYX_ERR(0, 119, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_return, __pyx_n_s_None) < 0) __PYX_ERR(0, 119, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_CyFunction_New(&__pyx_mdef_9src_files_6MyMath_6MyMath_1mutate_array_scaled, 0, __pyx_n_s_mutate_array_scaled, NULL, __pyx_n_s_src_files_MyMath_MyMath, __pyx_d, ((PyObject *)__pyx_codeobj__22)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 119, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_CyFunction_SetAnnotationsDict(__pyx_t_5, __pyx_t_7);
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_mutate_array_scaled, __pyx_t_5) < 0) __PYX_ERR(0, 119, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
   /* "src_files/MyMath/MyMath.pyx":1
  * import math             # <<<<<<<<<<<<<<
  * import cython
  * import numpy as np
  */
-  __pyx_t_4 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_4) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_5 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_5) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
   /*--- Wrapped vars code ---*/
 

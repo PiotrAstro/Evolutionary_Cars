@@ -52,15 +52,15 @@ SAVE_DIR = r"logs/metaparameters_tests_" + str(int(time.time()))
 TESTED_VALUES = [
     {
         "Evolutionary_Mutate_Population": {
-            "mutation_factor": [0.01, 0.05, 0.1, 0.2],
+            "mutation_factor": [0.03, 0.05, 0.8, 0.1],
             "mutation_threshold": [None],
         },
     },
 
     {
         "Evolutionary_Mutate_Population": {
-            "mutation_factor": [0.03, 0.1, 0.3],
-            "mutation_threshold": [0.03, 0.1, 0.3],
+            "mutation_factor": [0.02, 0.05, 0.1],
+            "mutation_threshold": [0.5, 1.0, 2.0],
         },
     }
 ]

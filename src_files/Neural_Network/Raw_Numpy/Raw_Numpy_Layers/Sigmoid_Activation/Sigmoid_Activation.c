@@ -2757,7 +2757,7 @@ static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_N
 /* Module declarations from "cython" */
 
 /* Module declarations from "src_files.MyMath.MyMath" */
-static double (*__pyx_f_9src_files_6MyMath_6MyMath_lookup_exp)(double); /*proto*/
+static double (*__pyx_f_9src_files_6MyMath_6MyMath_sigmoid)(double); /*proto*/
 
 /* Module declarations from "src_files.Neural_Network.Raw_Numpy.Raw_Numpy_Layers.Abstract_Layer.Abstract_Layer" */
 
@@ -17541,13 +17541,8 @@ static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_N
   int __pyx_t_6;
   Py_ssize_t __pyx_t_7;
   Py_ssize_t __pyx_t_8;
-  double __pyx_t_9;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  #ifdef WITH_THREAD
-  PyGILState_STATE __pyx_gilstate_save;
-  #endif
+  Py_ssize_t __pyx_t_9;
+  Py_ssize_t __pyx_t_10;
 
   /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Sigmoid_Activation/Sigmoid_Activation.pyx":21
  *         :return:
@@ -17572,7 +17567,7 @@ static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_N
  * 
  *         for i in range(rows):             # <<<<<<<<<<<<<<
  *             for j in range(cols):
- *                 inputs[i, j] = 1.0 / (1.0 + lookup_exp(-inputs[i, j]))
+ *                 inputs[i, j] = sigmoid(inputs[i, j])
  */
   __pyx_t_1 = __pyx_v_rows;
   __pyx_t_2 = __pyx_t_1;
@@ -17583,7 +17578,7 @@ static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_N
  * 
  *         for i in range(rows):
  *             for j in range(cols):             # <<<<<<<<<<<<<<
- *                 inputs[i, j] = 1.0 / (1.0 + lookup_exp(-inputs[i, j]))
+ *                 inputs[i, j] = sigmoid(inputs[i, j])
  *         return inputs
  */
     __pyx_t_4 = __pyx_v_cols;
@@ -17594,32 +17589,21 @@ static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_N
       /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Sigmoid_Activation/Sigmoid_Activation.pyx":27
  *         for i in range(rows):
  *             for j in range(cols):
- *                 inputs[i, j] = 1.0 / (1.0 + lookup_exp(-inputs[i, j]))             # <<<<<<<<<<<<<<
+ *                 inputs[i, j] = sigmoid(inputs[i, j])             # <<<<<<<<<<<<<<
  *         return inputs
  * 
  */
       __pyx_t_7 = __pyx_v_i;
       __pyx_t_8 = __pyx_v_j;
-      __pyx_t_9 = (1.0 + __pyx_f_9src_files_6MyMath_6MyMath_lookup_exp((-(*((float *) ( /* dim=1 */ ((char *) (((float *) ( /* dim=0 */ (__pyx_v_inputs.data + __pyx_t_7 * __pyx_v_inputs.strides[0]) )) + __pyx_t_8)) ))))));
-      if (unlikely(__pyx_t_9 == 0)) {
-        #ifdef WITH_THREAD
-        PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
-        #endif
-        PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-        #ifdef WITH_THREAD
-        __Pyx_PyGILState_Release(__pyx_gilstate_save);
-        #endif
-        __PYX_ERR(0, 27, __pyx_L1_error)
-      }
-      __pyx_t_8 = __pyx_v_i;
-      __pyx_t_7 = __pyx_v_j;
-      *((float *) ( /* dim=1 */ ((char *) (((float *) ( /* dim=0 */ (__pyx_v_inputs.data + __pyx_t_8 * __pyx_v_inputs.strides[0]) )) + __pyx_t_7)) )) = (1.0 / __pyx_t_9);
+      __pyx_t_9 = __pyx_v_i;
+      __pyx_t_10 = __pyx_v_j;
+      *((float *) ( /* dim=1 */ ((char *) (((float *) ( /* dim=0 */ (__pyx_v_inputs.data + __pyx_t_9 * __pyx_v_inputs.strides[0]) )) + __pyx_t_10)) )) = __pyx_f_9src_files_6MyMath_6MyMath_sigmoid((*((float *) ( /* dim=1 */ ((char *) (((float *) ( /* dim=0 */ (__pyx_v_inputs.data + __pyx_t_7 * __pyx_v_inputs.strides[0]) )) + __pyx_t_8)) ))));
     }
   }
 
   /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Sigmoid_Activation/Sigmoid_Activation.pyx":28
  *             for j in range(cols):
- *                 inputs[i, j] = 1.0 / (1.0 + lookup_exp(-inputs[i, j]))
+ *                 inputs[i, j] = sigmoid(inputs[i, j])
  *         return inputs             # <<<<<<<<<<<<<<
  * 
  *     def copy(self) -> 'Sigmoid_Activation':
@@ -17637,17 +17621,6 @@ static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_N
  */
 
   /* function exit code */
-  __pyx_L1_error:;
-  __pyx_r.data = NULL;
-  __pyx_r.memview = NULL;
-  #ifdef WITH_THREAD
-  __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
-  #endif
-  __Pyx_AddTraceback("src_files.Neural_Network.Raw_Numpy.Raw_Numpy_Layers.Sigmoid_Activation.Sigmoid_Activation.Sigmoid_Activation.forward", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  #ifdef WITH_THREAD
-  __Pyx_PyGILState_Release(__pyx_gilstate_save);
-  #endif
-  goto __pyx_L2;
   __pyx_L0:;
   if (unlikely(!__pyx_r.memview)) {
     #ifdef WITH_THREAD
@@ -17658,7 +17631,6 @@ static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_N
     __Pyx_PyGILState_Release(__pyx_gilstate_save);
     #endif
   }
-  __pyx_L2:;
   return __pyx_r;
 }
 
@@ -20285,7 +20257,7 @@ static int __Pyx_modinit_function_import_code(void) {
   /*--- Function import code ---*/
   __pyx_t_1 = PyImport_ImportModule("src_files.MyMath.MyMath"); if (!__pyx_t_1) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (__Pyx_ImportFunction_3_0_8(__pyx_t_1, "lookup_exp", (void (**)(void))&__pyx_f_9src_files_6MyMath_6MyMath_lookup_exp, "double (double)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ImportFunction_3_0_8(__pyx_t_1, "sigmoid", (void (**)(void))&__pyx_f_9src_files_6MyMath_6MyMath_sigmoid, "double (double)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_RefNannyFinishContext();
   return 0;

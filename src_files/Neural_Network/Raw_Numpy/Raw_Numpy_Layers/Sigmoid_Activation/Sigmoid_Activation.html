@@ -378,7 +378,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </pre><pre class="cython line score-0">&#xA0;<span class="">02</span>: </pre>
 <pre class="cython line score-0">&#xA0;<span class="">03</span>: <span class="k">import</span> <span class="nn">cython</span></pre>
 <pre class="cython line score-0">&#xA0;<span class="">04</span>: </pre>
-<pre class="cython line score-0">&#xA0;<span class="">05</span>: <span class="k">from</span> <span class="nn">src_files.MyMath.MyMath</span> <span class="k">cimport</span> <span class="n">lookup_exp</span></pre>
+<pre class="cython line score-0">&#xA0;<span class="">05</span>: <span class="k">from</span> <span class="nn">src_files.MyMath.MyMath</span> <span class="k">cimport</span> <span class="n">sigmoid</span></pre>
 <pre class="cython line score-0">&#xA0;<span class="">06</span>: <span class="k">from</span> <span class="nn">src_files.Neural_Network.Raw_Numpy.Raw_Numpy_Layers.Abstract_Layer.Abstract_Layer</span> <span class="k">cimport</span> <span class="n">Abstract_Layer</span></pre>
 <pre class="cython line score-0">&#xA0;<span class="">07</span>: </pre>
 <pre class="cython line score-0">&#xA0;<span class="">08</span>: </pre>
@@ -429,8 +429,8 @@ static int __pyx_pf_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_18
 <pre class="cython line score-0">&#xA0;<span class="">13</span>:     <span class="nd">@cython</span><span class="o">.</span><span class="n">boundscheck</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>  <span class="c"># Deactivate bounds checking</span></pre>
 <pre class="cython line score-0">&#xA0;<span class="">14</span>:     <span class="nd">@cython</span><span class="o">.</span><span class="n">wraparound</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span></pre>
 <pre class="cython line score-0">&#xA0;<span class="">15</span>:     <span class="nd">@cython</span><span class="o">.</span><span class="n">nonecheck</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span></pre>
-<pre class="cython line score-15" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">16</span>:     <span class="k">cdef</span> <span class="kr">inline</span> <span class="kt">float</span>[<span class="p">:,</span> <span class="p">::</span><span class="mf">1</span><span class="p">]</span> <span class="n">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">float</span><span class="p">[:,</span> <span class="p">::</span><span class="mf">1</span><span class="p">]</span> <span class="n">inputs</span><span class="p">)</span> <span class="n">noexcept</span> <span class="k">nogil</span><span class="p">:</span></pre>
-<pre class='cython code score-15 '>static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_18Sigmoid_Activation_18Sigmoid_Activation_18Sigmoid_Activation_forward(CYTHON_UNUSED struct __pyx_obj_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_18Sigmoid_Activation_18Sigmoid_Activation_Sigmoid_Activation *__pyx_v_self, __Pyx_memviewslice __pyx_v_inputs) {
+<pre class="cython line score-9" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">16</span>:     <span class="k">cdef</span> <span class="kr">inline</span> <span class="kt">float</span>[<span class="p">:,</span> <span class="p">::</span><span class="mf">1</span><span class="p">]</span> <span class="n">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">float</span><span class="p">[:,</span> <span class="p">::</span><span class="mf">1</span><span class="p">]</span> <span class="n">inputs</span><span class="p">)</span> <span class="n">noexcept</span> <span class="k">nogil</span><span class="p">:</span></pre>
+<pre class='cython code score-9 '>static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_18Sigmoid_Activation_18Sigmoid_Activation_18Sigmoid_Activation_forward(CYTHON_UNUSED struct __pyx_obj_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_18Sigmoid_Activation_18Sigmoid_Activation_Sigmoid_Activation *__pyx_v_self, __Pyx_memviewslice __pyx_v_inputs) {
   int __pyx_v_rows;
   int __pyx_v_cols;
   int __pyx_v_i;
@@ -438,14 +438,6 @@ static int __pyx_pf_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_18
   __Pyx_memviewslice __pyx_r = { 0, 0, { 0 }, { 0 }, { 0 } };
 /* … */
   /* function exit code */
-  __pyx_L1_error:;
-  __pyx_r.data = NULL;
-  __pyx_r.memview = NULL;
-  #ifdef WITH_THREAD
-  __pyx_gilstate_save = <span class='pyx_c_api'>__Pyx_PyGILState_Ensure</span>();
-  #endif
-  <span class='pyx_c_api'>__Pyx_AddTraceback</span>("src_files.Neural_Network.Raw_Numpy.Raw_Numpy_Layers.Sigmoid_Activation.Sigmoid_Activation.Sigmoid_Activation.forward", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  goto __pyx_L2;
   __pyx_L0:;
   if (unlikely(!__pyx_r.memview)) {
     #ifdef WITH_THREAD
@@ -456,10 +448,6 @@ static int __pyx_pf_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_18
     <span class='pyx_c_api'>__Pyx_PyGILState_Release</span>(__pyx_gilstate_save);
     #endif
   }
-  #ifdef WITH_THREAD
-  <span class='pyx_c_api'>__Pyx_PyGILState_Release</span>(__pyx_gilstate_save);
-  #endif
-  __pyx_L2:;
   return __pyx_r;
 }
 </pre><pre class="cython line score-0">&#xA0;<span class="">17</span>: <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span></pre>
@@ -482,23 +470,12 @@ static int __pyx_pf_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_18
     __pyx_t_5 = __pyx_t_4;
     for (__pyx_t_6 = 0; __pyx_t_6 &lt; __pyx_t_5; __pyx_t_6+=1) {
       __pyx_v_j = __pyx_t_6;
-</pre><pre class="cython line score-9" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">27</span>:                 <span class="n">inputs</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">lookup_exp</span><span class="p">(</span><span class="o">-</span><span class="n">inputs</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]))</span></pre>
-<pre class='cython code score-9 '>      __pyx_t_7 = __pyx_v_i;
+</pre><pre class="cython line score-0" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">27</span>:                 <span class="n">inputs</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">inputs</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span></pre>
+<pre class='cython code score-0 '>      __pyx_t_7 = __pyx_v_i;
       __pyx_t_8 = __pyx_v_j;
-      __pyx_t_9 = (1.0 + __pyx_f_9src_files_6MyMath_6MyMath_lookup_exp((-(*((float *) ( /* dim=1 */ ((char *) (((float *) ( /* dim=0 */ (__pyx_v_inputs.data + __pyx_t_7 * __pyx_v_inputs.strides[0]) )) + __pyx_t_8)) ))))));
-      if (unlikely(__pyx_t_9 == 0)) {
-        #ifdef WITH_THREAD
-        PyGILState_STATE __pyx_gilstate_save = <span class='pyx_c_api'>__Pyx_PyGILState_Ensure</span>();
-        #endif
-        <span class='py_c_api'>PyErr_SetString</span>(PyExc_ZeroDivisionError, "float division");
-        #ifdef WITH_THREAD
-        <span class='pyx_c_api'>__Pyx_PyGILState_Release</span>(__pyx_gilstate_save);
-        #endif
-        <span class='error_goto'>__PYX_ERR(0, 27, __pyx_L1_error)</span>
-      }
-      __pyx_t_8 = __pyx_v_i;
-      __pyx_t_7 = __pyx_v_j;
-      *((float *) ( /* dim=1 */ ((char *) (((float *) ( /* dim=0 */ (__pyx_v_inputs.data + __pyx_t_8 * __pyx_v_inputs.strides[0]) )) + __pyx_t_7)) )) = (1.0 / __pyx_t_9);
+      __pyx_t_9 = __pyx_v_i;
+      __pyx_t_10 = __pyx_v_j;
+      *((float *) ( /* dim=1 */ ((char *) (((float *) ( /* dim=0 */ (__pyx_v_inputs.data + __pyx_t_9 * __pyx_v_inputs.strides[0]) )) + __pyx_t_10)) )) = __pyx_f_9src_files_6MyMath_6MyMath_sigmoid((*((float *) ( /* dim=1 */ ((char *) (((float *) ( /* dim=0 */ (__pyx_v_inputs.data + __pyx_t_7 * __pyx_v_inputs.strides[0]) )) + __pyx_t_8)) ))));
     }
   }
 </pre><pre class="cython line score-0" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">28</span>:         <span class="k">return</span> <span class="n">inputs</span></pre>
