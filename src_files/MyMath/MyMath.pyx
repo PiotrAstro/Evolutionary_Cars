@@ -10,7 +10,8 @@ from src_files.MyMath.cython_debug_helper import cython_debug_call
 # constants
 cdef double LOOKUP_DEGREE_RESOLUTION = 0.05  # 0.05 degree resolution
 cdef double LOOKUP_EXP_RESOLUTION = 0.001
-cdef double LOOKUP_EXP_BOUNDS = 8
+cdef double LOOKUP_EXP_BOUNDS = 10
+cdef double TANH_SIGMOID_CLIP = 10
 cdef double LOOKUP_NORMAL_DISTRIBUTION_RESOLUTION = 0.001
 cdef double LOOKUP_LN_BOUNDS = 10
 cdef double LOOKUP_LN_RESOLUTION = 0.001
@@ -107,14 +108,25 @@ cdef inline double tanh(double value) noexcept nogil:
     """
     Return the hyperbolic tangent of the given value.
     """
-    cdef double exp_2x = lookup_exp(2.0 * value)
-    return (exp_2x - 1.0) / (exp_2x + 1.0)
+    cdef double exp_2x
+    if value > TANH_SIGMOID_CLIP:
+        return 1.0
+    elif value < -TANH_SIGMOID_CLIP:
+        return -1.0
+    else:
+        exp_2x = lookup_exp(2.0 * value)
+        return (exp_2x - 1.0) / (exp_2x + 1.0)
 
 cdef inline double sigmoid(double value) noexcept nogil:
     """
     Return the sigmoid of the given value.
     """
-    return 1.0 / (1.0 + lookup_exp(-value))
+    if value > TANH_SIGMOID_CLIP:
+        return 1.0
+    elif value < -TANH_SIGMOID_CLIP:
+        return 0.0
+    else:
+        return 1.0 / (1.0 + lookup_exp(-value))
 
 @cython.boundscheck(False)
 @cython.wraparound(False)

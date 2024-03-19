@@ -1,11 +1,11 @@
 import os
-from typing import List, Tuple
+from typing import List, Tuple, Any, Dict
 
+import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
 COLOURS = ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075', '#808080', '#ffffff']
-
 
 def draw_simple_graph(data_frames: List[List[Tuple[str, pd.DataFrame]]], x: str, y: str, title: str = "Results") -> None:
     """
@@ -25,8 +25,8 @@ def draw_simple_graph(data_frames: List[List[Tuple[str, pd.DataFrame]]], x: str,
     plt.legend()
     plt.show()
 
-VISUALIZATION_DIR = r"C:\Piotr\AIProjects\Evolutionary_Cars\logs\metaparameters_tests_1709668633"
-
+# VISUALIZATION_DIR = r"C:\Piotr\AIProjects\Evolutionary_Cars\logs\metaparameters_tests_1709987152"
+VISUALIZATION_DIR = r"C:\Piotr\AIProjects\Evolutionary_Cars\logs\metaparameters_tests_1709843179"
 # loading dataframes
 data_frames = {}
 for file in os.listdir(VISUALIZATION_DIR):

@@ -22,13 +22,18 @@ cdef class Softmax_Activation(Abstract_Layer):
         cdef int rows = inputs.shape[0]
         cdef int cols = inputs.shape[1]
         cdef double row_sum
+        cdef float max_value = -100000000
 
         for i in range(rows):
             row_sum = 0
             for j in range(cols):
-                row_sum += lookup_exp(inputs[i, j])
+                if inputs[i, j] > max_value:
+                    max_value = inputs[i, j]
             for j in range(cols):
-                inputs[i, j] = lookup_exp(inputs[i, j]) / row_sum
+                inputs[i, j] = lookup_exp(inputs[i, j] - max_value)
+                row_sum += inputs[i, j]
+            for j in range(cols):
+                inputs[i, j] = inputs[i, j] / row_sum
 
     def copy(self) -> 'Softmax_Activation':
         return Softmax_Activation()

@@ -4,7 +4,7 @@ from typing import Tuple, List, Union
 import cython
 import numpy as np
 from numpy import ndim
-from src_files.Environments.Abstract_Environment.Abstract_Environment cimport Abstract_Environment, real_t, real_t_numpy
+from src_files.Environments.Abstract_Environment.Abstract_Environment cimport Abstract_Environment
 from src_files.MyMath.MyMath cimport round_to_int, degree_sin, degree_cos
 from src_files.MyMath.cython_debug_helper import cython_debug_call
 
@@ -12,11 +12,11 @@ ctypedef unsigned char map_view_t
 cdef class Basic_Car_Environment(Abstract_Environment):
     cdef map_view_t[:, ::1] map_view
     cdef double[::1] rays_degrees
-    cdef real_t[::1] state
+    cdef float[::1] state
     cdef Car car
     cdef int max_steps
     cdef int current_step
-    cdef double start_position[2]
+    cdef (double, double) start_position
     cdef double start_angle
     cdef double start_speed
     cdef double speed_change
@@ -43,7 +43,7 @@ cdef class Basic_Car_Environment(Abstract_Environment):
 
     def __init__(self,
                  map_view: np.ndarray = np.zeros((1, 1)),
-                 start_position: Tuple[double, double] = (0, 0),
+                 start_position: Tuple[float, float] = (0, 0),
                  start_angle: float = 0,
                  angle_max_change: float = 1,
                  car_dimensions: Tuple[float, float] = (10, 20),
@@ -96,7 +96,7 @@ cdef class Basic_Car_Environment(Abstract_Environment):
         #     "map_view": np.array(self.map_view),
         #     "np_input_type": real_t_numpy,
         # })
-        self.state = np.zeros(len(rays_degrees) + 1, dtype=real_t_numpy)
+        self.state = np.zeros(len(rays_degrees) + 1, dtype=np.float32)
 
 
     cdef int reset(self) noexcept nogil:
@@ -105,9 +105,9 @@ cdef class Basic_Car_Environment(Abstract_Environment):
 
     @cython.boundscheck(False)
     @cython.wraparound(False)
-    cdef real_t[::1] get_state(self) noexcept nogil:
+    cdef float[::1] get_state(self) noexcept nogil:
         cdef double[::1] rays_degrees_here = self.rays_degrees
-        cdef real_t[::1] state_here = self.state
+        cdef float[::1] state_here = self.state
 
         for i in range(self.rays_degrees.shape[0]):
             state_here[i] = self.get_ray_distance(rays_degrees_here[i]) / self.rays_distances_scale_factor
@@ -147,7 +147,7 @@ cdef class Basic_Car_Environment(Abstract_Environment):
 
     @cython.boundscheck(False)
     @cython.wraparound(False)
-    cdef double react(self, real_t[::1] outputs) noexcept nogil:
+    cdef double react(self, float[::1] outputs) noexcept nogil:
         #self.car.change_angle(self.angle_max_change * outputs[0])
         cdef double result
         cdef int change_index_action = 0
@@ -198,7 +198,7 @@ cdef class Car:
     cdef bint is_does_collide_actual
 
     def __init__(self,
-                 start_position: Tuple[double, double],
+                 start_position: Tuple[float, float],
                  angle: float,
                  car_dimensions: Tuple[float, float],
                  speed: float,

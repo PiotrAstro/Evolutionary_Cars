@@ -1,6 +1,10 @@
+import math
+
+import numpy as np
 from libc.math cimport exp
 import cython
 from src_files.MyMath.MyMath cimport tanh
+from src_files.MyMath.cython_debug_helper import cython_debug_call
 
 from src_files.Neural_Network.Raw_Numpy.Raw_Numpy_Layers.Abstract_Layer.Abstract_Layer cimport Abstract_Layer
 
@@ -16,6 +20,8 @@ cdef class Tanh_Activation(Abstract_Layer):
         :param inputs: shape (batch_size, num_classes)
         :return: 
         """
+        with gil:
+            previous = np.array(inputs)
         cdef int rows = inputs.shape[0]
         cdef int cols = inputs.shape[1]
         cdef int i, j

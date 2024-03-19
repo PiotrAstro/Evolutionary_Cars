@@ -1,5 +1,6 @@
+import math
 from concurrent.futures import ThreadPoolExecutor
-from typing import Mapping, Any, List, Dict, Type, Tuple, Optional
+from typing import Dict, Any, List, Dict, Type, Tuple, Optional
 
 import numpy as np
 
@@ -9,18 +10,59 @@ from src_files.Environments.Abstract_Environment.Abstract_Environment_Iterator i
 from src_files.Neural_Network.Raw_Numpy.Raw_Numpy_Models.Normal.Normal_model import Normal_model
 
 
+class Individual_Params_Tree:
+    def __init__(self, params: Dict[str, Any], parent: Optional['Individual_Params_Tree']) -> None:
+        self.params = params
+        self.parent = parent
+        self.fitness = 0.0
+        self.children: List['Individual_Params_Tree'] = []
+
+    def add_child(self, new_child: 'Individual_Params_Tree') -> None:
+        self.children.append(new_child)
+
+
+
+
+
+# Because of mutation_factor change, currently only works normal mutation!
+# L1 and L2 factors are implemented only for mutation_threshold = None
 class Individual:
-    def __init__(self, neural_network_params: Dict[str, Any], environment_class: Type[Abstract_Environment], environments_list_kwargs: List[Dict[str, Any]]) -> None:
+    def __init__(self,
+                 neural_network_params: Dict[str, Any],
+                 environment_class: Type[Abstract_Environment],
+                 environments_list_kwargs: List[Dict[str, Any]],
+                 mutation_factor: float,
+                 parent: Optional[Individual_Params_Tree] = None,
+                 mutation_threshold: float | None = None,
+                 L1_factor: float = 0,
+                 L2_factor: float = 0) -> None:
         """
         Initializes Individual
         :param neural_network_params: parameters for neural network
         :param environment_class: class of environment
         :param environments_list_kwargs: list of kwargs for environments
+        :param mutation_factor: float
+        :param parent: parent of individual
+        :param mutation_threshold: None or float - if not None, then it uses scaled mutation
+        :param L1_factor: float - shrinks parameters by constant factor
+        :param L2_factor: float - shrinks parameters using also parameters value
         """
+        self.mutation_factor = mutation_factor
+        self.mutation_threshold = mutation_threshold
+        self.L1_factor = L1_factor
+        self.L2_factor = L2_factor
+
         self.neural_network = Normal_model(**neural_network_params)
+        self.param_tree_self = Individual_Params_Tree(self.neural_network.get_parameters(), parent)
+        if parent is not None:
+            parent.add_child(self.param_tree_self)
+
+        # self.params_to_look_at = self.neural_network.get_parameters()
+
         self.neural_network_params = neural_network_params
         self.environment_class = environment_class
         self.environments_kwargs = environments_list_kwargs
+
 
         self.environments = [environment_class(**kwargs) for kwargs in environments_list_kwargs]
         self.environment_iterator = Abstract_Environment_Iterator(self.environments)
@@ -32,6 +74,8 @@ class Individual:
         if not self.is_fitness_calculated:
             self.fitness = self.environment_iterator.get_results(self.neural_network)
             self.is_fitness_calculated = True
+            self.param_tree_self.params = self.neural_network.get_parameters()
+            self.param_tree_self.fitness = self.fitness
         return self.fitness
 
     def generate_crossed_scattered_individuals(self, other: 'Individual') -> Tuple['Individual', 'Individual']:
@@ -62,7 +106,7 @@ class Individual:
         new_individual.neural_network.set_parameters(new_policy_params)
         return new_individual
 
-    def mutate(self, mutation_factor: float, mutation_threshold: Optional[float] = None) -> None:
+    def mutate(self) -> None:
         """
         Mutates individual inplace, if mutation_threshold is not None, then it uses scaled mutation
         :param mutation_factor:
@@ -70,11 +114,12 @@ class Individual:
         :return:
         """
         params = self.neural_network.get_parameters()
-        self.__permute_params_dict(params, mutation_factor, mutation_threshold=mutation_threshold)
+        self.__permute_params_dict(params)
         self.neural_network.set_parameters(params)
+        # self.params_to_look_at = params
         self.is_fitness_calculated = False
 
-    def copy_mutate_and_evaluate(self, mutation_factor: float, mutation_threshold: Optional[float] = None) -> 'Individual':
+    def copy_mutate_and_evaluate(self) -> 'Individual':
         """
         Copies, mutates and evaluates individual
         :param mutation_factor:
@@ -82,19 +127,9 @@ class Individual:
         :return:
         """
         new_individual = self.copy()
-        new_individual.mutate(mutation_factor, mutation_threshold=mutation_threshold)
+        new_individual.mutate()
         new_individual.get_fitness()
         return new_individual
-
-    def copy_mutate_and_evaluate_other_self(self, mutation_factor: float, mutation_threshold: Optional[float] = None) -> 'Individual':
-        """
-        Copies, mutates and evaluates individual, firstly self is evaluated, then mutated
-        :param mutation_factor:
-        :param mutation_threshold: None or float - if not None, then it uses scaled mutation
-        :return:
-        """
-        self.get_fitness()
-        return self.copy_mutate_and_evaluate(mutation_factor, mutation_threshold=mutation_threshold)
 
     def evolutionary_strategy_one_epoch(self, number_of_individuals: int, sigma_change: float, alpha_learning_rate: float, num_of_processes: int) -> np.ndarray:
         """
@@ -109,13 +144,13 @@ class Individual:
         # multi-threading
         with ThreadPoolExecutor(max_workers=num_of_processes) as executor:
             futures = [
-                executor.submit(self.copy_mutate_and_evaluate, sigma_change)
+                executor.submit(self.copy_mutate_and_evaluate)
                 for _ in range(number_of_individuals)
             ]
             individuals_mutated = [future.result() for future in futures]
         # end of multi-threading
 
-        fitnesses = np.array([individual.get_fitness() for individual in individuals_mutated])
+        fitnesses = np.array([individual.get_fitness() for individual in individuals_mutated], dtype=float)
         fitnesses_normalised = (fitnesses - np.mean(fitnesses)) / np.std(fitnesses)
         multiply_factor = alpha_learning_rate / (number_of_individuals * sigma_change)
         change_amount = fitnesses_normalised * multiply_factor
@@ -129,9 +164,9 @@ class Individual:
         return fitnesses
 
     def differential_evolution_one_epoch(self,
-                                         base_params: Mapping[str, Any],
-                                         individual_1_params: Mapping[str, Any],
-                                         individual_2_params: Mapping[str, Any],
+                                         base_params: Dict[str, Any],
+                                         individual_1_params: Dict[str, Any],
+                                         individual_2_params: Dict[str, Any],
                                          cross_prob: float,
                                          diff_weight: float) -> bool:
         """
@@ -160,19 +195,118 @@ class Individual:
             self.fitness = original_fitness
             return False
 
+    def FIHC(self, mutation_factor: float, max_checks: int, mutation_threshold: Optional[float] = None) -> None:
+        """
+        Performs First Improvement Hill Climbing, modifies self inplace, takes into consideration columns of parameters (so changes each neuron)
+        :param mutation_factor:
+        :param max_checks: number of checks of different mutation combinations
+        :param mutation_threshold: None or float - if not None, then it uses scaled mutation
+        :return:
+        """
+        def get_list_of_things_to_consider(params: Dict[str, Any], so_far_list: List[np.ndarray]) -> List[np.ndarray]:
+            """
+            Gets list of things to consider, where each element is column of parameters from params
+            :param params:
+            :return:
+            """
+            for key, value in params.items():
+                if isinstance(value, dict):
+                    get_list_of_things_to_consider(value, so_far_list)
+                elif isinstance(value, np.ndarray):
+                    so_far_list.append(value)
+            return so_far_list
+        current_params = self.neural_network.get_parameters()
+
+        things_to_change = get_list_of_things_to_consider(current_params, [])
+
+        for param_column in things_to_change:
+            previous_column = param_column.copy()
+            original_fitness = self.get_fitness()
+
+            for _ in range(max_checks):
+                if mutation_threshold is None:
+                    param_column += np.random.normal(0, mutation_factor, param_column.shape)
+                else:
+                    MyMath.mutate_array_scaled(param_column, mutation_factor, mutation_threshold)
+                self.neural_network.set_parameters(current_params)
+                self.is_fitness_calculated = False
+                new_fitness = self.get_fitness()
+                if new_fitness > original_fitness:
+                    self.fitness = new_fitness
+                    break
+                else:
+                    self.fitness = original_fitness
+                    param_column[:] = previous_column
+
+        # def get_list_of_things_to_consider(params: Dict[str, Any], so_far_list: List[np.ndarray]) -> List[np.ndarray]:
+        #     """
+        #     Gets list of things to consider, where each element is column of parameters from params
+        #     :param params:
+        #     :return:
+        #     """
+        #     for key, value in params.items():
+        #         if isinstance(value, dict):
+        #             get_list_of_things_to_consider(value, so_far_list)
+        #         elif isinstance(value, np.ndarray):
+        #             if len(value.shape) == 1:
+        #                 so_far_list.append(value[:, None])
+        #             else:
+        #                 for i in range(value.shape[1]):
+        #                     so_far_list.append(value[:, i, None])
+        #     return so_far_list
+        # current_params = self.neural_network.get_parameters()
+        #
+        # things_to_change = get_list_of_things_to_consider(current_params, [])
+        #
+        # for param_column in things_to_change:
+        #     previous_column = param_column.copy()
+        #     original_fitness = self.get_fitness()
+        #
+        #     for _ in range(max_checks):
+        #         if mutation_threshold is None:
+        #             param_column += np.random.normal(0, mutation_factor, param_column.shape)
+        #         else:
+        #             MyMath.mutate_array_scaled(param_column, mutation_factor, mutation_threshold)
+        #         self.neural_network.set_parameters(current_params)
+        #         self.is_fitness_calculated = False
+        #         new_fitness = self.get_fitness()
+        #         if new_fitness > original_fitness:
+        #             self.fitness = new_fitness
+        #             break
+        #         else:
+        #             self.fitness = original_fitness
+        #             param_column[:] = previous_column
+
     def copy(self) -> 'Individual':
-        new_individual = Individual(self.neural_network_params, self.environment_class, self.environments_kwargs)
-        params = self.neural_network.get_parameters()
-        new_individual.neural_network.set_parameters(params)
+        # self_copy = self.__copy_set_same_previous()
+        # new_individual = Individual(self.neural_network_params, self.environment_class, self.environments_kwargs, self_copy)
+        new_individual = Individual(self.neural_network_params,
+                                    self.environment_class,
+                                    self.environments_kwargs,
+                                    self.mutation_factor,
+                                    self.param_tree_self,
+                                    self.mutation_threshold,
+                                    self.L1_factor,
+                                    self.L2_factor)
+        new_individual.neural_network.set_parameters(self.neural_network.get_parameters())
         new_individual.fitness = self.fitness
         new_individual.is_fitness_calculated = self.is_fitness_calculated
+        # new_individual.params_to_look_at = self.params_to_look_at
         return new_individual
 
+    # def __copy_set_same_previous(self) -> 'Individual':
+    #     new_individual = Individual(self.neural_network_params, self.environment_class, self.environments_kwargs, self.parent_individual)
+    #     new_individual.neural_network.set_parameters(self.neural_network.get_parameters())
+    #     new_individual.fitness = self.fitness
+    #     new_individual.is_fitness_calculated = self.is_fitness_calculated
+    #     new_individual.params_to_look_at = self.params_to_look_at
+    #     return new_individual
+
     def __diff_evolution_iteration(self,
-                                   self_params: Mapping[str, Any],
-                                    base_params: Mapping[str, Any],
-                                    individual_1_params: Mapping[str, Any],
-                                    individual_2_params: Mapping[str, Any],
+                                   self_params: Dict[str, Any],
+                                    base_params: Dict[str, Any],
+                                    individual_1_params: Dict[str, Any],
+                                    individual_2_params: Dict[str, Any],
                                     cross_prob: float,
                                     diff_weight: float) -> None:
         """
@@ -193,7 +327,7 @@ class Individual:
                 self_params[key][cross_mask] = base_params[key][cross_mask] + diff_weight * (individual_1_params[key][cross_mask] - individual_2_params[key][cross_mask])
 
 
-    def __cross_mean_policy(self, params_to_change: Mapping[str, Any], other_params: Mapping[str, Any]) -> None:
+    def __cross_mean_policy(self, params_to_change: Dict[str, Any], other_params: Dict[str, Any]) -> None:
         """
         Changes mean policy dictionary parameters, params_to_change = (params_to_change + other_params) / 2
         :param params_to_change: current main policy part of params
@@ -208,7 +342,7 @@ class Individual:
 
 
 
-    def __actualise_policy_dict_params(self, main_policy: Mapping[str, Any], other_policies: List[Mapping[str, Any]], change_amount: np.ndarray, key_list: List[str]) -> None:
+    def __actualise_policy_dict_params(self, main_policy: Dict[str, Any], other_policies: List[Dict[str, Any]], change_amount: np.ndarray, key_list: List[str]) -> None:
         """
         Actualises policy dictionary parameters
         :param main_policy: current main policy part of params
@@ -228,7 +362,7 @@ class Individual:
                 main_policy[key] = param_array_double.astype(np.float32)
             key_list.pop()
 
-    def __get_element_from_dict(self, dictionary: Mapping[str, Any], key_list: List[str]) -> Any:
+    def __get_element_from_dict(self, dictionary: Dict[str, Any], key_list: List[str]) -> Any:
         """
         Gets element from dictionary by key list
         :param dictionary:
@@ -239,7 +373,7 @@ class Individual:
             dictionary = dictionary[key]
         return dictionary
 
-    def __cross_scattered_policy(self, params1: Mapping[str, Any], params2: Mapping[str, Any]) -> None:
+    def __cross_scattered_policy(self, params1: Dict[str, Any], params2: Dict[str, Any]) -> None:
         """
         changes params_to_change so that on random places it swapes params1 and params2
         :param params1: first policy part of params
@@ -254,7 +388,7 @@ class Individual:
                 params2[key][mask] = value[mask]
                 params1[key][mask] = params_2_mask_copy
 
-    def __permute_params_dict(self, param_dict: Mapping[str, Any], sigma: float, mutation_threshold: Optional[float] = None) -> None:
+    def __permute_params_dict(self, param_dict: Dict[str, Any]) -> None:
         """
         Permutes parameters dictionary, used with __permute_policy
         :param param_dict:
@@ -264,9 +398,9 @@ class Individual:
         """
         for key, value in param_dict.items():
             if isinstance(value, dict):
-                self.__permute_params_dict(value, sigma, mutation_threshold=mutation_threshold)
+                self.__permute_params_dict(value)
             elif isinstance(value, np.ndarray):
-                if mutation_threshold is None:
-                    value += np.random.normal(0, sigma, value.shape)
+                if self.mutation_threshold is None:
+                    value += np.random.normal(0, self.mutation_factor, value.shape) - self.L1_factor * np.sign(value) - self.L2_factor * value
                 else:
-                    MyMath.mutate_array_scaled(value, sigma, mutation_threshold)
+                    MyMath.mutate_array_scaled(value, self.mutation_factor, self.mutation_threshold)

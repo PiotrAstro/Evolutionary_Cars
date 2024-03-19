@@ -115,18 +115,18 @@ class Genetic_Algorithm:
     #     :param environment: environment
     #     :return: reward
     #     """
-    #
+    
     #     environment_here.reset()
     #     output = policy_here.calculate_one_example(environment_here.get_whole_state())
     #     action = environment_here.get_action_production_state(output)
     #     reward, _ = environment_here.react_to_action(action)
-    #
+    
     #     while environment_here.is_alive():
     #         output = policy_here.calculate_one_example(environment_here.get_optimized_rnn_state())
     #         action = environment_here.get_action_production_state(output)
     #         reward_tmp, _ = environment_here.react_to_action(action)
     #         reward += reward_tmp
-    #
+    
     #     return reward
 
     def __perform_cross(self, parent_index_1: int, parent_index_2: int) -> None:

@@ -1,4 +1,5 @@
 import os
+import pickle
 import random
 import time
 from concurrent.futures import ThreadPoolExecutor
@@ -30,6 +31,8 @@ class Evolutionary_Mutate_Population:
         self.epochs = constants_dict["Evolutionary_Mutate_Population"]["epochs"]
         self.mutation_factor = constants_dict["Evolutionary_Mutate_Population"]["mutation_factor"]
         self.mutation_threshold = constants_dict["Evolutionary_Mutate_Population"]["mutation_threshold"]
+        self.L1 = constants_dict["Evolutionary_Mutate_Population"]["L1"]
+        self.L2 = constants_dict["Evolutionary_Mutate_Population"]["L2"]
         self.save_logs_every_n_epochs = constants_dict["Evolutionary_Mutate_Population"]["save_logs_every_n_epochs"]
         base_log_dir = constants_dict["Evolutionary_Mutate_Population"]["logs_path"]
 
@@ -51,13 +54,19 @@ class Evolutionary_Mutate_Population:
 
         # file handling
         self.log_directory = base_log_dir + "/" + "EvMuPop" + str(int(time.time())) + "/"
-        # os.makedirs(self.log_directory, exist_ok=True)
+        os.makedirs(self.log_directory, exist_ok=True)
 
         #self.logger = Timestamp_Logger(file_path=self.log_directory + "log.txt", log_mode='w', log_moment='a', separator='\t')
 
         self.neural_network_kwargs = constants_dict["neural_network"]
         self.population = [
-            Individual(self.neural_network_kwargs, self.environment_class, self.training_environments_kwargs)
+            Individual(self.neural_network_kwargs,
+                       self.environment_class,
+                       self.training_environments_kwargs,
+                       self.mutation_factor,
+                       mutation_threshold=self.mutation_threshold,
+                       L1_factor=self.L1,
+                       L2_factor=self.L2)
             for _ in range(self.population_size)
         ]
         self.best_individual = self.population[0].copy()
@@ -74,6 +83,13 @@ class Evolutionary_Mutate_Population:
         quantile_labels = [f"quantile_{q}" for q in quantile]
         log_list = []
 
+        with ThreadPoolExecutor(max_workers=self.max_threads) as executor:
+            futures = [
+                executor.submit(individual.get_fitness)
+                for individual in self.population
+            ]
+            results = [future.result() for future in futures]
+
         for generation in range(self.epochs):
             print(f"Generation {generation}")
 
@@ -81,7 +97,7 @@ class Evolutionary_Mutate_Population:
             # multi-threading
             with ThreadPoolExecutor(max_workers=self.max_threads) as executor:
                 futures = [
-                    executor.submit(individual.copy_mutate_and_evaluate_other_self, self.mutation_factor, self.mutation_threshold)
+                    executor.submit(individual.copy_mutate_and_evaluate)
                     for individual in self.population
                 ]
                 mutated_population = [future.result() for future in futures]
@@ -100,7 +116,15 @@ class Evolutionary_Mutate_Population:
             )[:self.population_size]
 
             if self.population[0].get_fitness() > self.best_individual.get_fitness():
+                # self.population[0].FIHC(self.mutation_factor, 20, self.mutation_threshold)
                 self.best_individual = self.population[0].copy()
+                if self.population[0].get_fitness() > 10000:
+                    deepest_parent = self.population[0].param_tree_self
+                    while deepest_parent.parent is not None:
+                        deepest_parent = deepest_parent.parent
+                    with open(self.log_directory + "best_individual_tree.pkl", "wb") as f:
+                        pickle.dump(deepest_parent, f)
+
 
             fitnesses = np.array([individual.get_fitness() for individual in self.population])
             quantile_results = np.quantile(fitnesses, quantile)

@@ -1,6 +1,5 @@
 import numpy as np
 
-real_t_numpy = np.float32
 
 cdef class Abstract_Environment:
     def p_reset(self) -> None:
@@ -48,11 +47,11 @@ cdef class Abstract_Environment:
         with gil:
             raise NotImplementedError("Abstract method")
 
-    cdef real_t[::1] get_state(self) noexcept nogil:
+    cdef float[::1] get_state(self) noexcept nogil:
         with gil:
             raise NotImplementedError("Abstract method")
 
-    cdef double react(self, real_t[::1] outputs) noexcept nogil:
+    cdef double react(self, float[::1] outputs) noexcept nogil:
         with gil:
             raise NotImplementedError("Abstract method")
 

@@ -102,8 +102,10 @@ CONSTANTS_DICT = {
     "Evolutionary_Mutate_Population": {
         "population": 500,
         "epochs": 600,
-        "mutation_factor": 0.05,
-        "mutation_threshold": 1,  # None - no scaled mutation, float - scaled mutation
+        "mutation_factor": 0.5,
+        "mutation_threshold": None,  # None - no scaled mutation, float - scaled mutation
+        "L1": 0.0,
+        "L2": 0.0,
         "save_logs_every_n_epochs": 50,
         "logs_path": r"C:\Piotr\AIProjects\Evolutionary_Cars\logs",
     },
