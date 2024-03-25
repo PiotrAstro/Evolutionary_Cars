@@ -137,6 +137,67 @@ cdef inline float float_abs(float value) noexcept nogil:
     else:
         return value
 
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
+def safe_mutate_inplace(array_modified: np.ndarray,
+                        mutation_factor: float,
+                        scales: np.ndarray,
+                        min_scale: float,
+                        max_scale: float,
+                        L1_norm: float,
+                        L2_norm: float) -> None:
+    """
+    Mutate the given array by adding random values to each element. Works in place.
+    Random values are taken from numpy, so one can take care of seed globally.
+    :param array_modified: 2d numpy array, modified in place (float32)
+    :param scales: 2d numpy array, scales for each element (float32)
+    :param min_scale: minimum scale for each element
+    :param max_scale: maximum scale for each element
+    :param L1_norm: L1 norm of the scales
+    :param L2_norm: L2 norm of the scales
+    :return: None, modifies the array in place
+    """
+    cdef float[:, ::1] array_modified_view
+    cdef double[:, ::1] random_values
+    cdef float[:, ::1] scales_view
+    cdef int i, j
+    cdef int rows
+    cdef int cols
+    cdef float mutation_factor_here = mutation_factor
+    cdef float min_scale_here = min_scale
+    cdef float max_scale_here = max_scale
+    cdef float L1_norm_here = L1_norm
+    cdef float L2_norm_here = L2_norm
+    cdef float L1_norm_tmp
+    cdef float scale_here
+    cdef float tmp_modified_value
+
+    if len(array_modified.shape) == 1:
+        array_modified_view = array_modified[None, :]
+        scales_view = scales[None, :]
+        random_values = np.random.uniform(0, 1, (1, array_modified.shape[0]))
+    else:
+        array_modified_view = array_modified
+        scales_view = scales
+        random_values = np.random.uniform(0, 1, array_modified.shape)
+
+    with nogil:
+        rows = array_modified_view.shape[0]
+        cols = array_modified_view.shape[1]
+        for i in range(rows):
+            for j in range(cols):
+                tmp_modified_value = array_modified_view[i, j]
+                scale_here = scales_view[i, j]
+                if scale_here < min_scale_here:
+                    scale_here = min_scale_here
+                elif scale_here > max_scale_here:
+                    scale_here = max_scale_here
+                L1_norm_tmp = L1_norm_here
+                if tmp_modified_value < 0:
+                    L1_norm_tmp *= -1
+                array_modified_view[i, j] += lookup_normal_distribution(random_values[i, j]) * mutation_factor_here / scale_here - L1_norm_tmp - L2_norm_here * tmp_modified_value
+
 # @cython.boundscheck(False)
 # @cython.wraparound(False)
 # def mutate_array_scaled(array_modified: np.ndarray, scale: float, threshold: float) -> None:

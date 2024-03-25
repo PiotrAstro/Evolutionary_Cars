@@ -7,6 +7,7 @@ import numpy as np
 from src_files.MyMath import MyMath
 from src_files.Environments.Abstract_Environment.Abstract_Environment import Abstract_Environment
 from src_files.Environments.Abstract_Environment.Abstract_Environment_Iterator import Abstract_Environment_Iterator
+from src_files.MyMath.MyMath import safe_mutate_inplace
 from src_files.Neural_Network.Raw_Numpy.Raw_Numpy_Models.Normal.Normal_model import Normal_model
 
 
@@ -36,7 +37,7 @@ class Individual:
                  use_safe_mutation: bool = False,
                  L1_factor: float = 0,
                  L2_factor: float = 0,
-                 safe_mutation_factor_max_age: int = 3,
+                 safe_mutation_factor_max_age: int = 5,
                  current_mutation_factor_age: int = 0,
                  safe_mutation_factors: dict[str, Any] | None = None) -> None:
         """
@@ -133,9 +134,10 @@ class Individual:
         :return:
         """
         if self.use_safe_mutation and (self.safe_mutation_factors is None or self.safe_mutation_factors_age >= self.safe_mutation_factor_max_age):
-            self.fitness, inputs, outputs = self.environment_iterator.get_results_with_input_output(self.neural_network, 100000)
+            self.fitness, inputs, outputs = self.environment_iterator.get_results_with_input_output(self.neural_network, 10_000)
             self.is_fitness_calculated = True
             self.safe_mutation_factors = self.neural_network.get_safe_mutation(inputs, outputs)
+            self.safe_mutation_factors_age = 0
         new_individual = self.copy()
         new_individual.mutate()
         new_individual.get_fitness()
@@ -299,7 +301,7 @@ class Individual:
                                     self.L1_factor,
                                     self.L2_factor,
                                     self.safe_mutation_factor_max_age,
-                                    self.safe_mutation_factors_age,
+                                    self.safe_mutation_factors_age + 1,
                                     self.safe_mutation_factors)
         new_individual.neural_network.set_parameters(self.neural_network.get_parameters())
         new_individual.fitness = self.fitness
@@ -416,8 +418,9 @@ class Individual:
                 if safe_mutation_factors is None or self.use_safe_mutation is False:
                     value += np.random.normal(0, self.mutation_factor, value.shape) - self.L1_factor * np.sign(value) - self.L2_factor * value
                 else:
-                    sigmas = self.mutation_factor / np.clip(safe_mutation_factors[key], 0.01, None)
-                    value += np.random.normal(0, sigmas, value.shape) - self.L1_factor * np.sign(value) - self.L2_factor * value
+                    # sigmas = self.mutation_factor / np.clip(safe_mutation_factors[key], 0.01, None)
+                    # value += np.random.normal(0, sigmas, value.shape) - self.L1_factor * np.sign(value) - self.L2_factor * value
+                    safe_mutate_inplace(value, self.mutation_factor, safe_mutation_factors[key], 0.01, 1000.0, self.L1_factor, self.L2_factor)
                 # if self.mutation_threshold is None:
                 # value += np.random.normal(0, self.mutation_factor, value.shape) - self.L1_factor * np.sign(value) - self.L2_factor * value
                 # else:
