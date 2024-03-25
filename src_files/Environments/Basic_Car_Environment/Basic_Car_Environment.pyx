@@ -291,14 +291,4 @@ cdef class Car:
         if check_y < 0 or check_y >= map_view.shape[0]:
             return True
 
-        # with gil:
-        #     cython_debug_call({
-        #         "check_x": check_x,
-        #         "check_y": check_y,
-        #         "angle to corner": self.angle_to_corner,
-        #         "map_view[check_y, check_x]": map_view[check_y, check_x],
-        #         "result": map_view[check_y, check_x] == 1,
-        #     },
-        #     place_in_code="collision check")
-
         return map_view[check_y, check_x] == 1

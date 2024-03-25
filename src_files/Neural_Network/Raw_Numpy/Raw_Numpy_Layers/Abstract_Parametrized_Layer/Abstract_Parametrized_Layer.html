@@ -392,10 +392,10 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_7); __pyx_t_7 = 0;
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_4); __pyx_t_4 = 0;
 /* … */
-  __pyx_t_7 = <span class='pyx_c_api'>__Pyx_PyDict_NewPresized</span>(0);<span class='error_goto'> if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 1, __pyx_L1_error)</span>
-  <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_7);
-  if (<span class='py_c_api'>PyDict_SetItem</span>(__pyx_d, __pyx_n_s_test, __pyx_t_7) &lt; 0) <span class='error_goto'>__PYX_ERR(0, 1, __pyx_L1_error)</span>
-  <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_7); __pyx_t_7 = 0;
+  __pyx_t_4 = <span class='pyx_c_api'>__Pyx_PyDict_NewPresized</span>(0);<span class='error_goto'> if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 1, __pyx_L1_error)</span>
+  <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_4);
+  if (<span class='py_c_api'>PyDict_SetItem</span>(__pyx_d, __pyx_n_s_test, __pyx_t_4) &lt; 0) <span class='error_goto'>__PYX_ERR(0, 1, __pyx_L1_error)</span>
+  <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_4); __pyx_t_4 = 0;
 </pre><pre class="cython line score-0">&#xA0;<span class="">02</span>: </pre>
 <pre class="cython line score-8" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">03</span>: <span class="k">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span></pre>
 <pre class='cython code score-8 '>  __pyx_t_4 = <span class='pyx_c_api'>__Pyx_ImportDottedModule</span>(__pyx_n_s_numpy, NULL);<span class='error_goto'> if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 3, __pyx_L1_error)</span>
@@ -697,4 +697,78 @@ static PyObject *__pyx_pf_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Lay
 <pre class='cython code score-2 '>  <span class='pyx_c_api'>__Pyx_Raise</span>(__pyx_builtin_NotImplementedError, 0, 0, 0);
   <span class='error_goto'>__PYX_ERR(0, 26, __pyx_L1_error)</span>
 </pre><pre class="cython line score-0">&#xA0;<span class="">27</span>: </pre>
+<pre class="cython line score-39" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">28</span>:     <span class="k">def</span> <span class="nf">get_safe_mutation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span></pre>
+<pre class='cython code score-39 '>/* Python wrapper */
+static PyObject *__pyx_pw_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_27Abstract_Parametrized_Layer_27Abstract_Parametrized_Layer_27Abstract_Parametrized_Layer_7get_safe_mutation(PyObject *__pyx_v_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+<span class='py_macro_api'>PyDoc_STRVAR</span>(__pyx_doc_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_27Abstract_Parametrized_Layer_27Abstract_Parametrized_Layer_27Abstract_Parametrized_Layer_6get_safe_mutation, "\n        Returns value for parameters that determine safe mutation size\n        ");
+static PyMethodDef __pyx_mdef_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_27Abstract_Parametrized_Layer_27Abstract_Parametrized_Layer_27Abstract_Parametrized_Layer_7get_safe_mutation = {"get_safe_mutation", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_27Abstract_Parametrized_Layer_27Abstract_Parametrized_Layer_27Abstract_Parametrized_Layer_7get_safe_mutation, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_27Abstract_Parametrized_Layer_27Abstract_Parametrized_Layer_27Abstract_Parametrized_Layer_6get_safe_mutation};
+static PyObject *__pyx_pw_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_27Abstract_Parametrized_Layer_27Abstract_Parametrized_Layer_27Abstract_Parametrized_Layer_7get_safe_mutation(PyObject *__pyx_v_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+) {
+  #if !CYTHON_METH_FASTCALL
+  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
+  #endif
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
+  PyObject *__pyx_r = 0;
+  <span class='refnanny'>__Pyx_RefNannyDeclarations</span>
+  <span class='refnanny'>__Pyx_RefNannySetupContext</span>("get_safe_mutation (wrapper)", 0);
+  #if !CYTHON_METH_FASTCALL
+  #if CYTHON_ASSUME_SAFE_MACROS
+  __pyx_nargs = <span class='py_macro_api'>PyTuple_GET_SIZE</span>(__pyx_args);
+  #else
+  __pyx_nargs = <span class='py_c_api'>PyTuple_Size</span>(__pyx_args); if (unlikely(__pyx_nargs &lt; 0)) return NULL;
+  #endif
+  #endif
+  __pyx_kwvalues = <span class='pyx_c_api'>__Pyx_KwValues_FASTCALL</span>(__pyx_args, __pyx_nargs);
+  if (unlikely(__pyx_nargs &gt; 0)) {
+    <span class='pyx_c_api'>__Pyx_RaiseArgtupleInvalid</span>("get_safe_mutation", 1, 0, 0, __pyx_nargs); return NULL;}
+  if (unlikely(__pyx_kwds) &amp;&amp; <span class='pyx_c_api'>__Pyx_NumKwargs_FASTCALL</span>(__pyx_kwds) &amp;&amp; unlikely(!<span class='pyx_c_api'>__Pyx_CheckKeywordStrings</span>(__pyx_kwds, "get_safe_mutation", 0))) return NULL;
+  __pyx_r = __pyx_pf_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_27Abstract_Parametrized_Layer_27Abstract_Parametrized_Layer_27Abstract_Parametrized_Layer_6get_safe_mutation(((struct __pyx_obj_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_27Abstract_Parametrized_Layer_27Abstract_Parametrized_Layer_Abstract_Parametrized_Layer *)__pyx_v_self));
+
+  /* function exit code */
+  <span class='refnanny'>__Pyx_RefNannyFinishContext</span>();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_27Abstract_Parametrized_Layer_27Abstract_Parametrized_Layer_27Abstract_Parametrized_Layer_6get_safe_mutation(CYTHON_UNUSED struct __pyx_obj_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_27Abstract_Parametrized_Layer_27Abstract_Parametrized_Layer_Abstract_Parametrized_Layer *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+/* … */
+  /* function exit code */
+  __pyx_L1_error:;
+  <span class='pyx_c_api'>__Pyx_AddTraceback</span>("src_files.Neural_Network.Raw_Numpy.Raw_Numpy_Layers.Abstract_Parametrized_Layer.Abstract_Parametrized_Layer.Abstract_Parametrized_Layer.get_safe_mutation", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  <span class='refnanny'>__Pyx_XGIVEREF</span>(__pyx_r);
+  <span class='refnanny'>__Pyx_RefNannyFinishContext</span>();
+  return __pyx_r;
+}
+/* … */
+  __pyx_t_7 = <span class='pyx_c_api'>__Pyx_PyDict_NewPresized</span>(1);<span class='error_goto'> if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 28, __pyx_L1_error)</span>
+  <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_7);
+  if (<span class='py_c_api'>PyDict_SetItem</span>(__pyx_t_7, __pyx_n_s_return, __pyx_kp_s_Dict_str_Any) &lt; 0) <span class='error_goto'>__PYX_ERR(0, 28, __pyx_L1_error)</span>
+  __pyx_t_4 = <span class='pyx_c_api'>__Pyx_CyFunction_New</span>(&amp;__pyx_mdef_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_27Abstract_Parametrized_Layer_27Abstract_Parametrized_Layer_27Abstract_Parametrized_Layer_7get_safe_mutation, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Abstract_Parametrized_Layer_get_2, NULL, __pyx_n_s_src_files_Neural_Network_Raw_Num_2, __pyx_d, ((PyObject *)__pyx_codeobj__26));<span class='error_goto'> if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 28, __pyx_L1_error)</span>
+  <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_4);
+  <span class='pyx_c_api'>__Pyx_CyFunction_SetAnnotationsDict</span>(__pyx_t_4, __pyx_t_7);
+  <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_7); __pyx_t_7 = 0;
+  if (<span class='pyx_c_api'>__Pyx_SetItemOnTypeDict</span>((PyObject *)__pyx_ptype_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_27Abstract_Parametrized_Layer_27Abstract_Parametrized_Layer_Abstract_Parametrized_Layer, __pyx_n_s_get_safe_mutation, __pyx_t_4) &lt; 0) <span class='error_goto'>__PYX_ERR(0, 28, __pyx_L1_error)</span>
+  <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_4); __pyx_t_4 = 0;
+  <span class='py_c_api'>PyType_Modified</span>(__pyx_ptype_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_27Abstract_Parametrized_Layer_27Abstract_Parametrized_Layer_Abstract_Parametrized_Layer);
+/* … */
+  __pyx_codeobj__26 = (PyObject*)<span class='pyx_c_api'>__Pyx_PyCode_New</span>(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__21, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_src_files_Neural_Network_Raw_Num, __pyx_n_s_get_safe_mutation, 28, __pyx_empty_bytes);<span class='error_goto'> if (unlikely(!__pyx_codeobj__26)) __PYX_ERR(0, 28, __pyx_L1_error)</span>
+</pre><pre class="cython line score-0">&#xA0;<span class="">29</span>: <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span></pre>
+<pre class="cython line score-0">&#xA0;<span class="">30</span>: <span class="sd">        Returns value for parameters that determine safe mutation size</span></pre>
+<pre class="cython line score-0">&#xA0;<span class="">31</span>: <span class="sd">        &quot;&quot;&quot;</span></pre>
+<pre class="cython line score-2" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">32</span>:         <span class="k">raise</span> <span class="ne">NotImplementedError</span></pre>
+<pre class='cython code score-2 '>  <span class='pyx_c_api'>__Pyx_Raise</span>(__pyx_builtin_NotImplementedError, 0, 0, 0);
+  <span class='error_goto'>__PYX_ERR(0, 32, __pyx_L1_error)</span>
+</pre><pre class="cython line score-0">&#xA0;<span class="">33</span>: </pre>
 </div></body></html>

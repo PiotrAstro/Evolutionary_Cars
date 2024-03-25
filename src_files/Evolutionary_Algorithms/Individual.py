@@ -33,9 +33,12 @@ class Individual:
                  environments_list_kwargs: List[Dict[str, Any]],
                  mutation_factor: float,
                  parent: Optional[Individual_Params_Tree] = None,
-                 mutation_threshold: float | None = None,
+                 use_safe_mutation: bool = False,
                  L1_factor: float = 0,
-                 L2_factor: float = 0) -> None:
+                 L2_factor: float = 0,
+                 safe_mutation_factor_max_age: int = 3,
+                 current_mutation_factor_age: int = 0,
+                 safe_mutation_factors: dict[str, Any] | None = None) -> None:
         """
         Initializes Individual
         :param neural_network_params: parameters for neural network
@@ -43,12 +46,12 @@ class Individual:
         :param environments_list_kwargs: list of kwargs for environments
         :param mutation_factor: float
         :param parent: parent of individual
-        :param mutation_threshold: None or float - if not None, then it uses scaled mutation
+        :param use_safe_mutation: bool - if True, then uses scaled mutation
         :param L1_factor: float - shrinks parameters by constant factor
         :param L2_factor: float - shrinks parameters using also parameters value
         """
         self.mutation_factor = mutation_factor
-        self.mutation_threshold = mutation_threshold
+        self.use_safe_mutation = use_safe_mutation
         self.L1_factor = L1_factor
         self.L2_factor = L2_factor
 
@@ -69,6 +72,9 @@ class Individual:
 
         self.fitness = 0.0
         self.is_fitness_calculated = False
+        self.safe_mutation_factors = safe_mutation_factors
+        self.safe_mutation_factors_age = current_mutation_factor_age
+        self.safe_mutation_factor_max_age = safe_mutation_factor_max_age
 
     def get_fitness(self) -> float:
         if not self.is_fitness_calculated:
@@ -114,7 +120,7 @@ class Individual:
         :return:
         """
         params = self.neural_network.get_parameters()
-        self.__permute_params_dict(params)
+        self.__permute_params_dict(params, self.safe_mutation_factors)
         self.neural_network.set_parameters(params)
         # self.params_to_look_at = params
         self.is_fitness_calculated = False
@@ -126,6 +132,10 @@ class Individual:
         :param mutation_threshold: None or float - if not None, then it uses scaled mutation
         :return:
         """
+        if self.use_safe_mutation and (self.safe_mutation_factors is None or self.safe_mutation_factors_age >= self.safe_mutation_factor_max_age):
+            self.fitness, inputs, outputs = self.environment_iterator.get_results_with_input_output(self.neural_network, 100000)
+            self.is_fitness_calculated = True
+            self.safe_mutation_factors = self.neural_network.get_safe_mutation(inputs, outputs)
         new_individual = self.copy()
         new_individual.mutate()
         new_individual.get_fitness()
@@ -285,9 +295,12 @@ class Individual:
                                     self.environments_kwargs,
                                     self.mutation_factor,
                                     self.param_tree_self,
-                                    self.mutation_threshold,
+                                    self.use_safe_mutation,
                                     self.L1_factor,
-                                    self.L2_factor)
+                                    self.L2_factor,
+                                    self.safe_mutation_factor_max_age,
+                                    self.safe_mutation_factors_age,
+                                    self.safe_mutation_factors)
         new_individual.neural_network.set_parameters(self.neural_network.get_parameters())
         new_individual.fitness = self.fitness
         new_individual.is_fitness_calculated = self.is_fitness_calculated
@@ -388,7 +401,7 @@ class Individual:
                 params2[key][mask] = value[mask]
                 params1[key][mask] = params_2_mask_copy
 
-    def __permute_params_dict(self, param_dict: Dict[str, Any]) -> None:
+    def __permute_params_dict(self, param_dict: Dict[str, Any], safe_mutation_factors: Dict[str, Any] | None) -> None:
         """
         Permutes parameters dictionary, used with __permute_policy
         :param param_dict:
@@ -398,9 +411,14 @@ class Individual:
         """
         for key, value in param_dict.items():
             if isinstance(value, dict):
-                self.__permute_params_dict(value)
+                self.__permute_params_dict(value, safe_mutation_factors[key] if safe_mutation_factors is not None else None)
             elif isinstance(value, np.ndarray):
-                if self.mutation_threshold is None:
+                if safe_mutation_factors is None or self.use_safe_mutation is False:
                     value += np.random.normal(0, self.mutation_factor, value.shape) - self.L1_factor * np.sign(value) - self.L2_factor * value
                 else:
-                    MyMath.mutate_array_scaled(value, self.mutation_factor, self.mutation_threshold)
+                    sigmas = self.mutation_factor / np.clip(safe_mutation_factors[key], 0.01, None)
+                    value += np.random.normal(0, sigmas, value.shape) - self.L1_factor * np.sign(value) - self.L2_factor * value
+                # if self.mutation_threshold is None:
+                # value += np.random.normal(0, self.mutation_factor, value.shape) - self.L1_factor * np.sign(value) - self.L2_factor * value
+                # else:
+                #     MyMath.mutate_array_scaled(value, self.mutation_factor, self.mutation_threshold)

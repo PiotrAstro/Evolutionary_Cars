@@ -21257,7 +21257,7 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
  *         if check_y < 0 or check_y >= map_view.shape[0]:
  *             return True             # <<<<<<<<<<<<<<
  * 
- *         # with gil:
+ *         return map_view[check_y, check_x] == 1
  */
     __pyx_r = 1;
     goto __pyx_L0;
@@ -21271,8 +21271,8 @@ static int __pyx_f_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car
  */
   }
 
-  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":304
- *         #     place_in_code="collision check")
+  /* "src_files/Environments/Basic_Car_Environment/Basic_Car_Environment.pyx":294
+ *             return True
  * 
  *         return map_view[check_y, check_x] == 1             # <<<<<<<<<<<<<<
  */

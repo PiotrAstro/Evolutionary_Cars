@@ -30,7 +30,7 @@ class Evolutionary_Mutate_Population:
         self.population_size = constants_dict["Evolutionary_Mutate_Population"]["population"]
         self.epochs = constants_dict["Evolutionary_Mutate_Population"]["epochs"]
         self.mutation_factor = constants_dict["Evolutionary_Mutate_Population"]["mutation_factor"]
-        self.mutation_threshold = constants_dict["Evolutionary_Mutate_Population"]["mutation_threshold"]
+        self.use_safe_mutation = constants_dict["Evolutionary_Mutate_Population"]["use_safe_mutation"]
         self.L1 = constants_dict["Evolutionary_Mutate_Population"]["L1"]
         self.L2 = constants_dict["Evolutionary_Mutate_Population"]["L2"]
         self.save_logs_every_n_epochs = constants_dict["Evolutionary_Mutate_Population"]["save_logs_every_n_epochs"]
@@ -64,7 +64,7 @@ class Evolutionary_Mutate_Population:
                        self.environment_class,
                        self.training_environments_kwargs,
                        self.mutation_factor,
-                       mutation_threshold=self.mutation_threshold,
+                       use_safe_mutation=self.use_safe_mutation,
                        L1_factor=self.L1,
                        L2_factor=self.L2)
             for _ in range(self.population_size)
@@ -83,12 +83,12 @@ class Evolutionary_Mutate_Population:
         quantile_labels = [f"quantile_{q}" for q in quantile]
         log_list = []
 
-        with ThreadPoolExecutor(max_workers=self.max_threads) as executor:
-            futures = [
-                executor.submit(individual.get_fitness)
-                for individual in self.population
-            ]
-            results = [future.result() for future in futures]
+        # with ThreadPoolExecutor(max_workers=self.max_threads) as executor:
+        #     futures = [
+        #         executor.submit(individual.get_fitness)
+        #         for individual in self.population
+        #     ]
+        #     results = [future.result() for future in futures]
 
         for generation in range(self.epochs):
             print(f"Generation {generation}")
@@ -102,7 +102,7 @@ class Evolutionary_Mutate_Population:
                 ]
                 mutated_population = [future.result() for future in futures]
             # mutated_population = [
-            #     individual.copy_mutate_and_evaluate_other_self(self.mutation_factor, self.mutation_threshold)
+            #     individual.copy_mutate_and_evaluate()
             #     for individual in self.population
             # ]
             # end of multi-threading

@@ -25,3 +25,9 @@ cdef class Abstract_Parametrized_Layer(Abstract_Layer):
         """
         raise NotImplementedError
 
+    def get_safe_mutation(self) -> Dict[str, Any]:
+        """
+        Returns value for parameters that determine safe mutation size
+        """
+        raise NotImplementedError
+

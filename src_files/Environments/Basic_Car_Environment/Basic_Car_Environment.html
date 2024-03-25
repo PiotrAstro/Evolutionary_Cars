@@ -2262,17 +2262,7 @@ static int __pyx_pf_9src_files_12Environments_21Basic_Car_Environment_21Basic_Ca
 <pre class='cython code score-0 '>    __pyx_r = 1;
     goto __pyx_L0;
 </pre><pre class="cython line score-0">&#xA0;<span class="">293</span>: </pre>
-<pre class="cython line score-0">&#xA0;<span class="">294</span>:         <span class="c"># with gil:</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">295</span>:         <span class="c">#     cython_debug_call({</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">296</span>:         <span class="c">#         &quot;check_x&quot;: check_x,</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">297</span>:         <span class="c">#         &quot;check_y&quot;: check_y,</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">298</span>:         <span class="c">#         &quot;angle to corner&quot;: self.angle_to_corner,</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">299</span>:         <span class="c">#         &quot;map_view[check_y, check_x]&quot;: map_view[check_y, check_x],</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">300</span>:         <span class="c">#         &quot;result&quot;: map_view[check_y, check_x] == 1,</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">301</span>:         <span class="c">#     },</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">302</span>:         <span class="c">#     place_in_code=&quot;collision check&quot;)</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">303</span>: </pre>
-<pre class="cython line score-0" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">304</span>:         <span class="k">return</span> <span class="n">map_view</span><span class="p">[</span><span class="n">check_y</span><span class="p">,</span> <span class="n">check_x</span><span class="p">]</span> <span class="o">==</span> <span class="mf">1</span></pre>
+<pre class="cython line score-0" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">294</span>:         <span class="k">return</span> <span class="n">map_view</span><span class="p">[</span><span class="n">check_y</span><span class="p">,</span> <span class="n">check_x</span><span class="p">]</span> <span class="o">==</span> <span class="mf">1</span></pre>
 <pre class='cython code score-0 '>  __pyx_t_3 = __pyx_v_check_y;
   __pyx_t_4 = __pyx_v_check_x;
   __pyx_r = ((*((__pyx_t_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_map_view_t *) ( /* dim=1 */ ((char *) (((__pyx_t_9src_files_12Environments_21Basic_Car_Environment_21Basic_Car_Environment_map_view_t *) ( /* dim=0 */ (__pyx_v_map_view.data + __pyx_t_3 * __pyx_v_map_view.strides[0]) )) + __pyx_t_4)) ))) == 1);

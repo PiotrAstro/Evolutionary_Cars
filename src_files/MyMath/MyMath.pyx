@@ -128,109 +128,118 @@ cdef inline double sigmoid(double value) noexcept nogil:
     else:
         return 1.0 / (1.0 + lookup_exp(-value))
 
-@cython.boundscheck(False)
-@cython.wraparound(False)
-def mutate_array_scaled(array_modified: np.ndarray, scale: float, threshold: float) -> None:
+cdef inline float float_abs(float value) noexcept nogil:
     """
-    Mutate the given array by adding random values to each element. Works in place.
-    Random values are taken from numpy, so one can take care of seed globally.
-
-    :param array_modified: 1d or 2d numpy array, modified in place, float32
-    :param scale: basic scale, like sigma of normal distribution, scales everything, e.g. 0.1
-    :param threshold: threshold for scaling, if value is bigger than threshold, scale is multiplied by value, else by threshold
-    :return: None, modifies the array in place
+    Return the absolute value of the given float.
     """
-    # initial_array = np.array(array_modified, copy=True, dtype=np.float32)
-
-    cdef float[:, ::1] array_modified_view
-    cdef double[:, ::1] random_values
-    cdef int i, j
-    cdef int rows
-    cdef int cols
-    cdef double scale_here
-    cdef double mean
-    cdef double std_dev
-    cdef double c_scale = scale
-    cdef double threshold_here = threshold
-    cdef double tmp_modified_value
-
-    if len(array_modified.shape) == 1:
-        array_modified_view = array_modified[None, :]
-        random_values = np.random.uniform(0, 1, (1, array_modified.shape[0]))
+    if value < 0:
+        return -value
     else:
-        array_modified_view = array_modified
-        random_values = np.random.uniform(0, 1, array_modified.shape)
-    rows = array_modified_view.shape[0]
-    cols = array_modified_view.shape[1]
+        return value
 
-    with nogil:
-        for j in range(cols):
-            mean = 0.0
-            std_dev = 0.0
-            for i in range(rows):
-                tmp_modified_value = array_modified_view[i, j]
-                std_dev += tmp_modified_value**2
-                mean += tmp_modified_value
-            mean /= rows
-            std_dev = sqrt(std_dev / rows - mean**2)
-
-            for i in range(rows):
-                tmp_modified_value = array_modified_view[i, j]
-
-                if std_dev == 0:
-                    std_dev = 1
-                tmp_modified_value /= std_dev
-
-                if tmp_modified_value < 0:
-                    tmp_modified_value = -tmp_modified_value
-
-                tmp_modified_value = 3 * (tmp_modified_value - 1)
-                scale_here = 1 + threshold_here * sigmoid(tmp_modified_value)
-                scale_here *= c_scale
-                array_modified_view[i, j] += lookup_normal_distribution(random_values[i, j]) * scale_here
-
-        # for i in range(rows):
-        #     for j in range(cols):
-                # original, normal threshold
-                # tmp_modified_value = array_modified_view[i, j]
-                # scale_here = c_scale
-                # if tmp_modified_value > threshold_here:
-                #     scale_here *= tmp_modified_value
-                # elif tmp_modified_value < -threshold_here:
-                #     scale_here *= -tmp_modified_value
-                # else:
-                #     scale_here *= threshold_here
-                #
-                # array_modified_view[i, j] = tmp_modified_value + lookup_normal_distribution(random_values[i, j]) * scale_here
-
-    # values_scale_here = np.zeros_like(random_values)
-    # for j in range(cols):
-    #     mean = 0.0
-    #     std_dev = 0.0
-    #     for i in range(rows):
-    #         tmp_modified_value = array_modified_view[i, j]
-    #         std_dev += tmp_modified_value ** 2
-    #         mean += tmp_modified_value
-    #     mean /= rows
-    #     std_dev = sqrt(std_dev / rows - mean ** 2)
-    #
-    #     for i in range(rows):
-    #         tmp_modified_value = array_modified_view[i, j]
-    #         tmp_modified_value /= std_dev
-    #
-    #         if tmp_modified_value < 0:
-    #             tmp_modified_value = -tmp_modified_value
-    #
-    #         tmp_modified_value = 3 * (tmp_modified_value - 1)
-    #         scale_here = 1 + threshold_here * sigmoid(tmp_modified_value)
-    #         values_scale_here[i, j] = scale_here
-    # cython_debug_call(
-    #     {
-    #         "initial_array": initial_array,
-    #         "array_modified": array_modified,
-    #         "random_values": np.array(random_values),
-    #         "values_scale_here": np.array(values_scale_here),
-    #         "scale": scale,
-    #         "threshold_here": threshold_here,
-    #     }
-    # )
+# @cython.boundscheck(False)
+# @cython.wraparound(False)
+# def mutate_array_scaled(array_modified: np.ndarray, scale: float, threshold: float) -> None:
+#     """
+#     Mutate the given array by adding random values to each element. Works in place.
+#     Random values are taken from numpy, so one can take care of seed globally.
+#
+#     :param array_modified: 1d or 2d numpy array, modified in place, float32
+#     :param scale: basic scale, like sigma of normal distribution, scales everything, e.g. 0.1
+#     :param threshold: threshold for scaling, if value is bigger than threshold, scale is multiplied by value, else by threshold
+#     :return: None, modifies the array in place
+#     """
+#     # initial_array = np.array(array_modified, copy=True, dtype=np.float32)
+#
+#     cdef float[:, ::1] array_modified_view
+#     cdef double[:, ::1] random_values
+#     cdef int i, j
+#     cdef int rows
+#     cdef int cols
+#     cdef double scale_here
+#     cdef double mean
+#     cdef double std_dev
+#     cdef double c_scale = scale
+#     cdef double threshold_here = threshold
+#     cdef double tmp_modified_value
+#
+#     if len(array_modified.shape) == 1:
+#         array_modified_view = array_modified[None, :]
+#         random_values = np.random.uniform(0, 1, (1, array_modified.shape[0]))
+#     else:
+#         array_modified_view = array_modified
+#         random_values = np.random.uniform(0, 1, array_modified.shape)
+#     rows = array_modified_view.shape[0]
+#     cols = array_modified_view.shape[1]
+#
+#     with nogil:
+#         for j in range(cols):
+#             mean = 0.0
+#             std_dev = 0.0
+#             for i in range(rows):
+#                 tmp_modified_value = array_modified_view[i, j]
+#                 std_dev += tmp_modified_value**2
+#                 mean += tmp_modified_value
+#             mean /= rows
+#             std_dev = sqrt(std_dev / rows - mean**2)
+#
+#             for i in range(rows):
+#                 tmp_modified_value = array_modified_view[i, j]
+#
+#                 if std_dev == 0:
+#                     std_dev = 1
+#                 tmp_modified_value /= std_dev
+#
+#                 if tmp_modified_value < 0:
+#                     tmp_modified_value = -tmp_modified_value
+#
+#                 tmp_modified_value = 3 * (tmp_modified_value - 1)
+#                 scale_here = 1 + threshold_here * sigmoid(tmp_modified_value)
+#                 scale_here *= c_scale
+#                 array_modified_view[i, j] += lookup_normal_distribution(random_values[i, j]) * scale_here
+#
+#         # for i in range(rows):
+#         #     for j in range(cols):
+#                 # original, normal threshold
+#                 # tmp_modified_value = array_modified_view[i, j]
+#                 # scale_here = c_scale
+#                 # if tmp_modified_value > threshold_here:
+#                 #     scale_here *= tmp_modified_value
+#                 # elif tmp_modified_value < -threshold_here:
+#                 #     scale_here *= -tmp_modified_value
+#                 # else:
+#                 #     scale_here *= threshold_here
+#                 #
+#                 # array_modified_view[i, j] = tmp_modified_value + lookup_normal_distribution(random_values[i, j]) * scale_here
+#
+#     # values_scale_here = np.zeros_like(random_values)
+#     # for j in range(cols):
+#     #     mean = 0.0
+#     #     std_dev = 0.0
+#     #     for i in range(rows):
+#     #         tmp_modified_value = array_modified_view[i, j]
+#     #         std_dev += tmp_modified_value ** 2
+#     #         mean += tmp_modified_value
+#     #     mean /= rows
+#     #     std_dev = sqrt(std_dev / rows - mean ** 2)
+#     #
+#     #     for i in range(rows):
+#     #         tmp_modified_value = array_modified_view[i, j]
+#     #         tmp_modified_value /= std_dev
+#     #
+#     #         if tmp_modified_value < 0:
+#     #             tmp_modified_value = -tmp_modified_value
+#     #
+#     #         tmp_modified_value = 3 * (tmp_modified_value - 1)
+#     #         scale_here = 1 + threshold_here * sigmoid(tmp_modified_value)
+#     #         values_scale_here[i, j] = scale_here
+#     # cython_debug_call(
+#     #     {
+#     #         "initial_array": initial_array,
+#     #         "array_modified": array_modified,
+#     #         "random_values": np.array(random_values),
+#     #         "values_scale_here": np.array(values_scale_here),
+#     #         "scale": scale,
+#     #         "threshold_here": threshold_here,
+#     #     }
+#     # )

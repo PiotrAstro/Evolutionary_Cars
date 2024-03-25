@@ -1,5 +1,7 @@
 import math
 
+import cython
+
 from src_files.Environments.Abstract_Environment.Abstract_Environment cimport Abstract_Environment
 from src_files.MyMath.cython_debug_helper import cython_debug_call
 
@@ -45,17 +47,59 @@ cdef class Abstract_Environment_Iterator:
                 input_rows_number = self.iterate_insert_state(input_states)
                 outputs = model_cython.forward_pass(input_states[:input_rows_number])
                 result += self.iterate_react(outputs)
-                # with gil:
-                #     if math.isnan(result):
-                #         cython_debug_call(
-                #             {
-                #                 "input_states": np.array(input_states[:input_rows_number]),
-                #                 "outputs": np.array(outputs),
-                #                 "input_rows_number": input_rows_number,
-                #                 "result sum": result,
-                #             }
-                #         )
         return result
+
+    @cython.boundscheck(False)
+    @cython.wraparound(False)
+    @cython.nonecheck(False)
+    def get_results_with_input_output(self, model: Normal_model, max_length: int) -> tuple[float, np.ndarray, np.ndarray]:
+        """
+        This function returns sum of all results from all environments, it is for python use
+        :return: sum of all results, input_states, outputs
+        """
+        cdef Normal_model model_cython = model
+        cdef float[:, ::1] input_states_memory = np.empty((max_length, model_cython.get_normal_input_size()), dtype=np.float32)
+        cdef float[:, ::1] outputs_memory = np.empty((max_length, model_cython.get_normal_output_size()), dtype=np.float32)
+        cdef float[:, ::1] input_states = np.zeros((self.number_of_environments, model_cython.get_normal_input_size()), dtype=np.float32)
+        cdef float[:, ::1] outputs
+        cdef int memory_rows = 0
+        cdef int max_length_here = max_length
+        cdef int cols
+        cdef int i, j
+        cdef int input_rows_number
+        cdef double result = 0
+
+        with nogil:
+            self.iterate_reset_environments()
+
+            while self.iterate_is_alive():
+                input_rows_number = self.iterate_insert_state(input_states)
+
+                if memory_rows + input_rows_number < max_length_here:
+                    cols = input_states_memory.shape[1]
+                    for i in range(input_rows_number):
+                        for j in range(cols):
+                            input_states_memory[memory_rows + i, j] = input_states[i, j]
+
+                outputs = model_cython.forward_pass(input_states[:input_rows_number])
+
+                if memory_rows + input_rows_number < max_length_here:
+                    cols = outputs_memory.shape[1]
+                    for i in range(input_rows_number):
+                        for j in range(cols):
+                            outputs_memory[memory_rows + i, j] = outputs[i, j]
+                memory_rows += input_rows_number
+
+                result += self.iterate_react(outputs)
+        # cython_debug_call({
+        #     "input_states_memory": np.array(input_states_memory[:memory_rows], dtype=np.float32, copy=False),
+        #     "outputs_memory": np.array(outputs_memory[:memory_rows], dtype=np.float32, copy=False),
+        #     "result": result
+        # },
+        # "get_results_with_input_output"
+        # )
+        return result, np.array(input_states_memory[:memory_rows], dtype=np.float32, copy=False), np.array(outputs_memory[:memory_rows], dtype=np.float32, copy=False)
+
 
     cdef int iterate_insert_state(self, float[:, ::1] input_state) noexcept nogil:
         """

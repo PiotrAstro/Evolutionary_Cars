@@ -21,6 +21,13 @@ cdef class Sequence_Layers(Abstract_Parametrized_Layer):
 
         return next_dict
 
+    def get_safe_mutation(self) -> Dict[str, Any]:
+        next_dict = self.next_one.get_safe_mutation() if self.next_one is not None else {}
+        if isinstance(self.layer, Abstract_Parametrized_Layer):
+            next_dict[self.layer_name] = self.layer.get_safe_mutation()
+
+        return next_dict
+
     def set_parameters(self, parameters: Dict[str, Any]) -> None:
         if isinstance(self.layer, Abstract_Parametrized_Layer):
             self.layer.set_parameters(parameters[self.layer_name])
@@ -39,8 +46,6 @@ cdef class Sequence_Layers(Abstract_Parametrized_Layer):
 
 
     cdef float[:, ::1] forward(self, float[:, ::1] inputs) noexcept nogil:
-        # with gil:
-        #     inputs_tmp = np.array(inputs)
         cdef float[:, ::1] outputs = self.layer.forward(inputs)
 
         # with gil:
@@ -56,6 +61,29 @@ cdef class Sequence_Layers(Abstract_Parametrized_Layer):
             return outputs
         else:
             return self.next_one.forward(outputs)
+
+    cdef float[:, ::1] forward_grad(self, float[:, ::1] inputs) noexcept nogil:
+        cdef float[:, ::1] outputs = self.layer.forward_grad(inputs)
+
+
+        if self.next_one is None:
+            return outputs
+        else:
+            return self.next_one.forward_grad(outputs)
+
+    cdef float[:, ::1] backward(self, float[:, ::1] grad) noexcept nogil:
+        """
+        :param grad: shape (batch_size, num_classes)
+        :return: 
+        """
+        cdef float[:, ::1] prev_grad
+
+        if self.next_one is None:
+            prev_grad = grad
+        else:
+            prev_grad = self.next_one.backward(grad)
+
+        return self.layer.backward(prev_grad)
 
 
 

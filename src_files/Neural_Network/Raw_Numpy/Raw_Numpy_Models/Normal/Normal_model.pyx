@@ -1,10 +1,12 @@
 import json
 import pickle
-from typing import Optional, Dict, Any
+from typing import Optional, Dict, Any, Union
 
 import cython
 import numpy as np
 
+from src_files.Neural_Network.Raw_Numpy.Raw_Numpy_Layers.Activation_Iterator.Activation_Iterator import \
+    Activations_Iterator_Wrapper
 from src_files.Neural_Network.Raw_Numpy.Raw_Numpy_Layers.Dense_Layer.Dense_Layer import Dense_Layer
 from src_files.Neural_Network.Raw_Numpy.Raw_Numpy_Layers.Parameter_Generator import Xavier_Distribution_Generator, \
     He_Distribution_Generator
@@ -20,7 +22,7 @@ cdef class Normal_model:
 
     def __init__(self, input_normal_size: int, out_actions_number: int = 3, normal_hidden_layers: int = 1,
                  normal_hidden_neurons: int = 64, normal_activation_function: str = "relu",
-                 last_activation_function: str = "none") -> None:
+                 last_activation_function: Union[list[tuple[str, int]], str] = "none") -> None:
         """
         Create a new model with the given parameters
         :param input_normal_size: size of the input for the normal part
@@ -28,16 +30,23 @@ cdef class Normal_model:
         :param normal_hidden_layers: number of hidden layers in the normal part
         :param normal_hidden_neurons: number of neurons in the hidden layers in the normal part
         :param normal_activation_function: activation function for the normal part: "relu", "tanh", "sigmoid", "softmax", "none"
-        :param last_activation_function: activation function for the last layer in the normal part: "relu", "tanh", "sigmoid", "softmax", "none"
+        :param last_activation_function: normal name, e.g. "relu", or several output actions with different activation functions, e.g. [(softmax, 3), (tanh, 1)]
         """
         self.normal_input_size = input_normal_size
+        self.normal_output_size = out_actions_number
 
         layers_counter: int = 0
         last_sequence_layer: Optional[Sequence_Layers] = None
-        last_activation_class = get_activation_class(last_activation_function)
         add_hidden_activation = False
+        if isinstance(last_activation_function, list):
+            last_activation_iterator: Optional[Activation_Iterator] = None
+            sum_of_action_numbers = sum([actions_number for _, actions_number in last_activation_function])
+            if sum_of_action_numbers != out_actions_number:
+                raise ValueError("Sum of actions numbers in last activation function should be equal to out actions number")
 
-        if last_activation_class is not None:
+            last_sequence_layer = Sequence_Layers(Activations_Iterator_Wrapper(last_activation_function), last_sequence_layer, layers_counter)
+        else:
+            last_activation_class = get_activation_class(last_activation_function)
             last_sequence_layer = Sequence_Layers(last_activation_class(), last_sequence_layer, layers_counter)
             layers_counter += 1
 
@@ -51,7 +60,7 @@ cdef class Normal_model:
             parameter_generator = Xavier_Distribution_Generator()
 
         for i in range(normal_hidden_layers + 1):
-            if activation_class is not None and add_hidden_activation:
+            if add_hidden_activation:
                 last_sequence_layer = Sequence_Layers(activation_class(), last_sequence_layer, layers_counter)
                 layers_counter += 1
             add_hidden_activation = True
@@ -163,12 +172,57 @@ cdef class Normal_model:
         """
         self.normal_part.generate_parameters()
 
+
+    @cython.boundscheck(False)  # Deactivate bounds checking
+    @cython.wraparound(False)
+    @cython.nonecheck(False)
+    def get_safe_mutation(self, inputs: np.ndarray, outputs: np.ndarray) -> Dict[str, Any]:
+        """
+        Get a safe mutation for the model
+        :param inputs: np.float32
+        :param outputs: np.float32
+        :return:
+        """
+        cdef float[:, ::1] normal_inputs = np.array(inputs, dtype=np.float32, copy=False)
+        cdef float[:, ::1] normal_outputs = np.array(outputs, dtype=np.float32, copy=False)
+        cdef float[:, ::1] outputs_single = np.zeros_like(outputs, dtype=np.float32)
+        # cdef float[:, ::1] normal_inputs = inputs
+        # cdef float[:, ::1] normal_outputs = outputs
+        # cdef float[:, ::1] outputs_single = np.zeros((outputs.shape[0], 1), dtype=np.float32)
+        cdef int rows = normal_outputs.shape[0]
+        cdef int out_cols = normal_outputs.shape[1]
+        cdef int i, j
+
+        with nogil:
+            self.normal_part.forward_grad(normal_inputs)
+            for i in range(out_cols):
+                for j in range(rows):
+                    outputs_single[j, i] = normal_outputs[j, i]
+                    if i > 0:
+                        outputs_single[j, i - 1] = 0.0
+                # with gil:
+                #     cython_debug_call({
+                #         "column": i,
+                #         "outputs_single": np.array(outputs_single, dtype=np.float32),
+                #         "normal_outputs": np.array(normal_outputs, dtype=np.float32),
+                #         "normal_inputs": np.array(normal_inputs, dtype=np.float32),
+                #         "inputs": inputs,
+                #         "outputs": outputs,
+                #     }, "get safe mutation column")
+                self.normal_part.backward(outputs_single)
+        return self.normal_part.get_safe_mutation()
+
     cdef int get_normal_input_size(self) noexcept nogil:
         """
         Get the size of the input for the normal part
         """
         return self.normal_input_size
 
+    cdef int get_normal_output_size(self) noexcept nogil:
+        """
+        Get the size of the output for the normal part
+        """
+        return self.normal_output_size
 
     def p_forward_pass(self, normal_input: np.ndarray) -> np.ndarray:
         """

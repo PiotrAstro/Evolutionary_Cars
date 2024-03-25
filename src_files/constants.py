@@ -80,7 +80,7 @@ CONSTANTS_DICT = {
         "normal_hidden_layers": 2,
         "normal_hidden_neurons": 64,
         "normal_activation_function": "relu",
-        "last_activation_function": "tanh",
+        "last_activation_function": [("softmax", 3), ("tanh", 1)],
     },
     "Genetic_Algorithm": {
         "population": 500,
@@ -100,10 +100,10 @@ CONSTANTS_DICT = {
         "logs_path": r"C:\Piotr\AIProjects\Evolutionary_Cars\logs",
     },
     "Evolutionary_Mutate_Population": {
-        "population": 500,
+        "population": 200,
         "epochs": 600,
-        "mutation_factor": 0.5,
-        "mutation_threshold": None,  # None - no scaled mutation, float - scaled mutation
+        "mutation_factor": 0.002, # good - 0.05 or 0.1
+        "use_safe_mutation": True,  # None - no scaled mutation, float - scaled mutation
         "L1": 0.0,
         "L2": 0.0,
         "save_logs_every_n_epochs": 50,

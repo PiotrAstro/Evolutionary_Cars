@@ -370,30 +370,115 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
     Click on a line that starts with a "<code>+</code>" to see the C code that Cython generated for it.
 </p>
 <p>Raw output: <a href="Abstract_Layer.c">Abstract_Layer.c</a></p>
-<div class="cython"><pre class="cython line score-0">&#xA0;<span class="">01</span>: </pre>
-<pre class="cython line score-8" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">02</span>: <span class="k">cdef</span> <span class="k">class</span> <span class="nf">Abstract_Layer</span><span class="p">:</span></pre>
-<pre class='cython code score-8 '>  __pyx_t_4 = <span class='pyx_c_api'>__Pyx_PyDict_NewPresized</span>(0);<span class='error_goto'> if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 2, __pyx_L1_error)</span>
+<div class="cython"><pre class="cython line score-8" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">01</span>: <span class="k">import</span> <span class="nn">cython</span></pre>
+<pre class='cython code score-8 '>  __pyx_t_7 = <span class='pyx_c_api'>__Pyx_PyDict_NewPresized</span>(0);<span class='error_goto'> if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 1, __pyx_L1_error)</span>
+  <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_7);
+  if (<span class='py_c_api'>PyDict_SetItem</span>(__pyx_d, __pyx_n_s_test, __pyx_t_7) &lt; 0) <span class='error_goto'>__PYX_ERR(0, 1, __pyx_L1_error)</span>
+  <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_7); __pyx_t_7 = 0;
+</pre><pre class="cython line score-8" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">02</span>: <span class="k">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span></pre>
+<pre class='cython code score-8 '>  __pyx_t_7 = <span class='pyx_c_api'>__Pyx_ImportDottedModule</span>(__pyx_n_s_numpy, NULL);<span class='error_goto'> if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 2, __pyx_L1_error)</span>
+  <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_7);
+  if (<span class='py_c_api'>PyDict_SetItem</span>(__pyx_d, __pyx_n_s_np, __pyx_t_7) &lt; 0) <span class='error_goto'>__PYX_ERR(0, 2, __pyx_L1_error)</span>
+  <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_7); __pyx_t_7 = 0;
+</pre><pre class="cython line score-20" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">03</span>: <span class="k">from</span> <span class="nn">src_files.MyMath.cython_debug_helper</span> <span class="k">import</span> <span class="n">cython_debug_call</span></pre>
+<pre class='cython code score-20 '>  __pyx_t_7 = <span class='py_c_api'>PyList_New</span>(1);<span class='error_goto'> if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 3, __pyx_L1_error)</span>
+  <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_7);
+  <span class='pyx_macro_api'>__Pyx_INCREF</span>(__pyx_n_s_cython_debug_call);
+  <span class='refnanny'>__Pyx_GIVEREF</span>(__pyx_n_s_cython_debug_call);
+  if (<span class='pyx_c_api'>__Pyx_PyList_SET_ITEM</span>(__pyx_t_7, 0, __pyx_n_s_cython_debug_call)) <span class='error_goto'>__PYX_ERR(0, 3, __pyx_L1_error)</span>;
+  __pyx_t_4 = <span class='pyx_c_api'>__Pyx_Import</span>(__pyx_n_s_src_files_MyMath_cython_debug_he, __pyx_t_7, 0);<span class='error_goto'> if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 3, __pyx_L1_error)</span>
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_4);
-  if (<span class='py_c_api'>PyDict_SetItem</span>(__pyx_d, __pyx_n_s_test, __pyx_t_4) &lt; 0) <span class='error_goto'>__PYX_ERR(0, 2, __pyx_L1_error)</span>
+  <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_7); __pyx_t_7 = 0;
+  __pyx_t_7 = <span class='pyx_c_api'>__Pyx_ImportFrom</span>(__pyx_t_4, __pyx_n_s_cython_debug_call);<span class='error_goto'> if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 3, __pyx_L1_error)</span>
+  <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_7);
+  if (<span class='py_c_api'>PyDict_SetItem</span>(__pyx_d, __pyx_n_s_cython_debug_call, __pyx_t_7) &lt; 0) <span class='error_goto'>__PYX_ERR(0, 3, __pyx_L1_error)</span>
+  <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_7); __pyx_t_7 = 0;
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_4); __pyx_t_4 = 0;
-/* … */
-struct __pyx_vtabstruct_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_Abstract_Layer {
+</pre><pre class="cython line score-0">&#xA0;<span class="">04</span>: </pre>
+<pre class="cython line score-0" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">05</span>: <span class="k">cdef</span> <span class="k">class</span> <span class="nf">Abstract_Layer</span><span class="p">:</span></pre>
+<pre class='cython code score-0 '>struct __pyx_vtabstruct_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_Abstract_Layer {
   __Pyx_memviewslice (*forward)(struct __pyx_obj_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_Abstract_Layer *, __Pyx_memviewslice);
+  __Pyx_memviewslice (*forward_grad)(struct __pyx_obj_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_Abstract_Layer *, __Pyx_memviewslice);
+  __Pyx_memviewslice (*backward)(struct __pyx_obj_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_Abstract_Layer *, __Pyx_memviewslice);
 };
 static struct __pyx_vtabstruct_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_Abstract_Layer *__pyx_vtabptr_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_Abstract_Layer;
 
-</pre><pre class="cython line score-43" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">03</span>:     <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s">&#39;Abstract_Layer&#39;</span><span class="p">:</span></pre>
+</pre><pre class="cython line score-0">&#xA0;<span class="">06</span>: </pre>
+<pre class="cython line score-16" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">07</span>:     <span class="k">def</span> <span class="nf">__cinit__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></pre>
+<pre class='cython code score-16 '>/* Python wrapper */
+static int __pyx_pw_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_14Abstract_Layer_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static int __pyx_pw_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_14Abstract_Layer_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
+  int __pyx_r;
+  <span class='refnanny'>__Pyx_RefNannyDeclarations</span>
+  <span class='refnanny'>__Pyx_RefNannySetupContext</span>("__cinit__ (wrapper)", 0);
+  #if CYTHON_ASSUME_SAFE_MACROS
+  __pyx_nargs = <span class='py_macro_api'>PyTuple_GET_SIZE</span>(__pyx_args);
+  #else
+  __pyx_nargs = <span class='py_c_api'>PyTuple_Size</span>(__pyx_args); if (unlikely(__pyx_nargs &lt; 0)) return -1;
+  #endif
+  __pyx_kwvalues = <span class='pyx_c_api'>__Pyx_KwValues_VARARGS</span>(__pyx_args, __pyx_nargs);
+  if (unlikely(__pyx_nargs &gt; 0)) {
+    <span class='pyx_c_api'>__Pyx_RaiseArgtupleInvalid</span>("__cinit__", 1, 0, 0, __pyx_nargs); return -1;}
+  if (unlikely(__pyx_kwds) &amp;&amp; <span class='pyx_c_api'>__Pyx_NumKwargs_VARARGS</span>(__pyx_kwds) &amp;&amp; unlikely(!<span class='pyx_c_api'>__Pyx_CheckKeywordStrings</span>(__pyx_kwds, "__cinit__", 0))) return -1;
+  __pyx_r = __pyx_pf_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_14Abstract_Layer___cinit__(((struct __pyx_obj_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_Abstract_Layer *)__pyx_v_self));
+
+  /* function exit code */
+  <span class='refnanny'>__Pyx_RefNannyFinishContext</span>();
+  return __pyx_r;
+}
+
+static int __pyx_pf_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_14Abstract_Layer___cinit__(struct __pyx_obj_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_Abstract_Layer *__pyx_v_self) {
+  int __pyx_r;
+/* … */
+  /* function exit code */
+  __pyx_r = 0;
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __PYX_XCLEAR_MEMVIEW(&amp;__pyx_t_1, 1);
+  <span class='pyx_c_api'>__Pyx_AddTraceback</span>("src_files.Neural_Network.Raw_Numpy.Raw_Numpy_Layers.Abstract_Layer.Abstract_Layer.Abstract_Layer.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = -1;
+  __pyx_L0:;
+  return __pyx_r;
+}
+</pre><pre class="cython line score-2" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">08</span>:         <span class="bp">self</span><span class="o">.</span><span class="n">previous_inputs</span> <span class="o">=</span> <span class="bp">None</span></pre>
+<pre class='cython code score-2 '>  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_to_MemoryviewSlice_d_dc_float</span>(Py_None, PyBUF_WRITABLE);<span class='error_goto'> if (unlikely(!__pyx_t_1.memview)) __PYX_ERR(0, 8, __pyx_L1_error)</span>
+  __PYX_XCLEAR_MEMVIEW(&amp;__pyx_v_self-&gt;previous_inputs, 0);
+  __pyx_v_self-&gt;previous_inputs = __pyx_t_1;
+  __pyx_t_1.memview = NULL;
+  __pyx_t_1.data = NULL;
+</pre><pre class="cython line score-2" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">09</span>:         <span class="bp">self</span><span class="o">.</span><span class="n">previous_outputs</span> <span class="o">=</span> <span class="bp">None</span></pre>
+<pre class='cython code score-2 '>  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_to_MemoryviewSlice_d_dc_float</span>(Py_None, PyBUF_WRITABLE);<span class='error_goto'> if (unlikely(!__pyx_t_1.memview)) __PYX_ERR(0, 9, __pyx_L1_error)</span>
+  __PYX_XCLEAR_MEMVIEW(&amp;__pyx_v_self-&gt;previous_outputs, 0);
+  __pyx_v_self-&gt;previous_outputs = __pyx_t_1;
+  __pyx_t_1.memview = NULL;
+  __pyx_t_1.data = NULL;
+</pre><pre class="cython line score-2" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">10</span>:         <span class="bp">self</span><span class="o">.</span><span class="n">grads_inputs</span> <span class="o">=</span> <span class="bp">None</span></pre>
+<pre class='cython code score-2 '>  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_to_MemoryviewSlice_d_dc_float</span>(Py_None, PyBUF_WRITABLE);<span class='error_goto'> if (unlikely(!__pyx_t_1.memview)) __PYX_ERR(0, 10, __pyx_L1_error)</span>
+  __PYX_XCLEAR_MEMVIEW(&amp;__pyx_v_self-&gt;grads_inputs, 0);
+  __pyx_v_self-&gt;grads_inputs = __pyx_t_1;
+  __pyx_t_1.memview = NULL;
+  __pyx_t_1.data = NULL;
+</pre><pre class="cython line score-2" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">11</span>:         <span class="bp">self</span><span class="o">.</span><span class="n">inputs_copy</span> <span class="o">=</span> <span class="bp">None</span></pre>
+<pre class='cython code score-2 '>  __pyx_t_1 = <span class='pyx_c_api'>__Pyx_PyObject_to_MemoryviewSlice_d_dc_float</span>(Py_None, PyBUF_WRITABLE);<span class='error_goto'> if (unlikely(!__pyx_t_1.memview)) __PYX_ERR(0, 11, __pyx_L1_error)</span>
+  __PYX_XCLEAR_MEMVIEW(&amp;__pyx_v_self-&gt;inputs_copy, 0);
+  __pyx_v_self-&gt;inputs_copy = __pyx_t_1;
+  __pyx_t_1.memview = NULL;
+  __pyx_t_1.data = NULL;
+</pre><pre class="cython line score-0">&#xA0;<span class="">12</span>: </pre>
+<pre class="cython line score-43" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">13</span>:     <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s">&#39;Abstract_Layer&#39;</span><span class="p">:</span></pre>
 <pre class='cython code score-43 '>/* Python wrapper */
-static struct __pyx_obj_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_Abstract_Layer *__pyx_pw_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_14Abstract_Layer_1copy(PyObject *__pyx_v_self, 
+static struct __pyx_obj_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_Abstract_Layer *__pyx_pw_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_14Abstract_Layer_3copy(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-<span class='py_macro_api'>PyDoc_STRVAR</span>(__pyx_doc_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_14Abstract_Layer_copy, "\n        Returns copy of layer\n        :return:\n        ");
-static PyMethodDef __pyx_mdef_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_14Abstract_Layer_1copy = {"copy", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_14Abstract_Layer_1copy, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_14Abstract_Layer_copy};
-static struct __pyx_obj_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_Abstract_Layer *__pyx_pw_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_14Abstract_Layer_1copy(PyObject *__pyx_v_self, 
+<span class='py_macro_api'>PyDoc_STRVAR</span>(__pyx_doc_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_14Abstract_Layer_2copy, "\n        Returns copy of layer\n        :return:\n        ");
+static PyMethodDef __pyx_mdef_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_14Abstract_Layer_3copy = {"copy", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_14Abstract_Layer_3copy, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_14Abstract_Layer_2copy};
+static struct __pyx_obj_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_Abstract_Layer *__pyx_pw_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_14Abstract_Layer_3copy(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -418,14 +503,14 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   if (unlikely(__pyx_nargs &gt; 0)) {
     <span class='pyx_c_api'>__Pyx_RaiseArgtupleInvalid</span>("copy", 1, 0, 0, __pyx_nargs); return NULL;}
   if (unlikely(__pyx_kwds) &amp;&amp; <span class='pyx_c_api'>__Pyx_NumKwargs_FASTCALL</span>(__pyx_kwds) &amp;&amp; unlikely(!<span class='pyx_c_api'>__Pyx_CheckKeywordStrings</span>(__pyx_kwds, "copy", 0))) return NULL;
-  __pyx_r = __pyx_pf_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_14Abstract_Layer_copy(((struct __pyx_obj_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_Abstract_Layer *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_14Abstract_Layer_2copy(((struct __pyx_obj_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_Abstract_Layer *)__pyx_v_self));
 
   /* function exit code */
   <span class='refnanny'>__Pyx_RefNannyFinishContext</span>();
   return __pyx_r;
 }
 
-static struct __pyx_obj_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_Abstract_Layer *__pyx_pf_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_14Abstract_Layer_copy(CYTHON_UNUSED struct __pyx_obj_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_Abstract_Layer *__pyx_v_self) {
+static struct __pyx_obj_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_Abstract_Layer *__pyx_pf_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_14Abstract_Layer_2copy(CYTHON_UNUSED struct __pyx_obj_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_Abstract_Layer *__pyx_v_self) {
   struct __pyx_obj_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_Abstract_Layer *__pyx_r = NULL;
 
   /* function exit code */
@@ -435,28 +520,254 @@ static struct __pyx_obj_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layer
   return __pyx_r;
 }
 /* … */
-  __pyx_tuple__21 = <span class='py_c_api'>PyTuple_Pack</span>(1, __pyx_n_s_self);<span class='error_goto'> if (unlikely(!__pyx_tuple__21)) __PYX_ERR(0, 3, __pyx_L1_error)</span>
-  <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_tuple__21);
-  <span class='refnanny'>__Pyx_GIVEREF</span>(__pyx_tuple__21);
+  __pyx_tuple__20 = <span class='py_c_api'>PyTuple_Pack</span>(1, __pyx_n_s_self);<span class='error_goto'> if (unlikely(!__pyx_tuple__20)) __PYX_ERR(0, 13, __pyx_L1_error)</span>
+  <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_tuple__20);
+  <span class='refnanny'>__Pyx_GIVEREF</span>(__pyx_tuple__20);
 /* … */
-  __pyx_t_7 = <span class='pyx_c_api'>__Pyx_PyDict_NewPresized</span>(1);<span class='error_goto'> if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 3, __pyx_L1_error)</span>
-  <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_7);
-  if (<span class='py_c_api'>PyDict_SetItem</span>(__pyx_t_7, __pyx_n_s_return, __pyx_kp_s_Abstract_Layer_2) &lt; 0) <span class='error_goto'>__PYX_ERR(0, 3, __pyx_L1_error)</span>
-  __pyx_t_4 = <span class='pyx_c_api'>__Pyx_CyFunction_New</span>(&amp;__pyx_mdef_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_14Abstract_Layer_1copy, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Abstract_Layer_copy, NULL, __pyx_n_s_src_files_Neural_Network_Raw_Num_2, __pyx_d, ((PyObject *)__pyx_codeobj__22));<span class='error_goto'> if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 3, __pyx_L1_error)</span>
+  __pyx_t_4 = <span class='pyx_c_api'>__Pyx_PyDict_NewPresized</span>(1);<span class='error_goto'> if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 13, __pyx_L1_error)</span>
   <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_4);
-  <span class='pyx_c_api'>__Pyx_CyFunction_SetAnnotationsDict</span>(__pyx_t_4, __pyx_t_7);
-  <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_7); __pyx_t_7 = 0;
-  if (<span class='pyx_c_api'>__Pyx_SetItemOnTypeDict</span>((PyObject *)__pyx_ptype_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_Abstract_Layer, __pyx_n_s_copy, __pyx_t_4) &lt; 0) <span class='error_goto'>__PYX_ERR(0, 3, __pyx_L1_error)</span>
+  if (<span class='py_c_api'>PyDict_SetItem</span>(__pyx_t_4, __pyx_n_s_return, __pyx_kp_s_Abstract_Layer_2) &lt; 0) <span class='error_goto'>__PYX_ERR(0, 13, __pyx_L1_error)</span>
+  __pyx_t_7 = <span class='pyx_c_api'>__Pyx_CyFunction_New</span>(&amp;__pyx_mdef_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_14Abstract_Layer_3copy, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Abstract_Layer_copy, NULL, __pyx_n_s_src_files_Neural_Network_Raw_Num_2, __pyx_d, ((PyObject *)__pyx_codeobj__21));<span class='error_goto'> if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 13, __pyx_L1_error)</span>
+  <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_7);
+  <span class='pyx_c_api'>__Pyx_CyFunction_SetAnnotationsDict</span>(__pyx_t_7, __pyx_t_4);
   <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_4); __pyx_t_4 = 0;
+  if (<span class='pyx_c_api'>__Pyx_SetItemOnTypeDict</span>((PyObject *)__pyx_ptype_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_Abstract_Layer, __pyx_n_s_copy, __pyx_t_7) &lt; 0) <span class='error_goto'>__PYX_ERR(0, 13, __pyx_L1_error)</span>
+  <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_7); __pyx_t_7 = 0;
   <span class='py_c_api'>PyType_Modified</span>(__pyx_ptype_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_Abstract_Layer);
-  __pyx_codeobj__22 = (PyObject*)<span class='pyx_c_api'>__Pyx_PyCode_New</span>(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__21, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_src_files_Neural_Network_Raw_Num, __pyx_n_s_copy, 3, __pyx_empty_bytes);<span class='error_goto'> if (unlikely(!__pyx_codeobj__22)) __PYX_ERR(0, 3, __pyx_L1_error)</span>
-</pre><pre class="cython line score-0">&#xA0;<span class="">04</span>: <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">05</span>: <span class="sd">        Returns copy of layer</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">06</span>: <span class="sd">        :return:</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">07</span>: <span class="sd">        &quot;&quot;&quot;</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">08</span>:         <span class="k">pass</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">09</span>: </pre>
-<pre class="cython line score-6" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">10</span>:     <span class="k">cdef</span> <span class="kt">float</span>[<span class="p">:,</span> <span class="p">::</span><span class="mf">1</span><span class="p">]</span> <span class="n">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">float</span><span class="p">[:,</span> <span class="p">::</span><span class="mf">1</span><span class="p">]</span> <span class="n">inputs</span><span class="p">)</span> <span class="n">noexcept</span> <span class="k">nogil</span><span class="p">:</span></pre>
+  __pyx_codeobj__21 = (PyObject*)<span class='pyx_c_api'>__Pyx_PyCode_New</span>(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__20, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_src_files_Neural_Network_Raw_Num, __pyx_n_s_copy, 13, __pyx_empty_bytes);<span class='error_goto'> if (unlikely(!__pyx_codeobj__21)) __PYX_ERR(0, 13, __pyx_L1_error)</span>
+</pre><pre class="cython line score-0">&#xA0;<span class="">14</span>: <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span></pre>
+<pre class="cython line score-0">&#xA0;<span class="">15</span>: <span class="sd">        Returns copy of layer</span></pre>
+<pre class="cython line score-0">&#xA0;<span class="">16</span>: <span class="sd">        :return:</span></pre>
+<pre class="cython line score-0">&#xA0;<span class="">17</span>: <span class="sd">        &quot;&quot;&quot;</span></pre>
+<pre class="cython line score-0">&#xA0;<span class="">18</span>:         <span class="k">pass</span></pre>
+<pre class="cython line score-0">&#xA0;<span class="">19</span>: </pre>
+<pre class="cython line score-0">&#xA0;<span class="">20</span>: </pre>
+<pre class="cython line score-0">&#xA0;<span class="">21</span>:     <span class="nd">@cython</span><span class="o">.</span><span class="n">boundscheck</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>  <span class="c"># Deactivate bounds checking</span></pre>
+<pre class="cython line score-0">&#xA0;<span class="">22</span>:     <span class="nd">@cython</span><span class="o">.</span><span class="n">wraparound</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span></pre>
+<pre class="cython line score-0">&#xA0;<span class="">23</span>:     <span class="nd">@cython</span><span class="o">.</span><span class="n">nonecheck</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span></pre>
+<pre class="cython line score-20" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">24</span>:     <span class="k">cdef</span> <span class="kt">float</span>[<span class="p">:,</span> <span class="p">::</span><span class="mf">1</span><span class="p">]</span> <span class="n">forward_grad</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">float</span><span class="p">[:,</span> <span class="p">::</span><span class="mf">1</span><span class="p">]</span> <span class="n">inputs</span><span class="p">)</span> <span class="n">noexcept</span> <span class="k">nogil</span><span class="p">:</span></pre>
+<pre class='cython code score-20 '>static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_14Abstract_Layer_forward_grad(struct __pyx_obj_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_Abstract_Layer *__pyx_v_self, __Pyx_memviewslice __pyx_v_inputs) {
+  __Pyx_memviewslice __pyx_v_inputs_copy = { 0, 0, { 0 }, { 0 }, { 0 } };
+  int __pyx_v_rows;
+  int __pyx_v_cols;
+  int __pyx_v_i;
+  int __pyx_v_j;
+  __Pyx_memviewslice __pyx_r = { 0, 0, { 0 }, { 0 }, { 0 } };
+/* … */
+  /* function exit code */
+  __pyx_L1_error:;
+  #ifdef WITH_THREAD
+  __pyx_gilstate_save = <span class='pyx_c_api'>__Pyx_PyGILState_Ensure</span>();
+  #endif
+  <span class='pyx_macro_api'>__Pyx_XDECREF</span>(__pyx_t_3);
+  <span class='pyx_macro_api'>__Pyx_XDECREF</span>(__pyx_t_4);
+  <span class='pyx_macro_api'>__Pyx_XDECREF</span>(__pyx_t_5);
+  <span class='pyx_macro_api'>__Pyx_XDECREF</span>(__pyx_t_6);
+  <span class='pyx_macro_api'>__Pyx_XDECREF</span>(__pyx_t_7);
+  __PYX_XCLEAR_MEMVIEW(&amp;__pyx_t_8, 1);
+  __pyx_r.data = NULL;
+  __pyx_r.memview = NULL;
+  <span class='pyx_c_api'>__Pyx_AddTraceback</span>("src_files.Neural_Network.Raw_Numpy.Raw_Numpy_Layers.Abstract_Layer.Abstract_Layer.Abstract_Layer.forward_grad", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  goto __pyx_L2;
+  __pyx_L0:;
+  if (unlikely(!__pyx_r.memview)) {
+    #ifdef WITH_THREAD
+    PyGILState_STATE __pyx_gilstate_save = <span class='pyx_c_api'>__Pyx_PyGILState_Ensure</span>();
+    #endif
+    <span class='py_c_api'>PyErr_SetString</span>(PyExc_TypeError, "Memoryview return value is not initialized");
+    #ifdef WITH_THREAD
+    <span class='pyx_c_api'>__Pyx_PyGILState_Release</span>(__pyx_gilstate_save);
+    #endif
+  }
+  #ifdef WITH_THREAD
+  <span class='pyx_c_api'>__Pyx_PyGILState_Release</span>(__pyx_gilstate_save);
+  #endif
+  __pyx_L2:;
+  __PYX_XCLEAR_MEMVIEW(&amp;__pyx_v_inputs_copy, 0);
+  <span class='refnanny'>__Pyx_RefNannyFinishContextNogil</span>()
+  return __pyx_r;
+}
+</pre><pre class="cython line score-0">&#xA0;<span class="">25</span>: <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span></pre>
+<pre class="cython line score-0">&#xA0;<span class="">26</span>: <span class="sd">        performs normal grad, but saves inputs for backpropagation</span></pre>
+<pre class="cython line score-0">&#xA0;<span class="">27</span>: <span class="sd">        &quot;&quot;&quot;</span></pre>
+<pre class="cython line score-0">&#xA0;<span class="">28</span>:         <span class="k">cdef</span> <span class="kt">float</span>[<span class="p">:,</span> <span class="p">::</span><span class="mf">1</span><span class="p">]</span> <span class="n">inputs_copy</span></pre>
+<pre class="cython line score-0">&#xA0;<span class="">29</span>:         <span class="k">cdef</span> <span class="kt">int</span> <span class="nf">rows</span></pre>
+<pre class="cython line score-0">&#xA0;<span class="">30</span>:         <span class="k">cdef</span> <span class="kt">int</span> <span class="nf">cols</span></pre>
+<pre class="cython line score-0">&#xA0;<span class="">31</span>:         <span class="k">cdef</span> <span class="kt">int</span> <span class="nf">i</span><span class="p">,</span> <span class="nf">j</span></pre>
+<pre class="cython line score-0">&#xA0;<span class="">32</span>: </pre>
+<pre class="cython line score-10" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">33</span>:         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs_copy</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs_copy</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mf">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">inputs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mf">0</span><span class="p">]:</span></pre>
+<pre class='cython code score-10 '>  if (unlikely(!__pyx_v_self-&gt;inputs_copy.memview)) {<span class='py_c_api'>PyErr_SetString</span>(PyExc_AttributeError,"Memoryview is not initialized");<span class='error_goto'>__PYX_ERR(0, 33, __pyx_L1_error)</span>}
+  __pyx_t_2 = (((PyObject *) __pyx_v_self-&gt;inputs_copy.memview) == Py_None);
+  if (!__pyx_t_2) {
+  } else {
+    __pyx_t_1 = __pyx_t_2;
+    goto __pyx_L4_bool_binop_done;
+  }
+  if (unlikely(!__pyx_v_self-&gt;inputs_copy.memview)) {<span class='py_c_api'>PyErr_SetString</span>(PyExc_AttributeError,"Memoryview is not initialized");<span class='error_goto'>__PYX_ERR(0, 33, __pyx_L1_error)</span>}
+  __pyx_t_2 = ((__pyx_v_self-&gt;inputs_copy.shape[0]) != (__pyx_v_inputs.shape[0]));
+  __pyx_t_1 = __pyx_t_2;
+  __pyx_L4_bool_binop_done:;
+  if (__pyx_t_1) {
+/* … */
+    goto __pyx_L3;
+  }
+</pre><pre class="cython line score-6" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">34</span>:             <span class="k">with</span> <span class="k">gil</span><span class="p">:</span></pre>
+<pre class='cython code score-6 '>    {
+        #ifdef WITH_THREAD
+        PyGILState_STATE __pyx_gilstate_save = <span class='pyx_c_api'>__Pyx_PyGILState_Ensure</span>();
+        #endif
+        /*try:*/ {
+/* … */
+        /*finally:*/ {
+          /*normal exit:*/{
+            #ifdef WITH_THREAD
+            <span class='pyx_c_api'>__Pyx_PyGILState_Release</span>(__pyx_gilstate_save);
+            #endif
+            goto __pyx_L8;
+          }
+          __pyx_L7_error: {
+            #ifdef WITH_THREAD
+            <span class='pyx_c_api'>__Pyx_PyGILState_Release</span>(__pyx_gilstate_save);
+            #endif
+            goto __pyx_L1_error;
+          }
+          __pyx_L8:;
+        }
+    }
+</pre><pre class="cython line score-38" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">35</span>:                 <span class="bp">self</span><span class="o">.</span><span class="n">inputs_copy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span></pre>
+<pre class='cython code score-38 '>          <span class='pyx_c_api'>__Pyx_GetModuleGlobalName</span>(__pyx_t_3, __pyx_n_s_np);<span class='error_goto'> if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 35, __pyx_L7_error)</span>
+          <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_3);
+          __pyx_t_4 = <span class='pyx_c_api'>__Pyx_PyObject_GetAttrStr</span>(__pyx_t_3, __pyx_n_s_array);<span class='error_goto'> if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 35, __pyx_L7_error)</span>
+          <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_4);
+          <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_3); __pyx_t_3 = 0;
+          __pyx_t_3 = __pyx_memoryview_fromslice(__pyx_v_inputs, 2, (PyObject *(*)(char *)) __pyx_memview_get_float, (int (*)(char *, PyObject *)) __pyx_memview_set_float, 0);;<span class='error_goto'> if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 35, __pyx_L7_error)</span>
+          <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_3);
+          __pyx_t_5 = <span class='py_c_api'>PyTuple_New</span>(1);<span class='error_goto'> if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 35, __pyx_L7_error)</span>
+          <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_5);
+          <span class='refnanny'>__Pyx_GIVEREF</span>(__pyx_t_3);
+          if (<span class='pyx_c_api'>__Pyx_PyTuple_SET_ITEM</span>(__pyx_t_5, 0, __pyx_t_3)) <span class='error_goto'>__PYX_ERR(0, 35, __pyx_L7_error)</span>;
+          __pyx_t_3 = 0;
+          __pyx_t_3 = <span class='pyx_c_api'>__Pyx_PyDict_NewPresized</span>(2);<span class='error_goto'> if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 35, __pyx_L7_error)</span>
+          <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_3);
+          <span class='pyx_c_api'>__Pyx_GetModuleGlobalName</span>(__pyx_t_6, __pyx_n_s_np);<span class='error_goto'> if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 35, __pyx_L7_error)</span>
+          <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_6);
+          __pyx_t_7 = <span class='pyx_c_api'>__Pyx_PyObject_GetAttrStr</span>(__pyx_t_6, __pyx_n_s_float32);<span class='error_goto'> if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 35, __pyx_L7_error)</span>
+          <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_7);
+          <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_6); __pyx_t_6 = 0;
+          if (<span class='py_c_api'>PyDict_SetItem</span>(__pyx_t_3, __pyx_n_s_dtype, __pyx_t_7) &lt; 0) <span class='error_goto'>__PYX_ERR(0, 35, __pyx_L7_error)</span>
+          <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_7); __pyx_t_7 = 0;
+          if (<span class='py_c_api'>PyDict_SetItem</span>(__pyx_t_3, __pyx_n_s_copy, Py_True) &lt; 0) <span class='error_goto'>__PYX_ERR(0, 35, __pyx_L7_error)</span>
+          __pyx_t_7 = <span class='pyx_c_api'>__Pyx_PyObject_Call</span>(__pyx_t_4, __pyx_t_5, __pyx_t_3);<span class='error_goto'> if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 35, __pyx_L7_error)</span>
+          <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_7);
+          <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_4); __pyx_t_4 = 0;
+          <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_5); __pyx_t_5 = 0;
+          <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_3); __pyx_t_3 = 0;
+          __pyx_t_8 = <span class='pyx_c_api'>__Pyx_PyObject_to_MemoryviewSlice_d_dc_float</span>(__pyx_t_7, PyBUF_WRITABLE);<span class='error_goto'> if (unlikely(!__pyx_t_8.memview)) __PYX_ERR(0, 35, __pyx_L7_error)</span>
+          <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_7); __pyx_t_7 = 0;
+          __PYX_XCLEAR_MEMVIEW(&amp;__pyx_v_self-&gt;inputs_copy, 0);
+          __pyx_v_self-&gt;inputs_copy = __pyx_t_8;
+          __pyx_t_8.memview = NULL;
+          __pyx_t_8.data = NULL;
+</pre><pre class="cython line score-33" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">36</span>:                 <span class="bp">self</span><span class="o">.</span><span class="n">grads_inputs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span></pre>
+<pre class='cython code score-33 '>          <span class='pyx_c_api'>__Pyx_GetModuleGlobalName</span>(__pyx_t_7, __pyx_n_s_np);<span class='error_goto'> if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 36, __pyx_L7_error)</span>
+          <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_7);
+          __pyx_t_3 = <span class='pyx_c_api'>__Pyx_PyObject_GetAttrStr</span>(__pyx_t_7, __pyx_n_s_empty_like);<span class='error_goto'> if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 36, __pyx_L7_error)</span>
+          <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_3);
+          <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_7); __pyx_t_7 = 0;
+          __pyx_t_7 = __pyx_memoryview_fromslice(__pyx_v_inputs, 2, (PyObject *(*)(char *)) __pyx_memview_get_float, (int (*)(char *, PyObject *)) __pyx_memview_set_float, 0);;<span class='error_goto'> if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 36, __pyx_L7_error)</span>
+          <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_7);
+          __pyx_t_5 = <span class='py_c_api'>PyTuple_New</span>(1);<span class='error_goto'> if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 36, __pyx_L7_error)</span>
+          <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_5);
+          <span class='refnanny'>__Pyx_GIVEREF</span>(__pyx_t_7);
+          if (<span class='pyx_c_api'>__Pyx_PyTuple_SET_ITEM</span>(__pyx_t_5, 0, __pyx_t_7)) <span class='error_goto'>__PYX_ERR(0, 36, __pyx_L7_error)</span>;
+          __pyx_t_7 = 0;
+          __pyx_t_7 = <span class='pyx_c_api'>__Pyx_PyDict_NewPresized</span>(1);<span class='error_goto'> if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 36, __pyx_L7_error)</span>
+          <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_7);
+          <span class='pyx_c_api'>__Pyx_GetModuleGlobalName</span>(__pyx_t_4, __pyx_n_s_np);<span class='error_goto'> if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 36, __pyx_L7_error)</span>
+          <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_4);
+          __pyx_t_6 = <span class='pyx_c_api'>__Pyx_PyObject_GetAttrStr</span>(__pyx_t_4, __pyx_n_s_float32);<span class='error_goto'> if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 36, __pyx_L7_error)</span>
+          <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_6);
+          <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_4); __pyx_t_4 = 0;
+          if (<span class='py_c_api'>PyDict_SetItem</span>(__pyx_t_7, __pyx_n_s_dtype, __pyx_t_6) &lt; 0) <span class='error_goto'>__PYX_ERR(0, 36, __pyx_L7_error)</span>
+          <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_6); __pyx_t_6 = 0;
+          __pyx_t_6 = <span class='pyx_c_api'>__Pyx_PyObject_Call</span>(__pyx_t_3, __pyx_t_5, __pyx_t_7);<span class='error_goto'> if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 36, __pyx_L7_error)</span>
+          <span class='refnanny'>__Pyx_GOTREF</span>(__pyx_t_6);
+          <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_3); __pyx_t_3 = 0;
+          <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_5); __pyx_t_5 = 0;
+          <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_7); __pyx_t_7 = 0;
+          __pyx_t_8 = <span class='pyx_c_api'>__Pyx_PyObject_to_MemoryviewSlice_d_dc_float</span>(__pyx_t_6, PyBUF_WRITABLE);<span class='error_goto'> if (unlikely(!__pyx_t_8.memview)) __PYX_ERR(0, 36, __pyx_L7_error)</span>
+          <span class='pyx_macro_api'>__Pyx_DECREF</span>(__pyx_t_6); __pyx_t_6 = 0;
+          __PYX_XCLEAR_MEMVIEW(&amp;__pyx_v_self-&gt;grads_inputs, 0);
+          __pyx_v_self-&gt;grads_inputs = __pyx_t_8;
+          __pyx_t_8.memview = NULL;
+          __pyx_t_8.data = NULL;
+        }
+</pre><pre class="cython line score-5" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">37</span>:             <span class="n">inputs_copy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs_copy</span></pre>
+<pre class='cython code score-5 '>    if (unlikely(!__pyx_v_self-&gt;inputs_copy.memview)) {<span class='py_c_api'>PyErr_SetString</span>(PyExc_AttributeError,"Memoryview is not initialized");<span class='error_goto'>__PYX_ERR(0, 37, __pyx_L1_error)</span>}
+    __pyx_t_8 = __pyx_v_self-&gt;inputs_copy;
+    __PYX_INC_MEMVIEW(&amp;__pyx_t_8, 0);
+    __pyx_v_inputs_copy = __pyx_t_8;
+    __pyx_t_8.memview = NULL;
+    __pyx_t_8.data = NULL;
+</pre><pre class="cython line score-0">&#xA0;<span class="">38</span>:         <span class="k">else</span><span class="p">:</span></pre>
+<pre class="cython line score-5" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">39</span>:             <span class="n">inputs_copy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs_copy</span></pre>
+<pre class='cython code score-5 '>  /*else*/ {
+    if (unlikely(!__pyx_v_self-&gt;inputs_copy.memview)) {<span class='py_c_api'>PyErr_SetString</span>(PyExc_AttributeError,"Memoryview is not initialized");<span class='error_goto'>__PYX_ERR(0, 39, __pyx_L1_error)</span>}
+    __pyx_t_8 = __pyx_v_self-&gt;inputs_copy;
+    __PYX_INC_MEMVIEW(&amp;__pyx_t_8, 0);
+    __pyx_v_inputs_copy = __pyx_t_8;
+    __pyx_t_8.memview = NULL;
+    __pyx_t_8.data = NULL;
+</pre><pre class="cython line score-0" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">40</span>:             <span class="n">rows</span> <span class="o">=</span> <span class="n">inputs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mf">0</span><span class="p">]</span></pre>
+<pre class='cython code score-0 '>    __pyx_v_rows = (__pyx_v_inputs.shape[0]);
+</pre><pre class="cython line score-0" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">41</span>:             <span class="n">cols</span> <span class="o">=</span> <span class="n">inputs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mf">1</span><span class="p">]</span></pre>
+<pre class='cython code score-0 '>    __pyx_v_cols = (__pyx_v_inputs.shape[1]);
+</pre><pre class="cython line score-0" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">42</span>:             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rows</span><span class="p">):</span></pre>
+<pre class='cython code score-0 '>    __pyx_t_9 = __pyx_v_rows;
+    __pyx_t_10 = __pyx_t_9;
+    for (__pyx_t_11 = 0; __pyx_t_11 &lt; __pyx_t_10; __pyx_t_11+=1) {
+      __pyx_v_i = __pyx_t_11;
+</pre><pre class="cython line score-0" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">43</span>:                 <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cols</span><span class="p">):</span></pre>
+<pre class='cython code score-0 '>      __pyx_t_12 = __pyx_v_cols;
+      __pyx_t_13 = __pyx_t_12;
+      for (__pyx_t_14 = 0; __pyx_t_14 &lt; __pyx_t_13; __pyx_t_14+=1) {
+        __pyx_v_j = __pyx_t_14;
+</pre><pre class="cython line score-0" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">44</span>:                     <span class="n">inputs_copy</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span></pre>
+<pre class='cython code score-0 '>        __pyx_t_15 = __pyx_v_i;
+        __pyx_t_16 = __pyx_v_j;
+        __pyx_t_17 = __pyx_v_i;
+        __pyx_t_18 = __pyx_v_j;
+        *((float *) ( /* dim=1 */ ((char *) (((float *) ( /* dim=0 */ (__pyx_v_inputs_copy.data + __pyx_t_17 * __pyx_v_inputs_copy.strides[0]) )) + __pyx_t_18)) )) = (*((float *) ( /* dim=1 */ ((char *) (((float *) ( /* dim=0 */ (__pyx_v_inputs.data + __pyx_t_15 * __pyx_v_inputs.strides[0]) )) + __pyx_t_16)) )));
+      }
+    }
+  }
+  __pyx_L3:;
+</pre><pre class="cython line score-0" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">45</span>:         <span class="bp">self</span><span class="o">.</span><span class="n">previous_inputs</span> <span class="o">=</span> <span class="n">inputs</span></pre>
+<pre class='cython code score-0 '>  __PYX_XCLEAR_MEMVIEW(&amp;__pyx_v_self-&gt;previous_inputs, 0);
+  __PYX_INC_MEMVIEW(&amp;__pyx_v_inputs, 0);
+  __pyx_v_self-&gt;previous_inputs = __pyx_v_inputs;
+</pre><pre class="cython line score-0" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">46</span>:         <span class="bp">self</span><span class="o">.</span><span class="n">previous_outputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">inputs_copy</span><span class="p">)</span></pre>
+<pre class='cython code score-0 '>  __pyx_t_8 = ((struct __pyx_vtabstruct_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_Abstract_Layer *)__pyx_v_self-&gt;__pyx_vtab)-&gt;forward(__pyx_v_self, __pyx_v_inputs_copy);<span class='error_goto'> if (unlikely(!__pyx_t_8.memview)) __PYX_ERR(0, 46, __pyx_L1_error)</span>
+  __PYX_XCLEAR_MEMVIEW(&amp;__pyx_v_self-&gt;previous_outputs, 0);
+  __pyx_v_self-&gt;previous_outputs = __pyx_t_8;
+  __pyx_t_8.memview = NULL;
+  __pyx_t_8.data = NULL;
+</pre><pre class="cython line score-0">&#xA0;<span class="">47</span>:         <span class="c"># with gil:</span></pre>
+<pre class="cython line score-0">&#xA0;<span class="">48</span>:         <span class="c">#     cython_debug_call(</span></pre>
+<pre class="cython line score-0">&#xA0;<span class="">49</span>:         <span class="c">#         {</span></pre>
+<pre class="cython line score-0">&#xA0;<span class="">50</span>:         <span class="c">#             &quot;previous_inputs&quot;: np.array(self.previous_inputs),</span></pre>
+<pre class="cython line score-0">&#xA0;<span class="">51</span>:         <span class="c">#             &quot;previous_outputs&quot;: np.array(self.previous_outputs),</span></pre>
+<pre class="cython line score-0">&#xA0;<span class="">52</span>:         <span class="c">#             &quot;grads_inputs&quot;: np.array(self.grads_inputs),</span></pre>
+<pre class="cython line score-0">&#xA0;<span class="">53</span>:         <span class="c">#         }</span></pre>
+<pre class="cython line score-0">&#xA0;<span class="">54</span>:         <span class="c">#     )</span></pre>
+<pre class="cython line score-0">&#xA0;<span class="">55</span>: </pre>
+<pre class="cython line score-5" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">56</span>:         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">previous_outputs</span></pre>
+<pre class='cython code score-5 '>  if (unlikely(!__pyx_v_self-&gt;previous_outputs.memview)) {<span class='py_c_api'>PyErr_SetString</span>(PyExc_AttributeError,"Memoryview is not initialized");<span class='error_goto'>__PYX_ERR(0, 56, __pyx_L1_error)</span>}
+  __PYX_INC_MEMVIEW(&amp;__pyx_v_self-&gt;previous_outputs, 0);
+  __pyx_r = __pyx_v_self-&gt;previous_outputs;
+  goto __pyx_L0;
+</pre><pre class="cython line score-0">&#xA0;<span class="">57</span>: </pre>
+<pre class="cython line score-6" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">58</span>:     <span class="k">cdef</span> <span class="kt">float</span>[<span class="p">:,</span> <span class="p">::</span><span class="mf">1</span><span class="p">]</span> <span class="n">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">float</span><span class="p">[:,</span> <span class="p">::</span><span class="mf">1</span><span class="p">]</span> <span class="n">inputs</span><span class="p">)</span> <span class="n">noexcept</span> <span class="k">nogil</span><span class="p">:</span></pre>
 <pre class='cython code score-6 '>static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_14Abstract_Layer_forward(CYTHON_UNUSED struct __pyx_obj_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_Abstract_Layer *__pyx_v_self, CYTHON_UNUSED __Pyx_memviewslice __pyx_v_inputs) {
   __Pyx_memviewslice __pyx_r = { 0, 0, { 0 }, { 0 }, { 0 } };
 /* … */
@@ -475,11 +786,11 @@ static struct __pyx_obj_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layer
   __pyx_L2:;
   return __pyx_r;
 }
-</pre><pre class="cython line score-0">&#xA0;<span class="">11</span>: <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">12</span>: <span class="sd">        Calls layer</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">13</span>: <span class="sd">        :param inputs: np.ndarray</span></pre>
-<pre class="cython line score-0">&#xA0;<span class="">14</span>: <span class="sd">        &quot;&quot;&quot;</span></pre>
-<pre class="cython line score-4" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">15</span>:         <span class="k">with</span> <span class="k">gil</span><span class="p">:</span></pre>
+</pre><pre class="cython line score-0">&#xA0;<span class="">59</span>: <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span></pre>
+<pre class="cython line score-0">&#xA0;<span class="">60</span>: <span class="sd">        Calls layer</span></pre>
+<pre class="cython line score-0">&#xA0;<span class="">61</span>: <span class="sd">        :param inputs: np.ndarray</span></pre>
+<pre class="cython line score-0">&#xA0;<span class="">62</span>: <span class="sd">        &quot;&quot;&quot;</span></pre>
+<pre class="cython line score-4" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">63</span>:         <span class="k">with</span> <span class="k">gil</span><span class="p">:</span></pre>
 <pre class='cython code score-4 '>  {
       #ifdef WITH_THREAD
       PyGILState_STATE __pyx_gilstate_save = <span class='pyx_c_api'>__Pyx_PyGILState_Ensure</span>();
@@ -495,8 +806,52 @@ static struct __pyx_obj_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layer
         }
       }
   }
-</pre><pre class="cython line score-2" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">16</span>:             <span class="k">raise</span> <span class="ne">NotImplementedError</span></pre>
+</pre><pre class="cython line score-2" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">64</span>:             <span class="k">raise</span> <span class="ne">NotImplementedError</span></pre>
 <pre class='cython code score-2 '>        <span class='pyx_c_api'>__Pyx_Raise</span>(__pyx_builtin_NotImplementedError, 0, 0, 0);
-        <span class='error_goto'>__PYX_ERR(0, 16, __pyx_L4_error)</span>
+        <span class='error_goto'>__PYX_ERR(0, 64, __pyx_L4_error)</span>
+      }
+</pre><pre class="cython line score-0">&#xA0;<span class="">65</span>: </pre>
+<pre class="cython line score-6" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">66</span>:     <span class="k">cdef</span> <span class="kt">float</span>[<span class="p">:,</span> <span class="p">::</span><span class="mf">1</span><span class="p">]</span> <span class="n">backward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">float</span><span class="p">[:,</span> <span class="p">::</span><span class="mf">1</span><span class="p">]</span> <span class="n">grad</span><span class="p">)</span> <span class="n">noexcept</span> <span class="k">nogil</span><span class="p">:</span></pre>
+<pre class='cython code score-6 '>static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_14Abstract_Layer_backward(CYTHON_UNUSED struct __pyx_obj_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_14Abstract_Layer_14Abstract_Layer_Abstract_Layer *__pyx_v_self, CYTHON_UNUSED __Pyx_memviewslice __pyx_v_grad) {
+  __Pyx_memviewslice __pyx_r = { 0, 0, { 0 }, { 0 }, { 0 } };
+/* … */
+  /* function exit code */
+  __pyx_L1_error:;
+  __pyx_r.data = NULL;
+  __pyx_r.memview = NULL;
+  #ifdef WITH_THREAD
+  __pyx_gilstate_save = <span class='pyx_c_api'>__Pyx_PyGILState_Ensure</span>();
+  #endif
+  <span class='pyx_c_api'>__Pyx_AddTraceback</span>("src_files.Neural_Network.Raw_Numpy.Raw_Numpy_Layers.Abstract_Layer.Abstract_Layer.Abstract_Layer.backward", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  goto __pyx_L2;
+  #ifdef WITH_THREAD
+  <span class='pyx_c_api'>__Pyx_PyGILState_Release</span>(__pyx_gilstate_save);
+  #endif
+  __pyx_L2:;
+  return __pyx_r;
+}
+</pre><pre class="cython line score-0">&#xA0;<span class="">67</span>: <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span></pre>
+<pre class="cython line score-0">&#xA0;<span class="">68</span>: <span class="sd">        Calls layer</span></pre>
+<pre class="cython line score-0">&#xA0;<span class="">69</span>: <span class="sd">        :param grad: np.ndarray</span></pre>
+<pre class="cython line score-0">&#xA0;<span class="">70</span>: <span class="sd">        &quot;&quot;&quot;</span></pre>
+<pre class="cython line score-4" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">71</span>:         <span class="k">with</span> <span class="k">gil</span><span class="p">:</span></pre>
+<pre class='cython code score-4 '>  {
+      #ifdef WITH_THREAD
+      PyGILState_STATE __pyx_gilstate_save = <span class='pyx_c_api'>__Pyx_PyGILState_Ensure</span>();
+      #endif
+      /*try:*/ {
+/* … */
+      /*finally:*/ {
+        __pyx_L4_error: {
+          #ifdef WITH_THREAD
+          <span class='pyx_c_api'>__Pyx_PyGILState_Release</span>(__pyx_gilstate_save);
+          #endif
+          goto __pyx_L1_error;
+        }
+      }
+  }
+</pre><pre class="cython line score-2" onclick="(function(s){s.display=s.display==='block'?'none':'block'})(this.nextElementSibling.style)">+<span class="">72</span>:             <span class="k">raise</span> <span class="ne">NotImplementedError</span></pre>
+<pre class='cython code score-2 '>        <span class='pyx_c_api'>__Pyx_Raise</span>(__pyx_builtin_NotImplementedError, 0, 0, 0);
+        <span class='error_goto'>__PYX_ERR(0, 72, __pyx_L4_error)</span>
       }
 </pre></div></body></html>
