@@ -24,10 +24,11 @@ cdef class Softmax_Activation(Abstract_Layer):
         cdef int cols = inputs.shape[1]
         cdef double row_sum
         cdef double exp_tmp
-        cdef float max_value = -100000000
+        cdef float max_value
 
         for i in range(rows):
             row_sum = 0
+            max_value = -1e38
             for j in range(cols):
                 if inputs[i, j] > max_value:
                     max_value = inputs[i, j]
@@ -36,6 +37,17 @@ cdef class Softmax_Activation(Abstract_Layer):
                 row_sum += exp_tmp
                 inputs[i, j] = exp_tmp
             for j in range(cols):
+                # tmp:
+                # if row_sum == 0:
+                #     with gil:
+                #         cython_debug_call({
+                #             "inputs": np.array(inputs[i]),
+                #             "row_sum": row_sum,
+                #             "max_value": max_value,
+                #         }, "Softmax_Activation_forward")
+                # exp_tmp = lookup_exp(inputs[i, j] - max_value)
+                # inputs[i, j] = exp_tmp
+
                 inputs[i, j] = inputs[i, j] / row_sum
         return inputs
 

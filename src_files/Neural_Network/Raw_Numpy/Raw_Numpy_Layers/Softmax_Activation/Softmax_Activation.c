@@ -17617,21 +17617,12 @@ static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_N
  */
   __pyx_v_cols = (__pyx_v_inputs.shape[1]);
 
-  /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":27
- *         cdef double row_sum
- *         cdef double exp_tmp
- *         cdef float max_value = -100000000             # <<<<<<<<<<<<<<
- * 
- *         for i in range(rows):
- */
-  __pyx_v_max_value = -100000000.0;
-
   /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":29
- *         cdef float max_value = -100000000
+ *         cdef float max_value
  * 
  *         for i in range(rows):             # <<<<<<<<<<<<<<
  *             row_sum = 0
- *             for j in range(cols):
+ *             max_value = -1e38
  */
   __pyx_t_1 = __pyx_v_rows;
   __pyx_t_2 = __pyx_t_1;
@@ -17642,14 +17633,23 @@ static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_N
  * 
  *         for i in range(rows):
  *             row_sum = 0             # <<<<<<<<<<<<<<
+ *             max_value = -1e38
  *             for j in range(cols):
- *                 if inputs[i, j] > max_value:
  */
     __pyx_v_row_sum = 0.0;
 
     /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":31
  *         for i in range(rows):
  *             row_sum = 0
+ *             max_value = -1e38             # <<<<<<<<<<<<<<
+ *             for j in range(cols):
+ *                 if inputs[i, j] > max_value:
+ */
+    __pyx_v_max_value = -1e38;
+
+    /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":32
+ *             row_sum = 0
+ *             max_value = -1e38
  *             for j in range(cols):             # <<<<<<<<<<<<<<
  *                 if inputs[i, j] > max_value:
  *                     max_value = inputs[i, j]
@@ -17659,8 +17659,8 @@ static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_N
     for (__pyx_t_6 = 0; __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
       __pyx_v_j = __pyx_t_6;
 
-      /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":32
- *             row_sum = 0
+      /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":33
+ *             max_value = -1e38
  *             for j in range(cols):
  *                 if inputs[i, j] > max_value:             # <<<<<<<<<<<<<<
  *                     max_value = inputs[i, j]
@@ -17671,7 +17671,7 @@ static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_N
       __pyx_t_9 = ((*((float *) ( /* dim=1 */ ((char *) (((float *) ( /* dim=0 */ (__pyx_v_inputs.data + __pyx_t_7 * __pyx_v_inputs.strides[0]) )) + __pyx_t_8)) ))) > __pyx_v_max_value);
       if (__pyx_t_9) {
 
-        /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":33
+        /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":34
  *             for j in range(cols):
  *                 if inputs[i, j] > max_value:
  *                     max_value = inputs[i, j]             # <<<<<<<<<<<<<<
@@ -17682,8 +17682,8 @@ static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_N
         __pyx_t_7 = __pyx_v_j;
         __pyx_v_max_value = (*((float *) ( /* dim=1 */ ((char *) (((float *) ( /* dim=0 */ (__pyx_v_inputs.data + __pyx_t_8 * __pyx_v_inputs.strides[0]) )) + __pyx_t_7)) )));
 
-        /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":32
- *             row_sum = 0
+        /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":33
+ *             max_value = -1e38
  *             for j in range(cols):
  *                 if inputs[i, j] > max_value:             # <<<<<<<<<<<<<<
  *                     max_value = inputs[i, j]
@@ -17692,7 +17692,7 @@ static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_N
       }
     }
 
-    /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":34
+    /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":35
  *                 if inputs[i, j] > max_value:
  *                     max_value = inputs[i, j]
  *             for j in range(cols):             # <<<<<<<<<<<<<<
@@ -17704,7 +17704,7 @@ static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_N
     for (__pyx_t_6 = 0; __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
       __pyx_v_j = __pyx_t_6;
 
-      /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":35
+      /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":36
  *                     max_value = inputs[i, j]
  *             for j in range(cols):
  *                 exp_tmp = lookup_exp(inputs[i, j] - max_value)             # <<<<<<<<<<<<<<
@@ -17715,7 +17715,7 @@ static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_N
       __pyx_t_8 = __pyx_v_j;
       __pyx_v_exp_tmp = __pyx_f_9src_files_6MyMath_6MyMath_lookup_exp(((*((float *) ( /* dim=1 */ ((char *) (((float *) ( /* dim=0 */ (__pyx_v_inputs.data + __pyx_t_7 * __pyx_v_inputs.strides[0]) )) + __pyx_t_8)) ))) - __pyx_v_max_value));
 
-      /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":36
+      /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":37
  *             for j in range(cols):
  *                 exp_tmp = lookup_exp(inputs[i, j] - max_value)
  *                 row_sum += exp_tmp             # <<<<<<<<<<<<<<
@@ -17724,33 +17724,33 @@ static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_N
  */
       __pyx_v_row_sum = (__pyx_v_row_sum + __pyx_v_exp_tmp);
 
-      /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":37
+      /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":38
  *                 exp_tmp = lookup_exp(inputs[i, j] - max_value)
  *                 row_sum += exp_tmp
  *                 inputs[i, j] = exp_tmp             # <<<<<<<<<<<<<<
  *             for j in range(cols):
- *                 inputs[i, j] = inputs[i, j] / row_sum
+ *                 # tmp:
  */
       __pyx_t_8 = __pyx_v_i;
       __pyx_t_7 = __pyx_v_j;
       *((float *) ( /* dim=1 */ ((char *) (((float *) ( /* dim=0 */ (__pyx_v_inputs.data + __pyx_t_8 * __pyx_v_inputs.strides[0]) )) + __pyx_t_7)) )) = __pyx_v_exp_tmp;
     }
 
-    /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":38
+    /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":39
  *                 row_sum += exp_tmp
  *                 inputs[i, j] = exp_tmp
  *             for j in range(cols):             # <<<<<<<<<<<<<<
- *                 inputs[i, j] = inputs[i, j] / row_sum
- *         return inputs
+ *                 # tmp:
+ *                 # if row_sum == 0:
  */
     __pyx_t_4 = __pyx_v_cols;
     __pyx_t_5 = __pyx_t_4;
     for (__pyx_t_6 = 0; __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
       __pyx_v_j = __pyx_t_6;
 
-      /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":39
- *                 inputs[i, j] = exp_tmp
- *             for j in range(cols):
+      /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":51
+ *                 # inputs[i, j] = exp_tmp
+ * 
  *                 inputs[i, j] = inputs[i, j] / row_sum             # <<<<<<<<<<<<<<
  *         return inputs
  * 
@@ -17766,7 +17766,7 @@ static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_N
         #ifdef WITH_THREAD
         __Pyx_PyGILState_Release(__pyx_gilstate_save);
         #endif
-        __PYX_ERR(0, 39, __pyx_L1_error)
+        __PYX_ERR(0, 51, __pyx_L1_error)
       }
       __pyx_t_8 = __pyx_v_i;
       __pyx_t_7 = __pyx_v_j;
@@ -17774,8 +17774,8 @@ static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_N
     }
   }
 
-  /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":40
- *             for j in range(cols):
+  /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":52
+ * 
  *                 inputs[i, j] = inputs[i, j] / row_sum
  *         return inputs             # <<<<<<<<<<<<<<
  * 
@@ -17819,7 +17819,7 @@ static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_N
   return __pyx_r;
 }
 
-/* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":45
+/* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":57
  *     @cython.wraparound(False)
  *     @cython.nonecheck(False)
  *     cdef inline float[:, ::1] backward(self, float[:, ::1] grad) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -17862,7 +17862,7 @@ static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_N
   PyGILState_STATE __pyx_gilstate_save;
   #endif
 
-  /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":55
+  /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":67
  *         """
  *         cdef int i, j, k
  *         cdef int rows = grad.shape[0]             # <<<<<<<<<<<<<<
@@ -17871,7 +17871,7 @@ static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_N
  */
   __pyx_v_rows = (__pyx_v_grad.shape[0]);
 
-  /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":56
+  /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":68
  *         cdef int i, j, k
  *         cdef int rows = grad.shape[0]
  *         cdef int cols = grad.shape[1]             # <<<<<<<<<<<<<<
@@ -17880,35 +17880,35 @@ static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_N
  */
   __pyx_v_cols = (__pyx_v_grad.shape[1]);
 
-  /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":57
+  /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":69
  *         cdef int rows = grad.shape[0]
  *         cdef int cols = grad.shape[1]
  *         cdef float[:, ::1] prev_outputs = self.previous_outputs             # <<<<<<<<<<<<<<
  *         cdef float[:, ::1] grads_inputs = self.grads_inputs
  * 
  */
-  if (unlikely(!__pyx_v_self->__pyx_base.previous_outputs.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 57, __pyx_L1_error)}
+  if (unlikely(!__pyx_v_self->__pyx_base.previous_outputs.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 69, __pyx_L1_error)}
   __pyx_t_1 = __pyx_v_self->__pyx_base.previous_outputs;
   __PYX_INC_MEMVIEW(&__pyx_t_1, 0);
   __pyx_v_prev_outputs = __pyx_t_1;
   __pyx_t_1.memview = NULL;
   __pyx_t_1.data = NULL;
 
-  /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":58
+  /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":70
  *         cdef int cols = grad.shape[1]
  *         cdef float[:, ::1] prev_outputs = self.previous_outputs
  *         cdef float[:, ::1] grads_inputs = self.grads_inputs             # <<<<<<<<<<<<<<
  * 
  *         for k in range(rows):
  */
-  if (unlikely(!__pyx_v_self->__pyx_base.grads_inputs.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 58, __pyx_L1_error)}
+  if (unlikely(!__pyx_v_self->__pyx_base.grads_inputs.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 70, __pyx_L1_error)}
   __pyx_t_1 = __pyx_v_self->__pyx_base.grads_inputs;
   __PYX_INC_MEMVIEW(&__pyx_t_1, 0);
   __pyx_v_grads_inputs = __pyx_t_1;
   __pyx_t_1.memview = NULL;
   __pyx_t_1.data = NULL;
 
-  /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":60
+  /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":72
  *         cdef float[:, ::1] grads_inputs = self.grads_inputs
  * 
  *         for k in range(rows):             # <<<<<<<<<<<<<<
@@ -17920,7 +17920,7 @@ static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_N
   for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
     __pyx_v_k = __pyx_t_4;
 
-    /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":61
+    /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":73
  * 
  *         for k in range(rows):
  *             for i in range(cols):             # <<<<<<<<<<<<<<
@@ -17932,7 +17932,7 @@ static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_N
     for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
       __pyx_v_i = __pyx_t_7;
 
-      /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":62
+      /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":74
  *         for k in range(rows):
  *             for i in range(cols):
  *                 grads_inputs[k, i] = 0             # <<<<<<<<<<<<<<
@@ -17943,7 +17943,7 @@ static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_N
       __pyx_t_9 = __pyx_v_i;
       *((float *) ( /* dim=1 */ ((char *) (((float *) ( /* dim=0 */ (__pyx_v_grads_inputs.data + __pyx_t_8 * __pyx_v_grads_inputs.strides[0]) )) + __pyx_t_9)) )) = 0.0;
 
-      /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":63
+      /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":75
  *             for i in range(cols):
  *                 grads_inputs[k, i] = 0
  *                 for j in range(cols):             # <<<<<<<<<<<<<<
@@ -17955,7 +17955,7 @@ static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_N
       for (__pyx_t_12 = 0; __pyx_t_12 < __pyx_t_11; __pyx_t_12+=1) {
         __pyx_v_j = __pyx_t_12;
 
-        /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":64
+        /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":76
  *                 grads_inputs[k, i] = 0
  *                 for j in range(cols):
  *                     if i == j:             # <<<<<<<<<<<<<<
@@ -17965,7 +17965,7 @@ static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_N
         __pyx_t_13 = (__pyx_v_i == __pyx_v_j);
         if (__pyx_t_13) {
 
-          /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":65
+          /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":77
  *                 for j in range(cols):
  *                     if i == j:
  *                         grads_inputs[k, i] += prev_outputs[k, i] * (1 - prev_outputs[k, i]) * grad[k, j]             # <<<<<<<<<<<<<<
@@ -17982,7 +17982,7 @@ static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_N
           __pyx_t_19 = __pyx_v_i;
           *((float *) ( /* dim=1 */ ((char *) (((float *) ( /* dim=0 */ (__pyx_v_grads_inputs.data + __pyx_t_18 * __pyx_v_grads_inputs.strides[0]) )) + __pyx_t_19)) )) += (((*((float *) ( /* dim=1 */ ((char *) (((float *) ( /* dim=0 */ (__pyx_v_prev_outputs.data + __pyx_t_9 * __pyx_v_prev_outputs.strides[0]) )) + __pyx_t_8)) ))) * (1.0 - (*((float *) ( /* dim=1 */ ((char *) (((float *) ( /* dim=0 */ (__pyx_v_prev_outputs.data + __pyx_t_14 * __pyx_v_prev_outputs.strides[0]) )) + __pyx_t_15)) ))))) * (*((float *) ( /* dim=1 */ ((char *) (((float *) ( /* dim=0 */ (__pyx_v_grad.data + __pyx_t_16 * __pyx_v_grad.strides[0]) )) + __pyx_t_17)) ))));
 
-          /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":64
+          /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":76
  *                 grads_inputs[k, i] = 0
  *                 for j in range(cols):
  *                     if i == j:             # <<<<<<<<<<<<<<
@@ -17992,7 +17992,7 @@ static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_N
           goto __pyx_L9;
         }
 
-        /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":67
+        /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":79
  *                         grads_inputs[k, i] += prev_outputs[k, i] * (1 - prev_outputs[k, i]) * grad[k, j]
  *                     else:
  *                         grads_inputs[k, i] += -prev_outputs[k, i] * prev_outputs[k, j] * grad[k, j]             # <<<<<<<<<<<<<<
@@ -18015,7 +18015,7 @@ static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_N
     }
   }
 
-  /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":77
+  /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":89
  *         #     }, "Softmax_Activation_backward")
  * 
  *         return grads_inputs             # <<<<<<<<<<<<<<
@@ -18026,7 +18026,7 @@ static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_N
   __pyx_r = __pyx_v_grads_inputs;
   goto __pyx_L0;
 
-  /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":45
+  /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":57
  *     @cython.wraparound(False)
  *     @cython.nonecheck(False)
  *     cdef inline float[:, ::1] backward(self, float[:, ::1] grad) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -18063,7 +18063,7 @@ static __Pyx_memviewslice __pyx_f_9src_files_14Neural_Network_9Raw_Numpy_16Raw_N
   return __pyx_r;
 }
 
-/* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":80
+/* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":92
  * 
  * 
  *     def copy(self) -> 'Softmax_Activation':             # <<<<<<<<<<<<<<
@@ -18120,19 +18120,19 @@ static struct __pyx_obj_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layer
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("copy", 1);
 
-  /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":81
+  /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":93
  * 
  *     def copy(self) -> 'Softmax_Activation':
  *         return Softmax_Activation()             # <<<<<<<<<<<<<<
  */
   __Pyx_XDECREF((PyObject *)__pyx_r);
-  __pyx_t_1 = __Pyx_PyObject_CallNoArg(((PyObject *)__pyx_ptype_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_18Softmax_Activation_18Softmax_Activation_Softmax_Activation)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 81, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_CallNoArg(((PyObject *)__pyx_ptype_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_18Softmax_Activation_18Softmax_Activation_Softmax_Activation)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 93, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = ((struct __pyx_obj_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_18Softmax_Activation_18Softmax_Activation_Softmax_Activation *)__pyx_t_1);
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":80
+  /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":92
  * 
  * 
  *     def copy(self) -> 'Softmax_Activation':             # <<<<<<<<<<<<<<
@@ -20435,16 +20435,16 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GIVEREF(__pyx_tuple__19);
   __pyx_codeobj__20 = (PyObject*)__Pyx_PyCode_New(3, 0, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__19, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_pyx_unpickle_Enum, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__20)) __PYX_ERR(1, 1, __pyx_L1_error)
 
-  /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":80
+  /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":92
  * 
  * 
  *     def copy(self) -> 'Softmax_Activation':             # <<<<<<<<<<<<<<
  *         return Softmax_Activation()
  */
-  __pyx_tuple__21 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__21)) __PYX_ERR(0, 80, __pyx_L1_error)
+  __pyx_tuple__21 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__21)) __PYX_ERR(0, 92, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__21);
   __Pyx_GIVEREF(__pyx_tuple__21);
-  __pyx_codeobj__22 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__21, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_src_files_Neural_Network_Raw_Num, __pyx_n_s_copy, 80, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__22)) __PYX_ERR(0, 80, __pyx_L1_error)
+  __pyx_codeobj__22 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__21, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_src_files_Neural_Network_Raw_Num, __pyx_n_s_copy, 92, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__22)) __PYX_ERR(0, 92, __pyx_L1_error)
 
   /* "(tree fragment)":1
  * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
@@ -21613,20 +21613,20 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":80
+  /* "src_files/Neural_Network/Raw_Numpy/Raw_Numpy_Layers/Softmax_Activation/Softmax_Activation.pyx":92
  * 
  * 
  *     def copy(self) -> 'Softmax_Activation':             # <<<<<<<<<<<<<<
  *         return Softmax_Activation()
  */
-  __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 80, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 92, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_return, __pyx_kp_s_Softmax_Activation_2) < 0) __PYX_ERR(0, 80, __pyx_L1_error)
-  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_18Softmax_Activation_18Softmax_Activation_18Softmax_Activation_3copy, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Softmax_Activation_copy, NULL, __pyx_n_s_src_files_Neural_Network_Raw_Num_2, __pyx_d, ((PyObject *)__pyx_codeobj__22)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 80, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_return, __pyx_kp_s_Softmax_Activation_2) < 0) __PYX_ERR(0, 92, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_18Softmax_Activation_18Softmax_Activation_18Softmax_Activation_3copy, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Softmax_Activation_copy, NULL, __pyx_n_s_src_files_Neural_Network_Raw_Num_2, __pyx_d, ((PyObject *)__pyx_codeobj__22)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 92, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_CyFunction_SetAnnotationsDict(__pyx_t_7, __pyx_t_4);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_18Softmax_Activation_18Softmax_Activation_Softmax_Activation, __pyx_n_s_copy, __pyx_t_7) < 0) __PYX_ERR(0, 80, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_18Softmax_Activation_18Softmax_Activation_Softmax_Activation, __pyx_n_s_copy, __pyx_t_7) < 0) __PYX_ERR(0, 92, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   PyType_Modified(__pyx_ptype_9src_files_14Neural_Network_9Raw_Numpy_16Raw_Numpy_Layers_18Softmax_Activation_18Softmax_Activation_Softmax_Activation);
 

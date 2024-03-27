@@ -416,12 +416,18 @@ class Individual:
                 self.__permute_params_dict(value, safe_mutation_factors[key] if safe_mutation_factors is not None else None)
             elif isinstance(value, np.ndarray):
                 if safe_mutation_factors is None or self.use_safe_mutation is False:
-                    value += np.random.normal(0, self.mutation_factor, value.shape) - self.L1_factor * np.sign(value) - self.L2_factor * value
+                    if len(value.shape) == 1:
+                        L1_here = 0
+                        L2_here = 0
+                    else:
+                        L1_here = self.L1_factor
+                        L2_here = self.L2_factor
+                    value += np.random.normal(0, self.mutation_factor, value.shape) - L1_here * np.sign(value) - L2_here * value
                 else:
-                    # sigmas = self.mutation_factor / np.clip(safe_mutation_factors[key], 0.01, None)
-                    # value += np.random.normal(0, sigmas, value.shape) - self.L1_factor * np.sign(value) - self.L2_factor * value
-                    safe_mutate_inplace(value, self.mutation_factor, safe_mutation_factors[key], 0.01, 1000.0, self.L1_factor, self.L2_factor)
-                # if self.mutation_threshold is None:
-                # value += np.random.normal(0, self.mutation_factor, value.shape) - self.L1_factor * np.sign(value) - self.L2_factor * value
-                # else:
-                #     MyMath.mutate_array_scaled(value, self.mutation_factor, self.mutation_threshold)
+                    # sigmas = self.mutation_factor * np.clip(safe_mutation_factors[key], 0.01, 10.0)
+                    min_value = np.min(safe_mutation_factors[key])
+                    max_value = np.max(safe_mutation_factors[key])
+                    normalized = (safe_mutation_factors[key] - min_value) / (max_value - min_value)
+                    sigmas = self.mutation_factor / (0.2 + normalized)
+                    value += np.random.normal(0, sigmas, value.shape) - self.L1_factor * np.sign(value) - self.L2_factor * value
+                    # safe_mutate_inplace(value, self.mutation_factor, safe_mutation_factors[key], 0.0001, 1000.0, self.L1_factor, self.L2_factor)
