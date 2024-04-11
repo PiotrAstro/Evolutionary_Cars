@@ -52,6 +52,7 @@ class Evolutionary_Mutate_Population:
         ]
         self.environment_class = get_environment_class(constants_dict["environment"]["name"])
         assert self.environment_class is not None
+        self.max_threads = os.cpu_count() if constants_dict["Evolutionary_Mutate_Population"]["max_threads"] <= 0 else constants_dict["Evolutionary_Mutate_Population"]["max_threads"]
         # end of things taken from constants_dict
 
         # file handling
@@ -75,8 +76,6 @@ class Evolutionary_Mutate_Population:
             for _ in range(self.population_size)
         ]
         self.best_individual = self.population[0].copy()
-
-        self.max_threads = os.cpu_count()
 
 
     def run(self) -> pd.DataFrame:
@@ -125,12 +124,12 @@ class Evolutionary_Mutate_Population:
             if self.population[0].get_fitness() > self.best_individual.get_fitness():
                 # self.population[0].FIHC(self.mutation_factor, 20, self.mutation_threshold)
                 self.best_individual = self.population[0].copy()
-                if self.population[0].get_fitness() > 10000:
-                    deepest_parent = self.population[0].param_tree_self
-                    while deepest_parent.parent is not None:
-                        deepest_parent = deepest_parent.parent
-                    with open(self.log_directory + "best_individual_tree.pkl", "wb") as f:
-                        pickle.dump(deepest_parent, f)
+                # if self.population[0].get_fitness() > 10000:
+                #     deepest_parent = self.population[0].param_tree_self
+                #     while deepest_parent.parent is not None:
+                #         deepest_parent = deepest_parent.parent
+                #     with open(self.log_directory + "best_individual_tree.pkl", "wb") as f:
+                #         pickle.dump(deepest_parent, f)
 
 
             fitnesses = np.array([individual.get_fitness() for individual in self.population])
@@ -142,8 +141,8 @@ class Evolutionary_Mutate_Population:
             if generation % self.save_logs_every_n_epochs == 0:
                 # params = self.best_individual.neural_network.get_parameters()
                 # print(f"Best individual parameters: {params}")
-                model = self.best_individual.neural_network
-                run_basic_environment_visualization(model)
+                # model = self.best_individual.neural_network
+                # run_basic_environment_visualization(model)
                 log_list.append(
                     {
                         "generation": generation,
@@ -152,6 +151,9 @@ class Evolutionary_Mutate_Population:
                         **{label: value for label, value in zip(quantile_labels, quantile_results)}
                     }
                 )
+
+            mut_fact = list(sorted(self.mutation_controller.mutation_factors))[::5]
+            print(" ".join([f"{x:.3f}" for x in mut_fact]))
         log_data_frame = pd.DataFrame(log_list)
 
         return log_data_frame

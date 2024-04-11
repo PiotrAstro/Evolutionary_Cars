@@ -55,7 +55,7 @@ class SHADE(Abstract_Mutation_Controller):
             child_fitness = tmp_array[:, 2]
 
             improvement = child_fitness - parent_fitness
-            weights = improvement / np.mean(improvement)
+            weights = improvement / np.sum(improvement)
             new_value = np.sum(new_mutations * weights)
             self.mutation_factors[self.k] = new_value
 

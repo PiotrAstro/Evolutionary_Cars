@@ -124,7 +124,7 @@ class Individual:
         id_in_controller = new_individual.mutate()
         new_fitness = new_individual.get_fitness()
 
-        if new_fitness > self.fitness:
+        if new_fitness > self.get_fitness():
             self.mutation_controller.mutation_better_than_parent(id_in_controller, self.fitness, new_fitness)
 
         return new_individual

@@ -4,7 +4,7 @@ from PIL import Image
 map_image_path = r"data\map2.png"
 car_image_path = r"data\car.png"
 
-map_image_path_2 = r"data\map3.png"
+map_image_path_2 = r"data\map.png"
 
 img = Image.open(map_image_path).convert('L')  # 'L' stands for luminance
 map_view = np.array(np.array(img) / 255, dtype=np.bool_)
@@ -106,16 +106,17 @@ CONSTANTS_DICT = {
         "logs_path": r"C:\Piotr\AIProjects\Evolutionary_Cars\logs",
     },
     "Evolutionary_Mutate_Population": {
-        "population": 500,
+        "population": 1000,
         "epochs": 300,
         "mutation_controller": {
             "name": "SHADE",
             "kwargs": {
-                "mem_size": 10,
-                "initial_mut_fact_range": (0.01, 0.2),
-                "mut_change_sigma": 0.2,  # 0.1
+                "mem_size": 30,
+                "initial_mut_fact_range": (0.005, 0.2),
+                "mut_change_sigma": 0.1,  # 0.1
             },
         },
+        "max_threads": 22,
         "save_logs_every_n_epochs": 10,
         "logs_path": r"C:\Piotr\AIProjects\Evolutionary_Cars\logs",
     },

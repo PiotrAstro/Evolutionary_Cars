@@ -1,17 +1,19 @@
 import copy
 import os
 import time
+from concurrent.futures import ProcessPoolExecutor, as_completed
 from typing import Dict, Any, List, Tuple
 
 from src_files.Evolutionary_Algorithms.Evolutionary_Strategies.Evolutionary_Mutate_Population import Evolutionary_Mutate_Population
 from src_files.constants import CONSTANTS_DICT
 
 
-# run this script from terminal, be in directory Stock_Agent and paste:
-# python -m src_files.metaparams_tests.py
+# run this script from terminal, be in directory Evolutionary_Cars and paste:
+# python -m src_files.scripts.metaparams_tests
 
 POLICY_SEARCH_ALGORITHM = Evolutionary_Mutate_Population
-TESTS_TRIES = 3
+TESTS_TRIES = 6
+CONCURRENT_WORKERS = 5
 SAVE_DIR = r"logs/metaparameters_tests_" + str(int(time.time()))
 
 
@@ -52,17 +54,20 @@ SAVE_DIR = r"logs/metaparameters_tests_" + str(int(time.time()))
 TESTED_VALUES = [
     {
         "Evolutionary_Mutate_Population": {
-            "mutation_factor": [0.03, 0.05, 0.8, 0.1],
-            "mutation_threshold": [None],
+            "mutation_factor": [0.05],
+            "L1": [0.0, 0.0001],
+            "L2": [0.0, 0.0001],
+            "max_threads": [5],
+            "use_safe_mutation": [False],
         },
     },
 
-    {
-        "Evolutionary_Mutate_Population": {
-            "mutation_factor": [0.02, 0.05, 0.1],
-            "mutation_threshold": [0.5, 1.0, 2.0],
-        },
-    }
+    # {
+    #     "Evolutionary_Mutate_Population": {
+    #         "mutation_factor": [0.002, 0.001],
+    #         "use_safe_mutation": [True],
+    #     },
+    # }
 ]
 
 
@@ -179,7 +184,21 @@ def test_one_case(basic_dict: Dict[str, Any], special_dict: Dict[str, Any], case
 
 if __name__ == "__main__":
     possible_dicts = create_all_special_dicts(TESTED_VALUES)
-    for special_dict in possible_dicts:
-        for i in range(TESTS_TRIES):
-            test_one_case(CONSTANTS_DICT, special_dict, i)
-            print("Tested:", special_dict, "case:", i)
+
+    futures = []
+    with ProcessPoolExecutor(max_workers=CONCURRENT_WORKERS) as executor:
+        # Submit all the tasks to the executor
+        for special_dict in possible_dicts:
+            for i in range(TESTS_TRIES):
+                # Submitting the task to be executed in parallel
+                future = executor.submit(test_one_case, CONSTANTS_DICT, special_dict, i)
+                futures.append(future)
+
+        # Process the results as they are completed
+        for future in as_completed(futures):
+            result = future.result()
+            print(result)
+
+# Specify the number of concurrent workers
+concurrent_workers = 4  # This can be adjusted based on your machine's capabilities
+
