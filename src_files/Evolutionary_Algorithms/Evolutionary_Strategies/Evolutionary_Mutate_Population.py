@@ -11,6 +11,8 @@ import pandas as pd
 from src_files.Environments.general_functions_provider import get_environment_class
 from src_files.Environments_Visualization.Basic_Environment_Visualization import run_basic_environment_visualization
 from src_files.Evolutionary_Algorithms.Individual import Individual
+from src_files.Evolutionary_Algorithms.Mutation_Controllers.mutation_controllers_functions import \
+    get_mutation_controller_by_name
 
 
 class Evolutionary_Mutate_Population:
@@ -29,10 +31,10 @@ class Evolutionary_Mutate_Population:
         # things taken from constants_dict:
         self.population_size = constants_dict["Evolutionary_Mutate_Population"]["population"]
         self.epochs = constants_dict["Evolutionary_Mutate_Population"]["epochs"]
-        self.mutation_factor = constants_dict["Evolutionary_Mutate_Population"]["mutation_factor"]
-        self.use_safe_mutation = constants_dict["Evolutionary_Mutate_Population"]["use_safe_mutation"]
-        self.L1 = constants_dict["Evolutionary_Mutate_Population"]["L1"]
-        self.L2 = constants_dict["Evolutionary_Mutate_Population"]["L2"]
+        # self.mutation_factor = constants_dict["Evolutionary_Mutate_Population"]["mutation_factor"]
+        # self.use_safe_mutation = constants_dict["Evolutionary_Mutate_Population"]["use_safe_mutation"]
+        # self.L1 = constants_dict["Evolutionary_Mutate_Population"]["L1"]
+        # self.L2 = constants_dict["Evolutionary_Mutate_Population"]["L2"]
         self.save_logs_every_n_epochs = constants_dict["Evolutionary_Mutate_Population"]["save_logs_every_n_epochs"]
         base_log_dir = constants_dict["Evolutionary_Mutate_Population"]["logs_path"]
 
@@ -57,16 +59,19 @@ class Evolutionary_Mutate_Population:
         os.makedirs(self.log_directory, exist_ok=True)
 
         #self.logger = Timestamp_Logger(file_path=self.log_directory + "log.txt", log_mode='w', log_moment='a', separator='\t')
-
+        self.mutation_controller = get_mutation_controller_by_name(
+            constants_dict["Evolutionary_Mutate_Population"]["mutation_controller"]["name"]
+        )(**constants_dict["Evolutionary_Mutate_Population"]["mutation_controller"]["kwargs"])
         self.neural_network_kwargs = constants_dict["neural_network"]
         self.population = [
             Individual(self.neural_network_kwargs,
                        self.environment_class,
                        self.training_environments_kwargs,
-                       self.mutation_factor,
-                       use_safe_mutation=self.use_safe_mutation,
-                       L1_factor=self.L1,
-                       L2_factor=self.L2)
+                       self.mutation_controller)
+                       # self.mutation_factor,
+                       # use_safe_mutation=self.use_safe_mutation,
+                       # L1_factor=self.L1,
+                       # L2_factor=self.L2)
             for _ in range(self.population_size)
         ]
         self.best_individual = self.population[0].copy()
@@ -108,6 +113,8 @@ class Evolutionary_Mutate_Population:
             # end of multi-threading
             time_end = time.perf_counter()
             print(f"Time: {time_end - time_start}, mean time: {(time_end - time_start) / self.population_size / 2}, mean time using one thread: {(time_end - time_start) / self.population_size / 2 * self.max_threads}")
+
+            self.mutation_controller.commit_iteration()
 
             self.population = sorted(
                 self.population + mutated_population,

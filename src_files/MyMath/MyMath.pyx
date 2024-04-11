@@ -11,7 +11,7 @@ from src_files.MyMath.cython_debug_helper import cython_debug_call
 cdef double LOOKUP_DEGREE_RESOLUTION = 0.05  # 0.05 degree resolution
 cdef double LOOKUP_EXP_RESOLUTION = 0.001
 cdef double LOOKUP_EXP_BOUNDS = 10
-cdef double TANH_SIGMOID_CLIP = 10
+cdef double TANH_SIGMOID_CLIP = 20
 cdef double LOOKUP_NORMAL_DISTRIBUTION_RESOLUTION = 0.001
 cdef double LOOKUP_LN_BOUNDS = 10
 cdef double LOOKUP_LN_RESOLUTION = 0.001

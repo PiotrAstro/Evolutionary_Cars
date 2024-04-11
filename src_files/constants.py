@@ -4,7 +4,7 @@ from PIL import Image
 map_image_path = r"data\map2.png"
 car_image_path = r"data\car.png"
 
-map_image_path_2 = r"data\map.png"
+map_image_path_2 = r"data\map3.png"
 
 img = Image.open(map_image_path).convert('L')  # 'L' stands for luminance
 map_view = np.array(np.array(img) / 255, dtype=np.bool_)
@@ -22,7 +22,7 @@ CONSTANTS_DICT = {
             "min_speed": 0.3,
             "max_speed": 1.5,  # 1.5
             "speed_change": 0.01,
-            "rays_degrees": (-90, -67.5, -45, -22.5, 0, 22.5, 45, 67.5, 90),  # (-90, -45, 0, 45, 90),  # (-90, -67.5, -45, -22.5, 0, 22.5, 45, 67.5, 90),  (-90, -60, -30, 0, 30, 60, 90)
+            "rays_degrees": (-90, -67.5, -45, -22.5, 0, 22.5, 45, 67.5, 90),  # (-90, -45, 0, 45, 90),  # (-90, -67.5, -45, -22.5, 0, 22.5, 45, 67.5, 90)
             "rays_distances_scale_factor": 100,
             "ray_input_clip": 5,
             "collision_reward": -100,
@@ -58,13 +58,19 @@ CONSTANTS_DICT = {
                 "start_angle": 315,
                 "max_steps": 20000,
             }
+            # {
+            #     "map_view": map_view_2,
+            #     "start_position": (365, 744),
+            #     "start_angle": 0,
+            #     "max_steps": 10000,
+            # }
         ],
         "changeable_validation_kwargs_list": [
             {
                 "map_view": map_view,
                 "start_position": (504, 744),
                 "start_angle": 0,
-                "max_steps": 50000,
+                "max_steps": 10000,
             }
             # {
             #     "map_view": map_view_2,
@@ -100,13 +106,17 @@ CONSTANTS_DICT = {
         "logs_path": r"C:\Piotr\AIProjects\Evolutionary_Cars\logs",
     },
     "Evolutionary_Mutate_Population": {
-        "population": 200,
+        "population": 500,
         "epochs": 300,
-        "mutation_factor": 0.01, # good - 0.05 or 0.1
-        "use_safe_mutation": False,  # None - no scaled mutation, float - scaled mutation
-        "L1": 0.0,
-        "L2": 0.0,
-        "save_logs_every_n_epochs": 50,
+        "mutation_controller": {
+            "name": "SHADE",
+            "kwargs": {
+                "mem_size": 10,
+                "initial_mut_fact_range": (0.01, 0.2),
+                "mut_change_sigma": 0.2,  # 0.1
+            },
+        },
+        "save_logs_every_n_epochs": 10,
         "logs_path": r"C:\Piotr\AIProjects\Evolutionary_Cars\logs",
     },
     "Evolutionary_Strategy": {
