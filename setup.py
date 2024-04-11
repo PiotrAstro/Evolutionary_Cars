@@ -23,6 +23,7 @@ extensions = [
     Extension(
         name=filepath_to_modulename(pyx_file),
         sources=[pyx_file],
+        extra_compile_args=["/Ox"],
     ) for pyx_file in pyx_files
 ]
 
