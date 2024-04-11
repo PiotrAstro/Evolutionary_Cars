@@ -1,6 +1,6 @@
 from typing import Optional, Type
 
-from src_files.Neural_Network.Raw_Numpy.Raw_Numpy_Layers.Abstract_Layer import Abstract_Layer
+from src_files.Neural_Network.Raw_Numpy.Raw_Numpy_Layers.Abstract_Layer.Abstract_Layer import Abstract_Layer
 from src_files.Neural_Network.Raw_Numpy.Raw_Numpy_Layers.Abstract_Parametrized_Layer import \
     Abstract_Parametrized_Layer
 from src_files.Neural_Network.Raw_Numpy.Raw_Numpy_Layers.None_Activation.None_Activation import None_Activation

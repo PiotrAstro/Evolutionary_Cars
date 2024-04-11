@@ -7,18 +7,24 @@ import matplotlib.pyplot as plt
 
 COLOURS = ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075', '#808080', '#ffffff']
 
-def draw_simple_graph(data_frames: List[List[Tuple[str, pd.DataFrame]]], x: str, y: str, title: str = "Results") -> None:
+def draw_simple_graph(data_frames: List[List[Tuple[str, pd.DataFrame]]], x: str, y: str, title: str = "Results", one_label_per_group: bool = True) -> None:
     """
     Draws simple many lines graph, as input takes list of groups - in group every element wil have the same colour
     :param data_frames: list of groups of tuples with name of line and data frame List[List[Tuple[file description, loaded data frame]]]
     :param x: x axis name
     :param y: y axis name
     :param title: title of graph
+    :param one_label_per_group: if True, then every group will have only one label, if False, then every line will have its own label
     """
 
     for group_id, group in enumerate(data_frames):
+        label = None
         for name, df in group:
-            plt.plot(df[x], df[y], label=name, color=COLOURS[group_id % len(COLOURS)])
+            if label is None or not one_label_per_group:
+                label = name
+            plt.plot(df[x], df[y], label=label, color=COLOURS[group_id % len(COLOURS)])
+            if one_label_per_group:
+                label = "_no_legend_"
     plt.title(title)
     plt.xlabel(x)
     plt.ylabel(y)
@@ -26,7 +32,7 @@ def draw_simple_graph(data_frames: List[List[Tuple[str, pd.DataFrame]]], x: str,
     plt.show()
 
 # VISUALIZATION_DIR = r"C:\Piotr\AIProjects\Evolutionary_Cars\logs\metaparameters_tests_1709987152"
-VISUALIZATION_DIR = r"C:\Piotr\AIProjects\Evolutionary_Cars\logs\metaparameters_tests_1709843179"
+VISUALIZATION_DIR = r"D:\Evolutionary_Cars\logs\metaparameters_tests_1711625127"
 # loading dataframes
 data_frames = {}
 for file in os.listdir(VISUALIZATION_DIR):
