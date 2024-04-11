@@ -30,8 +30,11 @@ def get_mutation_controller_by_name(name: str) -> Type[Abstract_Mutation_Control
     :param name:
     :return:
     """
-    if name == "SHADE":
-        from src_files.Evolutionary_Algorithms.Mutation_Controllers.SHADE import SHADE
-        return SHADE
+    if name == "SHADE_single":
+        from src_files.Evolutionary_Algorithms.Mutation_Controllers.SHADE import SHADE_single
+        return SHADE_single
+    elif name == "SHADE_multiple":
+        from src_files.Evolutionary_Algorithms.Mutation_Controllers.SHADE import SHADE_multiple
+        return SHADE_multiple
     else:
         raise ValueError("Unknown mutation controller name: " + name)

@@ -6,8 +6,7 @@ import numpy as np
 from src_files.Evolutionary_Algorithms.Mutation_Controllers.mutation_controllers_functions import \
     Abstract_Mutation_Controller
 
-
-class SHADE(Abstract_Mutation_Controller):
+class SHADE_single(Abstract_Mutation_Controller):
     mem_size: int
     lock: Lock
     mut_change_sigma: float
@@ -28,7 +27,7 @@ class SHADE(Abstract_Mutation_Controller):
         self.improved_over_parents = []
         self.lock = Lock()
 
-    def mutate(self, params: dict[str, Any]) -> int:
+    def mutate(self, params: dict[str, Any] | np.ndarray) -> int:
         mut_fact_org = np.random.choice(self.mutation_factors)
         rand = np.random.normal(0, self.mut_change_sigma)
         rand *= (1 - self.mut_change_sigma) if rand < 0 else 1
@@ -41,11 +40,15 @@ class SHADE(Abstract_Mutation_Controller):
         id_mutation = len(self.current_mutations) - 1
         self.lock.release()
 
-        self._permute_params_dict(params, mut_fact_new)
+        self._permute(params, mut_fact_new)
         return id_mutation
 
     def mutation_better_than_parent(self, id: int, parent_fitness: float, child_fitness: float) -> None:
+        self.lock.acquire()
+        if id >= len(self.current_mutations):
+            raise ValueError("Mutation id out of range")
         self.improved_over_parents.append((self.current_mutations[id], parent_fitness, child_fitness))
+        self.lock.release()
 
     def commit_iteration(self) -> None:
         if self.improved_over_parents:
@@ -64,12 +67,69 @@ class SHADE(Abstract_Mutation_Controller):
         self.current_mutations = []
 
 
-    def _permute_params_dict(self, param_dict: dict[str, Any], mut_factor: float) -> None:
+    def _permute(self, param: dict[str, Any] | np.ndarray, mut_factor: float) -> None:
         """
         Permutes parameters dictionary inplace
         """
-        for key, value in param_dict.items():
-            if isinstance(value, dict):
-                self._permute_params_dict(value, mut_factor)
-            elif isinstance(value, np.ndarray):
-                value += np.random.normal(0, mut_factor, value.shape)
+        if isinstance(param, np.ndarray):
+            param += np.random.normal(0, mut_factor, param.shape)
+        else:
+            for key, value in param.items():
+                self._permute(value, mut_factor)
+
+    def __str__(self) -> str:
+        mut_fact = list(sorted(self.mutation_factors))[::5]
+        return " ".join([f"{x:.3f}" for x in mut_fact])
+
+
+class SHADE_multiple(Abstract_Mutation_Controller):
+    dict_SHADEs: dict[str, Any]
+    list_SHADEs: list[SHADE_single]
+    singular_args: tuple[Any, ...]
+    singular_kwargs: dict[str, Any]
+    lock: Lock
+
+    def __init__(self, *args, **kwargs):
+        self.singular_args = args
+        self.singular_kwargs = kwargs
+        self.lock = Lock()
+        self.dict_SHADEs = {}
+        self.list_SHADEs = []
+
+    def mutate(self, params: dict[str, Any]) -> int:
+        return self._permute(params, self.dict_SHADEs)
+
+    def _permute(self, param: dict[str, Any] | np.ndarray, SHADE_dict: dict[str, Any] | SHADE_single) -> int:
+        """
+        Permutes parameters dictionary inplace
+        returns index of mutation
+        """
+        if isinstance(param, np.ndarray):
+            return SHADE_dict.mutate(param)
+        else:
+            returned_id = -1
+            for key, value in param.items():
+                self.lock.acquire()
+                if key not in SHADE_dict:
+                    if isinstance(value, dict):
+                        SHADE_dict[key] = {}
+                    else:
+                        new = SHADE_single(*self.singular_args, **self.singular_kwargs)
+                        SHADE_dict[key] = new
+                        self.list_SHADEs.append(new)
+                self.lock.release()
+                returned_id = self._permute(value, SHADE_dict[key])
+            return returned_id
+
+    def mutation_better_than_parent(self, id: int, parent_fitness: float, child_fitness: float) -> None:
+        for shade in self.list_SHADEs:
+            shade.mutation_better_than_parent(id, parent_fitness, child_fitness)
+
+    def commit_iteration(self) -> None:
+        for shade in self.list_SHADEs:
+            shade.commit_iteration()
+
+    def __str__(self) -> str:
+
+        return "\n".join([shade.__str__() for shade in self.list_SHADEs])
+

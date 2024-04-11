@@ -152,8 +152,7 @@ class Evolutionary_Mutate_Population:
                     }
                 )
 
-            mut_fact = list(sorted(self.mutation_controller.mutation_factors))[::5]
-            print(" ".join([f"{x:.3f}" for x in mut_fact]))
+            print(self.mutation_controller)
         log_data_frame = pd.DataFrame(log_list)
 
         return log_data_frame

@@ -109,10 +109,10 @@ CONSTANTS_DICT = {
         "population": 1000,
         "epochs": 300,
         "mutation_controller": {
-            "name": "SHADE",
+            "name": "SHADE_multiple",
             "kwargs": {
                 "mem_size": 30,
-                "initial_mut_fact_range": (0.005, 0.2),
+                "initial_mut_fact_range": (0.001, 0.2),
                 "mut_change_sigma": 0.1,  # 0.1
             },
         },
