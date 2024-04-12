@@ -17,11 +17,22 @@ from src_files.constants import CONSTANTS_DICT
 # IRRG - Komarnicki
 # sprawdzić iterated local search
 
+
+# nowe pomysły:
+# SHADE - ILS
+# IDA - np. jakieś hierarchical BOA (od pana Pelicana)
+# najlepiej pingnąc maila o tych rzeczach
+# pingnąć o tych IDA dla metaparatetrów
+# GAWL (Renato), CANNIBAL - te zależności w parametrach ML
+
+
 # moje pomysły - l1 i l2
 # wtedy sprawdzić jeszcze raz z różnymi wartościami mutacji w zależności od wartości bezwzględnej parametru
 # dynamiczna zmiana populacji (jak idzie dobrze to mniejsza, jak źle to większa)
 # mutacje - dziecko dziedziczy mutacje po rodzicu, początkowo losuję z normal distribution mutacje, co np 10 generacji biorę średni poziom mutacji i losuję z niego z normal distribution
 
+
+# spróbować
 
 # policy_search_algorithm = Differential_Evolution(CONSTANTS_DICT)
 policy_search_algorithm = Evolutionary_Mutate_Population(CONSTANTS_DICT)

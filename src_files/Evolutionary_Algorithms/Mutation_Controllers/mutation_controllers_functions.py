@@ -36,5 +36,8 @@ def get_mutation_controller_by_name(name: str) -> Type[Abstract_Mutation_Control
     elif name == "SHADE_multiple":
         from src_files.Evolutionary_Algorithms.Mutation_Controllers.SHADE import SHADE_multiple
         return SHADE_multiple
+    elif name == "Mut_Prob":
+        from src_files.Evolutionary_Algorithms.Mutation_Controllers.Mut_Prob import Mut_Prob
+        return Mut_Prob
     else:
         raise ValueError("Unknown mutation controller name: " + name)
