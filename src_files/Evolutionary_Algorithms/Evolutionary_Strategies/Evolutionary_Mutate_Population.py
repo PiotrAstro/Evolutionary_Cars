@@ -113,8 +113,6 @@ class Evolutionary_Mutate_Population:
             time_end = time.perf_counter()
             print(f"Time: {time_end - time_start}, mean time: {(time_end - time_start) / self.population_size / 2}, mean time using one thread: {(time_end - time_start) / self.population_size / 2 * self.max_threads}")
 
-            self.mutation_controller.commit_iteration()
-
             self.population = sorted(
                 self.population + mutated_population,
                 key=lambda individual: individual.get_fitness(),
@@ -130,7 +128,6 @@ class Evolutionary_Mutate_Population:
                 #         deepest_parent = deepest_parent.parent
                 #     with open(self.log_directory + "best_individual_tree.pkl", "wb") as f:
                 #         pickle.dump(deepest_parent, f)
-
 
             fitnesses = np.array([individual.get_fitness() for individual in self.population])
             quantile_results = np.quantile(fitnesses, quantile)
@@ -151,6 +148,7 @@ class Evolutionary_Mutate_Population:
                         **{label: value for label, value in zip(quantile_labels, quantile_results)}
                     }
                 )
+            self.mutation_controller.commit_iteration(fitnesses)
 
             print(self.mutation_controller)
         log_data_frame = pd.DataFrame(log_list)

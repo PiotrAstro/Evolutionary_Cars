@@ -106,7 +106,7 @@ CONSTANTS_DICT = {
         "logs_path": r"C:\Piotr\AIProjects\Evolutionary_Cars\logs",
     },
     "Evolutionary_Mutate_Population": {
-        "population": 500,
+        "population": 200,
         "epochs": 300,
         "mutation_controller": {
             "name": "Mut_Prob",  # "SHADE_single", "Mut_Prob", "SHADE_multiple"

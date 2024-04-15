@@ -48,14 +48,18 @@ class Mut_Prob(Abstract_Mutation_Controller):
         self.improved_over_parents.append((id, parent_fitness, child_fitness))
         self.lock.release()
 
-    def commit_iteration(self) -> None:
+    def commit_iteration(self, fitnesses: np.ndarray) -> None:
         new_probs = np.ones(self.mut_size) / self.mut_size
+
         if self.improved_over_parents:
+            threshold = np.quantile(fitnesses, 0.95)
             new_probs_tmp = np.zeros(self.mut_size)
             for index, parent_fitness, child_fitness in self.improved_over_parents:
                 candidate = child_fitness - parent_fitness
-                if candidate > new_probs_tmp[index]:
-                    new_probs_tmp[index] = candidate
+                if child_fitness > threshold:
+                    new_probs_tmp[index] += candidate
+                # if candidate > new_probs_tmp[index]:
+                #     new_probs_tmp[index] = candidate
             # new_probs_tmp *= (1 - self.mutation_probs)
             new_probs_tmp /= np.sum(new_probs_tmp)
             # self.global_changes_tmp += new_probs_tmp
@@ -80,7 +84,6 @@ class Mut_Prob(Abstract_Mutation_Controller):
 
     def __str__(self) -> str:
         number_to_show = 10
-
         stride = self.mut_size // number_to_show
         mut_probs = np.convolve(self.mutation_probs, np.ones(stride), mode="valid")[::stride]
         # global_changes = np.convolve(self.global_changes_tmp, np.ones(stride), mode="valid")[::stride]

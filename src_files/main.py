@@ -1,5 +1,4 @@
 import math
-from src_files.Environments_Visualization.Basic_Environment_Visualization import run_basic_environment_visualization
 from src_files.Evolutionary_Algorithms.Evolutionary_Strategies.Differential_Evolution import Differential_Evolution
 from src_files.Evolutionary_Algorithms.Evolutionary_Strategies.Evolutionary_Mutate_Population import \
     Evolutionary_Mutate_Population
