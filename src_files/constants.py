@@ -106,16 +106,16 @@ CONSTANTS_DICT = {
         "logs_path": r"C:\Piotr\AIProjects\Evolutionary_Cars\logs",
     },
     "Evolutionary_Mutate_Population": {
-        "population": 200,
+        "population": 600,
         "epochs": 300,
         "mutation_controller": {
             "name": "Mut_Prob",  # "SHADE_single", "Mut_Prob", "SHADE_multiple"
             "kwargs": {
                 "mem_size": 30,
-                "initial_mut_fact_range": (0.001, 0.2),
+                "initial_mut_fact_range": (0.001, 0.2), # (0.001, 0.2)
                 # "mut_change_sigma": 0.1,  # 0.1
-                "survival_rate": 0.0,
-                "learning_rate": 0.1,
+                "survival_rate": 0.05,
+                "learning_rate": 0.05,
             },
         },
         "max_threads": 22,

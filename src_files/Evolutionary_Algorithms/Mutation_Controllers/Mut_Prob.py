@@ -48,26 +48,29 @@ class Mut_Prob(Abstract_Mutation_Controller):
         self.improved_over_parents.append((id, parent_fitness, child_fitness))
         self.lock.release()
 
-    def commit_iteration(self, fitnesses: np.ndarray) -> None:
+    def commit_iteration(self, previous_best: float) -> None:
         new_probs = np.ones(self.mut_size) / self.mut_size
-
-        if self.improved_over_parents:
-            threshold = np.quantile(fitnesses, 0.95)
+        learning_rate_here = self.learning_rate
+        if len(self.improved_over_parents) > 0:
             new_probs_tmp = np.zeros(self.mut_size)
             for index, parent_fitness, child_fitness in self.improved_over_parents:
                 candidate = child_fitness - parent_fitness
-                if child_fitness > threshold:
+                if child_fitness > previous_best:
                     new_probs_tmp[index] += candidate
                 # if candidate > new_probs_tmp[index]:
                 #     new_probs_tmp[index] = candidate
             # new_probs_tmp *= (1 - self.mutation_probs)
-            new_probs_tmp /= np.sum(new_probs_tmp)
-            # self.global_changes_tmp += new_probs_tmp
-            # new_probs_tmp = self.global_changes_tmp / np.sum(self.global_changes_tmp)
-            new_probs = self.survival_rate * new_probs + (1 - self.survival_rate) * new_probs_tmp
-
+            summed = np.sum(new_probs_tmp)
+            if summed != 0:
+                new_probs_tmp /= summed if summed != 0 else 1
+                # self.global_changes_tmp += new_probs_tmp
+                # new_probs_tmp = self.global_changes_tmp / np.sum(self.global_changes_tmp)
+                new_probs = self.survival_rate * new_probs + (1 - self.survival_rate) * new_probs_tmp
+            else:
+                learning_rate_here = self.survival_rate
             self.improved_over_parents = []
-        self.mutation_probs = (1 - self.learning_rate) * self.mutation_probs + self.learning_rate * new_probs
+
+        self.mutation_probs = (1 - learning_rate_here) * self.mutation_probs + learning_rate_here * new_probs
         self.mutation_probs /= np.sum(self.mutation_probs)
         self.current_mutations = []
 
