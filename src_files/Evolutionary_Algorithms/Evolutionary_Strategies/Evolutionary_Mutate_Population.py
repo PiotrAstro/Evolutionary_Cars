@@ -138,10 +138,8 @@ class Evolutionary_Mutate_Population:
             print(f"Quantiles: {quantile_text}\n\n")
 
             if generation % self.save_logs_every_n_epochs == 0:
-                # params = self.best_individual.neural_network.get_parameters()
-                # print(f"Best individual parameters: {params}")
-                # model = self.best_individual.neural_network
-                # run_basic_environment_visualization(model)
+                model = self.best_individual.neural_network
+                run_basic_environment_visualization(model)
                 log_list.append(
                     {
                         "generation": generation,

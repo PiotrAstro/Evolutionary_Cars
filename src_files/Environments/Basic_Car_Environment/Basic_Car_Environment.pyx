@@ -242,7 +242,7 @@ cdef class Car:
         self.y -= self.speed * degree_sin(self.angle)
         self.is_does_collide_actual = False
 
-        return self.speed ** 2
+        return (self.speed / self.max_speed) ** 2
 
     cdef int change_speed(self, double speed_change) noexcept nogil:
         """
