@@ -23,6 +23,7 @@ map_image_path = CONSTANTS_DICT["visualization"]["map_image_path"]
 car_dimmensions = CONSTANTS_DICT["environment"]["universal_kwargs"]["car_dimensions"]
 
 
+
 class Car:
     def __init__(self, environment: Abstract_Environment, model: Optional[Normal_model] = None):
         self.environment = environment
@@ -72,6 +73,7 @@ class Car:
 def run_basic_environment_visualization(model: Optional[Normal_model] = None):
     environment = get_environment_class(environment_name)(**environment_kwargs)
 
+    clock = pygame.time.Clock()
     pygame.init()
     screen = pygame.display.set_mode((width, height))
 
@@ -84,6 +86,7 @@ def run_basic_environment_visualization(model: Optional[Normal_model] = None):
     is_alive = True
 
     while is_alive:
+        clock.tick(150)
         # keys = pygame.key.get_pressed()
         is_alive = car.step()
 

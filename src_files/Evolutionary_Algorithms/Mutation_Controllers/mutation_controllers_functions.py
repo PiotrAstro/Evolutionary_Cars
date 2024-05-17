@@ -11,11 +11,11 @@ class Abstract_Mutation_Controller(ABC):
         :return:
         """
 
-    @abstractmethod
-    def mutation_better_than_parent(self, id: int, parent_fitness: float, child_fitness: float) -> None:
-        """
-        Tells the mutation controller that the mutation with the given id is better than the parent
-        """
+    # @abstractmethod
+    # def mutation_better_than_parent(self, id: int, parent_fitness: float, child_fitness: float) -> None:
+    #     """
+    #     Tells the mutation controller that the mutation with the given id is better than the parent
+    #     """
 
     @abstractmethod
     def commit_iteration(self) -> None:
@@ -39,5 +39,11 @@ def get_mutation_controller_by_name(name: str) -> Type[Abstract_Mutation_Control
     elif name == "Mut_Prob":
         from src_files.Evolutionary_Algorithms.Mutation_Controllers.Mut_Prob import Mut_Prob
         return Mut_Prob
+    elif name == "Mut_One":
+        from src_files.Evolutionary_Algorithms.Mutation_Controllers.Mut_One import Mut_One
+        return Mut_One
+    elif name == "Mut_Prob_Epochs":
+        from src_files.Evolutionary_Algorithms.Mutation_Controllers.Mut_Prob_Epochs import Mut_Prob_Epochs
+        return Mut_Prob_Epochs
     else:
         raise ValueError("Unknown mutation controller name: " + name)

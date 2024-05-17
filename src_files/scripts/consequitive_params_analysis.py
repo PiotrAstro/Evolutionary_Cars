@@ -78,6 +78,8 @@ def draw_params_difference_heatmap(params1: Dict[str, Any], params2: Dict[str, A
 
     # get differences
     differences = [p1 - p2 for p1, p2 in zip(flattened_params1, flattened_params2)]
+    differences_std = [np.std(diff) for diff in differences]
+    print(f"differences std: {differences_std}")
 
     # drawing
     # Create a figure and a set of subplots

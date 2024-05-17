@@ -1,8 +1,7 @@
 import os
-import random
 import time
 from concurrent.futures import ThreadPoolExecutor
-from typing import Dict, Any, List, Type
+from typing import Dict, Any, Type, List
 
 import numpy as np
 import pandas as pd
@@ -14,13 +13,13 @@ from src_files.Environments_Visualization.Basic_Environment_Visualization import
 from src_files.Neural_Network.Raw_Numpy.Raw_Numpy_Models.Normal.Normal_model import Normal_model
 
 
-class Genetic_Algorithm:
+class Differential_Evolution:
     """
-    Genetic Algorithm - sees neural network as set of genes, cross and mutate them
+    Differential Evolution - https://en.wikipedia.org/wiki/Differential_evolution
     """
     def __init__(self, constants_dict: Dict[str, Any]) -> None:
         """
-        Initializes Genetic ALgorithm - cross and mutate neural networks
+        Initializes Differential Evolution - https://en.wikipedia.org/wiki/Differential_evolution
         :param constants_dict:
         :return:
         """
@@ -28,15 +27,14 @@ class Genetic_Algorithm:
         np.random.seed(seed)
 
         # things taken from constants_dict:
-        self.population_size = constants_dict["Genetic_Algorithm"]["population"]
-        self.epochs = constants_dict["Genetic_Algorithm"]["epochs"]
-        self.mutation_factor = constants_dict["Genetic_Algorithm"]["mutation_factor"]
-        self.crosses_per_epoch = constants_dict["Genetic_Algorithm"]["crosses_per_epoch"]
-        # self.new_individual_every_n_epochs = constants_dict["Genetic_Algorithm"]["new_individual_every_n_epochs"]
-        self.save_logs_every_n_epochs = constants_dict["Genetic_Algorithm"]["save_logs_every_n_epochs"]
-        self.max_evaluations = constants_dict["Genetic_Algorithm"]["max_evaluations"]
-        self.max_threads = os.cpu_count() if constants_dict["Genetic_Algorithm"]["max_threads"] <= 0 else constants_dict["Genetic_Algorithm"]["max_threads"]
-        base_log_dir = constants_dict["Genetic_Algorithm"]["logs_path"]
+        self.population_size = constants_dict["Differential_Evolution"]["population"]
+        self.epochs = constants_dict["Differential_Evolution"]["epochs"]
+        self.cross_prob = constants_dict["Differential_Evolution"]["cross_prob"]
+        self.diff_weight = constants_dict["Differential_Evolution"]["diff_weight"]
+        self.save_logs_every_n_epochs = constants_dict["Differential_Evolution"]["save_logs_every_n_epochs"]
+        self.max_evaluations = constants_dict["Differential_Evolution"]["max_evaluations"]
+        self.max_threads = os.cpu_count() if constants_dict["Differential_Evolution"]["max_threads"] <= 0 else constants_dict["Differential_Evolution"]["max_threads"]
+        base_log_dir = constants_dict["Differential_Evolution"]["logs_path"]
 
         self.training_environments_kwargs = [
             {
@@ -55,7 +53,7 @@ class Genetic_Algorithm:
         # end of things taken from constants_dict
 
         # file handling
-        self.log_directory = base_log_dir + "/" + "GeAl" + str(int(time.time())) + "/"
+        self.log_directory = base_log_dir + "/" + "DiffEv" + str(int(time.time())) + "/"
         # os.makedirs(self.log_directory, exist_ok=True)
 
         #self.logger = Timestamp_Logger(file_path=self.log_directory + "log.txt", log_mode='w', log_moment='a', separator='\t')
@@ -74,28 +72,26 @@ class Genetic_Algorithm:
         :return:
         """
         log_list = []
-
         for generation in range(self.epochs):
             print(f"Generation {generation}")
-
-            # if generation % self.new_individual_every_n_epochs == 0:
-            #     self.population[random.randint(0, self.population_size - 1)] = Individual(self.neural_network_kwargs, self.environment_class, self.training_environments_kwargs)
-
-            indecies_randomized = np.random.permutation(self.population_size)
 
             time_start = time.perf_counter()
             # multi-threading
             with ThreadPoolExecutor(max_workers=self.max_threads) as executor:
-                futures = [
-                    executor.submit(self._perform_cross, indecies_randomized[i * 2], indecies_randomized[i * 2 + 1])
-                    for i in range(self.crosses_per_epoch)
-                ]
+                futures = []
+                for i in range(self.population_size):
+                    base_id, id1, id2 = np.random.choice(self.population_size, 3, replace=False)
+                    base_params = self.best_individual.neural_network.get_parameters()  # self.population[base_id].neural_network.get_parameters()
+                    id1_params = self.population[id1].neural_network.get_parameters()
+                    id2_params = self.population[id2].neural_network.get_parameters()
+                    futures.append(executor.submit(self.population[i].differential_evolution_one_epoch, base_params, id1_params, id2_params, self.cross_prob, self.diff_weight))
+
                 results = [future.result() for future in futures]
-            # for i in range(self.crosses_per_epoch):
+            # for i in range(self.crosses_per_poch):
             #     self.__perform_cross(indecies_randomized[i * 2], indecies_randomized[i * 2 + 1])
             # end of multi-threading
             time_end = time.perf_counter()
-            print(f"Time: {time_end - time_start}, mean time: {(time_end - time_start) / self.crosses_per_epoch / 2}, mean time using one thread: {(time_end - time_start) / self.crosses_per_epoch / 2 * self.max_threads}")
+            print(f"Time: {time_end - time_start}, mean time: {(time_end - time_start) / self.population_size / 2}, mean time using one thread: {(time_end - time_start) / self.population_size / 2 * self.max_threads}")
 
             for individual in self.population:
                 if individual.get_fitness() > self.best_individual.get_fitness():
@@ -108,37 +104,22 @@ class Genetic_Algorithm:
             print(f"Mean fitness: {fitnesses.mean()}, best fitness: {self.best_individual.get_fitness()}")
             print(f"Quantiles: {quantile_text}\n\n")
 
-            evaluations = self.population_size + (1 + generation) * self.crosses_per_epoch * 2
+            evaluations = generation * self.population_size
 
             if generation % self.save_logs_every_n_epochs == 0:
                 # model = self.best_individual.neural_network
                 # run_basic_environment_visualization(model)
                 log_list.append({
                     "generation": generation,
-                    "evaluations": evaluations,
                     "mean_fitness": fitnesses.mean(),
                     "best_fitness": self.best_individual.get_fitness(),
+                    "evaluations": evaluations,
                 })
 
-            if evaluations >= self.max_evaluations:
+            if evaluations > self.max_evaluations:
                 break
 
         return pd.DataFrame(log_list)
-
-
-    def _perform_cross(self, parent_index_1: int, parent_index_2: int) -> None:
-        """
-        Performs crosses, changes population in place
-        :param parent_index_1: index of first parent
-        :param parent_index_2: index of second parent
-        """
-        new_individual_1, new_individual_2 = self.population[parent_index_1].generate_crossed_scattered_individuals(self.population[parent_index_2])
-        new_individual_1.mutate(self.mutation_factor)
-        new_individual_2.mutate(self.mutation_factor)
-
-        better_individual = new_individual_1 if new_individual_1.get_fitness() > new_individual_2.get_fitness() else new_individual_2
-        worse_parent_index = parent_index_1 if self.population[parent_index_1].get_fitness() < self.population[parent_index_2].get_fitness() else parent_index_2
-        self.population[worse_parent_index] = better_individual
 
 
 class Individual:
@@ -197,33 +178,59 @@ class Individual:
             elif isinstance(params[key], dict):
                 self._permute_params(params[key], factor)
 
-    def generate_crossed_scattered_individuals(self, other: 'Individual') -> tuple['Individual', 'Individual']:
+    def differential_evolution_one_epoch(self,
+                                         base_params: Dict[str, Any],
+                                         individual_1_params: Dict[str, Any],
+                                         individual_2_params: Dict[str, Any],
+                                         cross_prob: float,
+                                         diff_weight: float) -> bool:
         """
-        Generates two new individuals, which are scattered cross of two individuals
-        :param other: other individual
-        :return: two new individuals
+        Performs one step of differential evolution, modifies self inplace, if modification is better than base individual, returns True, otherwise False
+        :param base_params:
+        :param individual_1_params:
+        :param individual_2_params:
+        :param cross_prob:
+        :param diff_weight:
+        :return: True if change accepted, False otherwise
         """
-        self_policy_params = self.neural_network.get_parameters()
-        other_policy_params = other.neural_network.get_parameters()
-        self._cross_scattered_policy(self_policy_params, other_policy_params)
-        new_individual1 = Individual(self.neural_network_params, self.environment_class, self.environments_kwargs)
-        new_individual1.neural_network.set_parameters(self_policy_params)
-        new_individual2 = Individual(self.neural_network_params, self.environment_class, self.environments_kwargs)
-        new_individual2.neural_network.set_parameters(other_policy_params)
-        return new_individual1, new_individual2
+        original_params = self.neural_network.get_parameters()
+        original_fitness = self.get_fitness()
 
-    def _cross_scattered_policy(self, params1: Dict[str, Any], params2: Dict[str, Any]) -> None:
+        new_params = self.neural_network.get_parameters()
+        self._diff_evolution_iteration(new_params, base_params, individual_1_params, individual_2_params, cross_prob, diff_weight)
+
+        self.neural_network.set_parameters(new_params)
+        self.is_fitness_calculated = False
+
+        if self.get_fitness() > original_fitness:
+            return True
+        else:
+            self.neural_network.set_parameters(original_params)
+            self.is_fitness_calculated = True
+            self.fitness = original_fitness
+            return False
+
+    def _diff_evolution_iteration(self,
+                                   self_params: Dict[str, Any],
+                                    base_params: Dict[str, Any],
+                                    individual_1_params: Dict[str, Any],
+                                    individual_2_params: Dict[str, Any],
+                                    cross_prob: float,
+                                    diff_weight: float) -> None:
         """
-        changes params_to_change so that on random places it swapes params1 and params2
-        :param params1: first policy part of params
-        :param params2: second policy part of params
+        Performs Differential Evolution on np.array, iterates fthrwo params
+        :param self_params:
+        :param base_params:
+        :param individual_1_params:
+        :param individual_2_params:
+        :param cross_prob:
+        :param diff_weight:
+        :return:
         """
-        for key, value in params1.items():
+        for key, value in self_params.items():
             if isinstance(value, dict):
-                self._cross_scattered_policy(value, params2[key])
+                self._diff_evolution_iteration(value, base_params[key], individual_1_params[key], individual_2_params[key], cross_prob, diff_weight)
             elif isinstance(value, np.ndarray):
-                mask = np.random.randint(0, 2, value.shape, dtype=np.bool_)
-                params_2_mask_copy = np.array(params2[key][mask])
-                params2[key][mask] = value[mask]
-                params1[key][mask] = params_2_mask_copy
+                cross_mask = np.random.rand(*value.shape) < cross_prob
+                self_params[key][cross_mask] = base_params[key][cross_mask] + diff_weight * (individual_1_params[key][cross_mask] - individual_2_params[key][cross_mask])
 

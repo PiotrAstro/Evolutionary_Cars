@@ -8,3 +8,4 @@ cdef class Sequence_Layers(Abstract_Parametrized_Layer):
     cdef int self_number
     cdef object layer_name  # python string
     cdef float[:, ::1] forward(self, float[:, ::1] inputs) noexcept nogil
+    cdef int SGD(self, float learning_rate) noexcept nogil

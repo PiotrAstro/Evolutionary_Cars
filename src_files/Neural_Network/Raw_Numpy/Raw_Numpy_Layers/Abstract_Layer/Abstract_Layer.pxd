@@ -11,5 +11,6 @@ cdef class Abstract_Layer:
     cdef float[:, ::1] forward(self, float[:, ::1] inputs) noexcept nogil
     cdef float[:, ::1] forward_grad(self, float[:, ::1] inputs) noexcept nogil
     cdef float[:, ::1] backward(self, float[:, ::1] grad) noexcept nogil
+    cdef int SGD(self, float learning_rate) noexcept nogil
 
 

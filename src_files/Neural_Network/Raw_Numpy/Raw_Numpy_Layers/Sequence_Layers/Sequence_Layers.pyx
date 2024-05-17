@@ -71,6 +71,16 @@ cdef class Sequence_Layers(Abstract_Parametrized_Layer):
         else:
             return self.next_one.forward_grad(outputs)
 
+    cdef int SGD(self, float learning_rate) noexcept nogil:
+        """
+        :param learning_rate: float
+        :return: 
+        """
+        self.layer.SGD(learning_rate)
+        if self.next_one is not None:
+            self.next_one.SGD(learning_rate)
+        return 0
+
     cdef float[:, ::1] backward(self, float[:, ::1] grad) noexcept nogil:
         """
         :param grad: shape (batch_size, num_classes)

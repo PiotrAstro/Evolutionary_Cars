@@ -4,6 +4,8 @@ import numpy as np
 
 
 cdef class Abstract_Parametrized_Layer(Abstract_Layer):
+
+
     def generate_parameters(self) -> None:
         """
         Generates new parameters for layer
@@ -30,4 +32,5 @@ cdef class Abstract_Parametrized_Layer(Abstract_Layer):
         Returns value for parameters that determine safe mutation size
         """
         raise NotImplementedError
+
 

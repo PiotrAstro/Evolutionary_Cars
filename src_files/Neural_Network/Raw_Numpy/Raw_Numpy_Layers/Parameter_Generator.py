@@ -49,6 +49,7 @@ class Normal_Distribution_Generator(ParameterGenerator):
         :return:
         """
         return np.zeros(shape, dtype=np.float32)
+        # return np.random.normal(self.mean, self.std, shape).astype(np.float32)
 
 
 class Xavier_Distribution_Generator(ParameterGenerator):
@@ -67,7 +68,7 @@ class Xavier_Distribution_Generator(ParameterGenerator):
         :return:
         """
         return np.zeros(shape, dtype=np.float32)
-
+        # return np.random.normal(0, np.sqrt(2.0 / (shape[0])), shape).astype(np.float32)
 
 class He_Distribution_Generator(ParameterGenerator):
     def generate_weights(self, shape: List[int]) -> np.ndarray:
@@ -85,3 +86,4 @@ class He_Distribution_Generator(ParameterGenerator):
         :return:
         """
         return np.zeros(shape, dtype=np.float32)
+        # return np.random.normal(0, np.sqrt(2.0 / (shape[0])), shape).astype(np.float32)

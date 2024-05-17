@@ -17,6 +17,14 @@ cdef class Abstract_Layer:
         """
         pass
 
+    cdef int SGD(self, float learning_rate) noexcept nogil:
+        """
+        Stochastic Gradient Descent
+        :param learning_rate: float
+        :return: int
+        """
+        pass
+
 
     @cython.boundscheck(False)  # Deactivate bounds checking
     @cython.wraparound(False)

@@ -21,6 +21,8 @@ cdef class Dense_Layer(Abstract_Parametrized_Layer):
     # cdef float[::1] safe_mutation_abs_gradient_biases_sum_cache  # gradient information for the biases
     cdef float[:, ::1] safe_mutation_weights_cache  # cache for the safe mutation gradients
     cdef float[::1] safe_mutation_biases_cache  # sum of the gradients for the weights
+    cdef float[:, ::1] grad_weights_cache  # cache for the gradients
+    cdef float[::1] grad_biases_cache  # cache for the gradients
     cdef int input_size
     cdef int output_size
     cdef object parameters_generator
@@ -74,6 +76,8 @@ cdef class Dense_Layer(Abstract_Parametrized_Layer):
         # self.safe_mutation_abs_gradient_biases_sum_cache = np.zeros_like(self.biases)
         self.safe_mutation_weights_cache = np.zeros_like(self.weights)
         self.safe_mutation_biases_cache = np.zeros_like(self.biases)
+        self.grad_weights_cache = np.zeros_like(self.weights)
+        self.grad_biases_cache = np.zeros_like(self.biases)
 
     @cython.boundscheck(False)
     @cython.wraparound(False)
@@ -127,10 +131,12 @@ cdef class Dense_Layer(Abstract_Parametrized_Layer):
         cdef float[::1] biases = self.biases
         # cdef float[:, ::1] safe_mutation_abs_gradient_weights_sum_cache = self.safe_mutation_abs_gradient_weights_sum_cache
         # cdef float[::1] safe_mutation_abs_gradient_biases_sum_cache = self.safe_mutation_abs_gradient_biases_sum_cache
-        cdef float weight_grad_abs_sum_tmp
-        cdef float bias_grad_abs_sum_tmp
-        cdef float[:, ::1] safe_mutation_weights_cache = self.safe_mutation_weights_cache
-        cdef float[::1] safe_mutation_biases_cache = self.safe_mutation_biases_cache
+        # cdef float weight_grad_abs_sum_tmp
+        # cdef float bias_grad_abs_sum_tmp
+        # cdef float[:, ::1] safe_mutation_weights_cache = self.safe_mutation_weights_cache
+        # cdef float[::1] safe_mutation_biases_cache = self.safe_mutation_biases_cache
+        cdef float[:, ::1] grad_weights_cache = self.grad_weights_cache
+        cdef float[::1] grad_biases_cache = self.grad_biases_cache
 
 
         for i in range(out_cols):
@@ -138,10 +144,12 @@ cdef class Dense_Layer(Abstract_Parametrized_Layer):
             for j in range(in_cols):
                 weight_grad_abs_sum_tmp = 0
                 for k in range(rows):
-                    weight_grad_abs_sum_tmp += float_abs(grad[k, i] * prev_input[k, j])
-                    bias_grad_abs_sum_tmp += float_abs(grad[k, i])
-                safe_mutation_weights_cache[j, i] += (weight_grad_abs_sum_tmp / rows) ** 2
-            safe_mutation_biases_cache[i] += (bias_grad_abs_sum_tmp / rows) ** 2
+                    grad_weights_cache[j, i] += grad[k, i] * prev_input[k, j]
+                    grad_biases_cache[i] += grad[k, i]
+            #         weight_grad_abs_sum_tmp += float_abs(grad[k, i] * prev_input[k, j])
+            #         bias_grad_abs_sum_tmp += float_abs(grad[k, i])
+            #     safe_mutation_weights_cache[j, i] += (weight_grad_abs_sum_tmp / rows) ** 2
+            # safe_mutation_biases_cache[i] += (bias_grad_abs_sum_tmp / rows) ** 2
 
         for k in range(rows):
             for j in range(in_cols):
@@ -166,11 +174,41 @@ cdef class Dense_Layer(Abstract_Parametrized_Layer):
     @cython.boundscheck(False)  # Deactivate bounds checking
     @cython.wraparound(False)
     @cython.nonecheck(False)
-    cdef inline float[:, ::1] forward(self, float[:, ::1] inputs) noexcept nogil:
+    cdef int SGD(self, float learning_rate) noexcept nogil:
         """
-        :param inputs: 
+        :param learning_rate: 
         :return: 
         """
+        cdef float[:, ::1] weights = self.weights
+        cdef float[::1] biases = self.biases
+        cdef float[:, ::1] grad_weights_cache = self.grad_weights_cache
+        cdef float[::1] grad_biases_cache = self.grad_biases_cache
+        cdef int i, j
+        cdef int rows = weights.shape[0]
+        cdef int cols = weights.shape[1]
+
+        for i in range(rows):
+            for j in range(cols):
+                weights[i, j] -= learning_rate * grad_weights_cache[i, j]
+
+        for i in range(cols):
+            biases[i] -= learning_rate * grad_biases_cache[i]
+
+        # with gil:
+        #     cython_debug_call({
+        #         "weights": np.array(weights),
+        #         "biases": np.array(biases),
+        #         "grad_weights_cache": np.array(grad_weights_cache),
+        #         "grad_biases_cache": np.array(grad_biases_cache),
+        #     },
+        #     "Dense_Layer_SGD"
+        #     )
+        return 0
+
+    @cython.boundscheck(False)  # Deactivate bounds checking
+    @cython.wraparound(False)
+    @cython.nonecheck(False)
+    cdef inline float[:, ::1] forward(self, float[:, ::1] inputs) noexcept nogil:
         if inputs.shape[0] > self.output.shape[0]:
             with gil:
                 self.output = np.empty([inputs.shape[0], self.output_size], dtype=np.float32)
