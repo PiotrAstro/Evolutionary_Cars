@@ -226,18 +226,29 @@ if __name__ == "__main__":
     possible_dicts = create_all_special_dicts(TESTED_VALUES)
 
     futures = []
-    with ProcessPoolExecutor(max_workers=CONCURRENT_WORKERS) as executor:
-        # Submit all the tasks to the executor
-        for special_dict in possible_dicts:
-            for i in range(TESTS_TRIES):
-                # Submitting the task to be executed in parallel
-                future = executor.submit(test_one_case, CONSTANTS_DICT, special_dict, i)
-                futures.append(future)
+    try:
+        with ProcessPoolExecutor(max_workers=CONCURRENT_WORKERS) as executor:
+            # Submit all the tasks to the executor
+            for special_dict in possible_dicts:
+                for i in range(TESTS_TRIES):
+                    # Submitting the task to be executed in parallel
+                    future = executor.submit(test_one_case, CONSTANTS_DICT, special_dict, i)
+                    futures.append(future)
 
-        # Process the results as they are completed
-        for future in as_completed(futures):
-            result = future.result()
-            print(result)
+            # Process the results as they are completed
+            for future in as_completed(futures):
+                try:
+                    result = future.result()
+                    print(result)
+                except Exception as e:
+                    print(f"Error occurred in future: {e}")
+
+    except Exception as e:
+        print(f"Error occurred while executing the tasks: {e}")
+
+    finally:
+        # Cleanup if needed
+        print("Processing complete.")
 
     # for special_dict in possible_dicts:
     #     for i in range(TESTS_TRIES):

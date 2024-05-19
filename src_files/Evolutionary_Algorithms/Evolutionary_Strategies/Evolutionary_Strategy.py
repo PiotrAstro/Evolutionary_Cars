@@ -165,7 +165,7 @@ class Individual:
     def _permute_params(self, params: dict[str, Any], factor: float) -> None:
         for key in params:
             if isinstance(params[key], np.ndarray):
-                params[key] += np.random.normal(0, factor, params[key].shape)
+                params[key] += np.random.normal(0, 1, params[key].shape)
             elif isinstance(params[key], dict):
                 self._permute_params(params[key], factor)
 
@@ -195,15 +195,17 @@ class Individual:
         """
 
         # multi-threading
-        # with ThreadPoolExecutor(max_workers=num_of_processes) as executor:
-        #     params = self.neural_network.get_parameters()
-        #     futures = [
-        #         executor.submit(self.copy_mutate_and_evaluate, sigma_change, params)
-        #         for _ in range(number_of_individuals)
-        #     ]
-        #     individuals_mutated = [future.result() for future in futures]
-        params = self.neural_network.get_parameters()
-        individuals_mutated = [self.copy_mutate_and_evaluate(sigma_change, params) for _ in range(number_of_individuals)]
+        print("start_collecting")
+        params = [self.neural_network.get_parameters() for _ in range(number_of_individuals)]
+        with ThreadPoolExecutor(max_workers=num_of_processes) as executor:
+            futures = [
+                executor.submit(self.copy_mutate_and_evaluate, sigma_change, params[i])
+                for i in range(number_of_individuals)
+            ]
+            individuals_mutated = [future.result() for future in futures]
+        print("end_collecting")
+        # params = self.neural_network.get_parameters()
+        # individuals_mutated = [self.copy_mutate_and_evaluate(sigma_change, params[i]) for i in range(number_of_individuals)]
         # end of multi-threading
 
         print("Start NN proceeding")
