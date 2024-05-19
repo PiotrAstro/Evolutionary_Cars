@@ -25,7 +25,7 @@ class Param_Les_Ev_Mut_Pop:
         :param constants_dict:
         :return:
         """
-        seed = int(time.time())
+        seed = int(time.time() * 10000) % 2**32
         np.random.seed(seed)
 
         # universal params

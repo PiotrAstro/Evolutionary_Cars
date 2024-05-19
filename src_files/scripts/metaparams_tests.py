@@ -13,8 +13,10 @@ from src_files.constants import CONSTANTS_DICT
 # python -m src_files.scripts.metaparams_tests
 
 POLICY_SEARCH_ALGORITHM = Evolutionary_Mutate_Population
-TESTS_TRIES = 1
-CONCURRENT_WORKERS = 4
+TESTS_TRIES = 3
+CONCURRENT_WORKERS = 20
+MAX_EVALUATIONS = 100_000
+MAX_THREADS = 1
 SAVE_DIR = r"logs/metaparameters_tests_" + str(int(time.time()))
 
 
@@ -52,57 +54,57 @@ SAVE_DIR = r"logs/metaparameters_tests_" + str(int(time.time()))
 #     }]
 
 
-MAX_EVALUATIONS = 100#100_000
-MAX_THREADS = 2
 TESTED_VALUES = [
-    {
-        "Evolutionary_Mutate_Population": {
-            "population": [100, 300, 1000],
-            "max_evaluations": [MAX_EVALUATIONS],
-            "epochs": 100000,
-            "mutation_controller": {
-                "name": "Mut_One",
-                "kwargs": {
-                    "mutation_factor": [0.1, 0.01, 0.001],
-                    "use_children": False,
-                },
-            },
-            "save_logs_every_n_epochs": 1,
-            "max_threads": MAX_THREADS,
-        },
-    },
-    {
-        "Genetic_Algorithm": {
-            "population": [200, 1000],
-            "max_evaluations": [MAX_EVALUATIONS],
-            "epochs": 100000,
-            "mutation_factor": [0.1, 0.01, 0.001],
-            "crosses_per_epoch": [49, 99],
-            # "new_individual_every_n_epochs": 2,
-            "save_logs_every_n_epochs": 1,
-            "max_threads": MAX_THREADS,
-        },
-    },
-    {
-        "Differential_Evolution": {
-            "population": [100, 1000],
-            "max_evaluations": [MAX_EVALUATIONS],
-            "epochs": 100000,
-            "cross_prob": [0.9, 0.5],
-            "diff_weight": [0.8, 0.5],
-            "save_logs_every_n_epochs": 1,
-            "max_threads": MAX_THREADS,
-        },
-    },
+    # {
+    #     "Evolutionary_Mutate_Population": {
+    #         "population": [100, 300, 1000],
+    #         "mutation_controller": {
+    #             "name": "Mut_One",
+    #             "kwargs": {
+    #                 "mutation_factor": [0.1, 0.01, 0.001],
+    #                 "use_children": [False],
+    #             },
+    #         },
+    #         "______": ["_____"],
+    #         "epochs": [100000],
+    #         "max_evaluations": [MAX_EVALUATIONS],
+    #         "save_logs_every_n_epochs": [1],
+    #         "max_threads": [MAX_THREADS],
+    #     },
+    # },
+    # {
+    #     "Genetic_Algorithm": {
+    #         "population": [200, 1000],
+    #         "mutation_factor": [0.1, 0.01, 0.001],
+    #         "______": ["_____"],
+    #         "epochs": [100000],
+    #         "max_evaluations": [MAX_EVALUATIONS],
+    #         "save_logs_every_n_epochs": [1],
+    #         "max_threads": [MAX_THREADS],
+    #     },
+    # },
+    # {
+    #     "Differential_Evolution": {
+    #         "population": [100, 1000],
+    #         "cross_prob": [0.9, 0.5],
+    #         "diff_weight": [0.8, 0.5],
+    #         "______": ["_____"],
+    #         "epochs": [100000],
+    #         "max_evaluations": [MAX_EVALUATIONS],
+    #         "save_logs_every_n_epochs": [1],
+    #         "max_threads": [MAX_THREADS],
+    #     },
+    # },
     {
         "Evolutionary_Strategy": {
-            "permutations": [1000, 10000],
-            "max_evaluations": [MAX_EVALUATIONS],
-            "epochs": 100000,
+            "permutations": [1000],
             "sigma_change": [0.01, 0.001],
             "learning_rate": [0.1, 0.01, 0.001],
-            "save_logs_every_n_epochs": 1,
-            "max_threads": MAX_THREADS,
+            "______": ["_____"],
+            "epochs": [100000],
+            "max_evaluations": [MAX_EVALUATIONS],
+            "save_logs_every_n_epochs": [1],
+            "max_threads": [MAX_THREADS],
         }
     }
 ]
@@ -223,21 +225,21 @@ def test_one_case(basic_dict: Dict[str, Any], special_dict: Dict[str, Any], case
 if __name__ == "__main__":
     possible_dicts = create_all_special_dicts(TESTED_VALUES)
 
-    # futures = []
-    # with ProcessPoolExecutor(max_workers=CONCURRENT_WORKERS) as executor:
-    #     # Submit all the tasks to the executor
-    #     for special_dict in possible_dicts:
-    #         for i in range(TESTS_TRIES):
-    #             # Submitting the task to be executed in parallel
-    #             future = executor.submit(test_one_case, CONSTANTS_DICT, special_dict, i)
-    #             futures.append(future)
-    #
-    #     # Process the results as they are completed
-    #     for future in as_completed(futures):
-    #         result = future.result()
-    #         print(result)
+    futures = []
+    with ProcessPoolExecutor(max_workers=CONCURRENT_WORKERS) as executor:
+        # Submit all the tasks to the executor
+        for special_dict in possible_dicts:
+            for i in range(TESTS_TRIES):
+                # Submitting the task to be executed in parallel
+                future = executor.submit(test_one_case, CONSTANTS_DICT, special_dict, i)
+                futures.append(future)
 
-    for special_dict in possible_dicts:
-        for i in range(TESTS_TRIES):
-            print(list(special_dict)[0])
-            test_one_case(CONSTANTS_DICT, special_dict, i)
+        # Process the results as they are completed
+        for future in as_completed(futures):
+            result = future.result()
+            print(result)
+
+    # for special_dict in possible_dicts:
+    #     for i in range(TESTS_TRIES):
+    #         print(list(special_dict)[0])
+    #         test_one_case(CONSTANTS_DICT, special_dict, i)

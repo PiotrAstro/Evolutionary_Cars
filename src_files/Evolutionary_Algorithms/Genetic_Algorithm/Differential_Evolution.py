@@ -23,7 +23,7 @@ class Differential_Evolution:
         :param constants_dict:
         :return:
         """
-        seed = int(time.time())
+        seed = int(time.time() * 10000) % 2**32
         np.random.seed(seed)
 
         # things taken from constants_dict:
@@ -63,7 +63,13 @@ class Differential_Evolution:
             Individual(self.neural_network_kwargs, self.environment_class, self.training_environments_kwargs)
             for _ in range(self.population_size)
         ]
-        self.best_individual = self.population[0].copy()
+
+        with ThreadPoolExecutor(max_workers=self.max_threads) as executor:
+            futures = [executor.submit(individual.get_fitness) for individual in self.population]
+
+            results = [future.result() for future in futures]
+
+        self.best_individual = max(self.population, key=lambda individual: individual.get_fitness()).copy()
 
 
     def run(self) -> pd.DataFrame:
@@ -104,7 +110,7 @@ class Differential_Evolution:
             print(f"Mean fitness: {fitnesses.mean()}, best fitness: {self.best_individual.get_fitness()}")
             print(f"Quantiles: {quantile_text}\n\n")
 
-            evaluations = generation * self.population_size
+            evaluations = (generation + 2) * self.population_size
 
             if generation % self.save_logs_every_n_epochs == 0:
                 # model = self.best_individual.neural_network

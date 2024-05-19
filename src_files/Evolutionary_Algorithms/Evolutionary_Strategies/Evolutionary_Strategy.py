@@ -26,7 +26,7 @@ class Evolutionary_Strategy:
         :param constants_dict:
         :return:
         """
-        seed = int(time.time())
+        seed = int(time.time() * 10000) % 2**32
         np.random.seed(seed)
 
         # things taken from constants_dict:
@@ -102,6 +102,7 @@ class Evolutionary_Strategy:
                         "evaluations": evaluations,
                     }
                 )
+            print("Evolutionary strategy")
 
             if evaluations >= self.max_evaluations:
                 break
@@ -146,16 +147,16 @@ class Individual:
             self.is_fitness_calculated = True
         return self.fitness
 
-    def copy(self) -> 'Individual':
+    def copy(self, params = None) -> 'Individual':
         new_individual = Individual(self.neural_network_params,
                                     self.environment_class,
                                     self.environments_kwargs)
-        new_individual.neural_network.set_parameters(self.neural_network.get_parameters())
+        new_individual.neural_network.set_parameters(self.neural_network.get_parameters() if params is None else params)
         new_individual.fitness = self.fitness
         new_individual.is_fitness_calculated = self.is_fitness_calculated
         return new_individual
 
-    def mutate(self, factor: float):
+    def mutate(self, factor: float) -> None:
         params = self.neural_network.get_parameters()
         self._permute_params(params, factor)
         self.neural_network.set_parameters(params)
@@ -168,14 +169,14 @@ class Individual:
             elif isinstance(params[key], dict):
                 self._permute_params(params[key], factor)
 
-    def copy_mutate_and_evaluate(self, factor: float) -> 'Individual':
+    def copy_mutate_and_evaluate(self, factor: float, params = None) -> 'Individual':
         """
         Copies, mutates and evaluates individual
         :param mutation_factor:
         :param mutation_threshold: None or float - if not None, then it uses scaled mutation
         :return:
         """
-        new_individual = self.copy()
+        new_individual = self.copy(params)
 
         new_individual.mutate(factor)
 
@@ -194,22 +195,27 @@ class Individual:
         """
 
         # multi-threading
-        with ThreadPoolExecutor(max_workers=num_of_processes) as executor:
-            futures = [
-                executor.submit(self.copy_mutate_and_evaluate, sigma_change)
-                for _ in range(number_of_individuals)
-            ]
-            individuals_mutated = [future.result() for future in futures]
+        # with ThreadPoolExecutor(max_workers=num_of_processes) as executor:
+        #     params = self.neural_network.get_parameters()
+        #     futures = [
+        #         executor.submit(self.copy_mutate_and_evaluate, sigma_change, params)
+        #         for _ in range(number_of_individuals)
+        #     ]
+        #     individuals_mutated = [future.result() for future in futures]
+        params = self.neural_network.get_parameters()
+        individuals_mutated = [self.copy_mutate_and_evaluate(sigma_change, params) for _ in range(number_of_individuals)]
         # end of multi-threading
 
+        print("Start NN proceeding")
         fitnesses = np.array([individual.get_fitness() for individual in individuals_mutated], dtype=float)
-        fitnesses_normalized = (fitnesses - np.mean(fitnesses)) / np.std(fitnesses)
+        fitnesses_normalized = (fitnesses - np.mean(fitnesses)) / (np.std(fitnesses) if np.std(fitnesses) != 0 else 1.0)
         multiply_factor = alpha_learning_rate / (number_of_individuals * sigma_change)
         change_amount = fitnesses_normalized * multiply_factor
         other_policies_params = [individual.neural_network.get_parameters() for individual in individuals_mutated]
         self_policy_params = self.neural_network.get_parameters()
         self._actualise_policy_dict_params(self_policy_params, other_policies_params, change_amount, [])
         self.neural_network.set_parameters(self_policy_params)
+        print("End NN proceeding")
 
         self.is_fitness_calculated = False
 

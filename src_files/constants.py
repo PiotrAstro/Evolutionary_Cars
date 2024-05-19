@@ -52,6 +52,12 @@ CONSTANTS_DICT = {
             # },
             # {
             #     "map_view": map_view,
+            #     "start_position": (504, 744),
+            #     "start_angle": 180,
+            #     "max_steps": MAX_STEPS,
+            # },
+            # {
+            #     "map_view": map_view,
             #     "start_position": (425, 337),
             #     "start_angle": 170,
             #     "max_steps": MAX_STEPS,

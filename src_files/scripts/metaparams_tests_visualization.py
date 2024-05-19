@@ -31,8 +31,8 @@ def draw_simple_graph(data_frames: List[List[Tuple[str, pd.DataFrame]]], x: str,
     plt.legend()
     plt.show()
 
-VISUALIZATION_DIR = r"C:\Piotr\AIProjects\Evolutionary_Cars\logs\metaparameters_tests_1714082749"
-# VISUALIZATION_DIR = r"D:\Evolutionary_Cars\logs\metaparameters_tests_1711625127"
+# VISUALIZATION_DIR = r"C:\Piotr\AIProjects\Evolutionary_Cars\logs\metaparameters_tests_1709987152"
+VISUALIZATION_DIR = r"D:\Evolutionary_Cars\logs\metaparameters_tests_1713343392"
 # loading dataframes
 data_frames = {}
 for file in os.listdir(VISUALIZATION_DIR):

@@ -24,7 +24,7 @@ class Genetic_Algorithm:
         :param constants_dict:
         :return:
         """
-        seed = int(time.time())
+        seed = int(time.time() * 10000) % 2**32
         np.random.seed(seed)
 
         # things taken from constants_dict:
