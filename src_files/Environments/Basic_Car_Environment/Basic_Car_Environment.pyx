@@ -1,5 +1,5 @@
 import math
-from typing import Tuple, List, Union
+from typing import Tuple, List, Union, Any
 
 import cython
 import numpy as np
@@ -25,6 +25,24 @@ cdef class Basic_Car_Environment(Abstract_Environment):
 
     cdef double angle_max_change
     cdef double collision_reward
+
+    # cdef bint _tmp_safe_rewards
+
+    def p_get_safe_data(self) -> dict[str, Any]:
+        return {
+            "x": self.car.x,
+            "y": self.car.y,
+            "angle": self.car.angle,
+            "speed": self.car.speed,
+            "current_step": self.current_step,
+        }
+
+    def p_load_safe_data(self, safe_data: dict[str, Any]) -> None:
+        self.car.x = safe_data["x"]
+        self.car.y = safe_data["y"]
+        self.car.angle = safe_data["angle"]
+        self.car.speed = safe_data["speed"]
+        self.current_step = safe_data["current_step"]
 
     def get_car_position(self) -> Tuple[float, float]:
         """
@@ -66,6 +84,9 @@ cdef class Basic_Car_Environment(Abstract_Environment):
         :param speed: speed of the car, currently it is constant
         :param rays_degrees: list of the degrees of the rays, car direction is 0 degrees, so it could be e.g. [-45, -30, -15, 0, 15, 30, 45]
         """
+
+        # if np.random.rand() < 0.001:
+        #     self._tmp_safe_rewards = True
 
         self.map_view = np.array(map_view, dtype=np.uint8)
         self.start_position = start_position
@@ -116,6 +137,10 @@ cdef class Basic_Car_Environment(Abstract_Environment):
 
         state_here[state_here.shape[0] - 1] = self.car.speed / self.car.max_speed
 
+        # if self._tmp_safe_rewards:
+        #     with gil:
+        #         print(list(state_here), end="  ")
+
         return state_here
 
     @cython.boundscheck(False)
@@ -159,20 +184,29 @@ cdef class Basic_Car_Environment(Abstract_Environment):
         elif change_index_action == 2:
             self.car.change_angle(-self.angle_max_change)
 
+
+        # cdef double engine_power = 0.0
         # change_index_action = 3
         # for i in range(3, 6):
         #     if outputs[i] > outputs[change_index_action]:
-        #         angle_change_index_action = i
+        #         change_index_action = i
         # if change_index_action == 4:
-        #     self.car.change_speed(self.speed_change)
+        #     engine_power = 1.0
         # elif change_index_action == 5:
-        #     self.car.change_speed(-self.speed_change)
-        self.car.change_speed(self.speed_change * outputs[3])
+        #     engine_power = -1.0
+
+        cdef double engine_power = outputs[3]
+        # TRACTION !!!
+        # ADDED !!!
+        engine_power -= self.car.speed / self.car.max_speed
+        # END TRACTION !!!
+        self.car.change_speed(self.speed_change * engine_power)
 
         self.current_step += 1
         result = self.car.step()
         if self.car.does_collide(self.map_view):
             result += self.collision_reward
+
         return result
 
     cdef bint is_alive(self) noexcept nogil:
@@ -237,17 +271,22 @@ cdef class Car:
         """
         Returns distance of the car
         """
-
+        cdef double return_value
         self.x += self.speed * degree_cos(self.angle)
         self.y -= self.speed * degree_sin(self.angle)
         self.is_does_collide_actual = False
 
-        return (self.speed / self.max_speed) ** 2
+
+        return_value = (self.speed / self.max_speed) ** 2
+        if self.speed <= 0:
+            return_value = -1
+        return return_value
 
     cdef int change_speed(self, double speed_change) noexcept nogil:
         """
         Changes speed of the car by the given amount
         """
+
         self.speed += speed_change
         if self.speed < self.min_speed:
             self.speed = self.min_speed

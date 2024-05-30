@@ -19,8 +19,7 @@ map_view_2 = np.array(np.array(img2) / 255, dtype=np.bool_)
 #             "min_speed": 0.3,
 #             "max_speed": 1.5,  # 1.5
 #             "speed_change": 0.01,
-MAX_STEPS = 10_000
-# MAX_STEPS = 5000
+MAX_STEPS = 2000  # 5000
 # "angle_max_change": 1.2,
 # "car_dimensions": (30, 45),  # width, height
 # "initial_speed": 1.2,
@@ -34,87 +33,87 @@ CONSTANTS_DICT = {
         "universal_kwargs": {
             "angle_max_change": 1.2,  # 1.15
             "car_dimensions": (30, 45),  # width, height
-            "initial_speed": 1.2,
-            "min_speed": 1.2,
-            "max_speed": 6,  # 1.5
+            "initial_speed": 0,  # 1.2
+            "min_speed": -1.2,  # 1.2
+            "max_speed": 6,
             "speed_change": 0.04,
-            "rays_degrees": (-90, -67.5, -45, -22.5, 0, 22.5, 45, 67.5, 90),  # (-90, -45, 0, 45, 90),  # (-90, -67.5, -45, -22.5, 0, 22.5, 45, 67.5, 90)
+            "rays_degrees": (-90, -45, 0, 45, 90),  # (-90, -45, 0, 45, 90),  # (-90, -67.5, -45, -22.5, 0, 22.5, 45, 67.5, 90)
             "rays_distances_scale_factor": 100,
             "ray_input_clip": 5,
             "collision_reward": -100,
         },
         "changeable_training_kwargs_list": [
-            # {
-            #     "map_view": map_view,
-            #     "start_position": (504, 744),
-            #     "start_angle": 0,
-            #     "max_steps": MAX_STEPS,
-            # },
-            # {
-            #     "map_view": map_view,
-            #     "start_position": (504, 744),
-            #     "start_angle": 180,
-            #     "max_steps": MAX_STEPS,
-            # },
-            # {
-            #     "map_view": map_view,
-            #     "start_position": (425, 337),
-            #     "start_angle": 170,
-            #     "max_steps": MAX_STEPS,
-            # },
-            # {
-            #     "map_view": map_view,
-            #     "start_position": (283, 536),
-            #     "start_angle": 200,
-            #     "max_steps": MAX_STEPS,
-            # },
-            # {
-            #     "map_view": map_view,
-            #     "start_position": (665, 400),
-            #     "start_angle": 270,
-            #     "max_steps": MAX_STEPS,
-            # },
-            # {
-            #     "map_view": map_view,
-            #     "start_position": (366, 173),
-            #     "start_angle": 315,
-            #     "max_steps": MAX_STEPS,
-            # }
             {
-                "map_view": map_view_2,
-                "start_position": (365, 744),
+                "map_view": map_view,
+                "start_position": (504, 744),
                 "start_angle": 0,
                 "max_steps": MAX_STEPS,
             },
             {
-                "map_view": map_view_2,
-                "start_position": (365, 744),
+                "map_view": map_view,
+                "start_position": (504, 744),
                 "start_angle": 180,
                 "max_steps": MAX_STEPS,
+            },
+            {
+                "map_view": map_view,
+                "start_position": (425, 337),
+                "start_angle": 170,
+                "max_steps": MAX_STEPS,
+            },
+            {
+                "map_view": map_view,
+                "start_position": (283, 536),
+                "start_angle": 200,
+                "max_steps": MAX_STEPS,
+            },
+            {
+                "map_view": map_view,
+                "start_position": (665, 400),
+                "start_angle": 270,
+                "max_steps": MAX_STEPS,
+            },
+            {
+                "map_view": map_view,
+                "start_position": (366, 173),
+                "start_angle": 315,
+                "max_steps": MAX_STEPS,
             }
+            # {
+            #     "map_view": map_view_2,
+            #     "start_position": (365, 744),
+            #     "start_angle": 0,
+            #     "max_steps": MAX_STEPS,
+            # },
+            # {
+            #     "map_view": map_view_2,
+            #     "start_position": (365, 744),
+            #     "start_angle": 180,
+            #     "max_steps": MAX_STEPS,
+            # }
         ],
         "changeable_validation_kwargs_list": [
             {
                 "map_view": map_view,
                 "start_position": (504, 744),
                 "start_angle": 0,
-                "max_steps": 10_000,
-            }
+                "max_steps": 5_000,
+            },
             # {
             #     "map_view": map_view_2,
             #     "start_position": (365, 744),
             #     "start_angle": 0,
             #     "max_steps": 10000,
-            # }
+            # },
         ],
     },
     "neural_network": {
-        "input_normal_size": 10,
+        "input_normal_size": 6,
         "out_actions_number": 4,
         "normal_hidden_layers": 2,
-        "normal_hidden_neurons": 64,
+        "normal_hidden_neurons": 128,  # 64
         "normal_activation_function": "relu",  # "relu"
-        "last_activation_function": [("softmax", 3), ("tanh", 1)],
+        "last_activation_function": [("softmax", 3), ("tanh", 1)],#("softmax", 3)], #("tanh", 1)],
     },
     "Genetic_Algorithm": {
         "population": 500,
@@ -138,8 +137,8 @@ CONSTANTS_DICT = {
         "logs_path": r"C:\Piotr\AIProjects\Evolutionary_Cars\logs",
     },
     "Evolutionary_Mutate_Population": {
-        "population": 100,
-        "max_evaluations": 100000,
+        "population": 500,
+        "max_evaluations": 1_000_000,
         "epochs": 1000,
         "mutation_controller": {
             # "name": "Mut_Prob",  # "SHADE_single", "Mut_Prob", "SHADE_multiple"
@@ -162,7 +161,23 @@ CONSTANTS_DICT = {
             },
         },
         "max_threads": 8,
-        "save_logs_every_n_epochs": 5,
+        "save_logs_every_n_epochs": 50,
+        "logs_path": r"C:\Piotr\AIProjects\Evolutionary_Cars\logs",
+    },
+    "Evolutionary_Mutate_Population_Original": {
+        "population": 5000,
+        "best_base_N": 100,
+        "max_evaluations": 100000,
+        "epochs": 1000,
+        "mutation_controller": {
+            "name": "Mut_One",
+            "kwargs": {
+                "mutation_factor": 0.1,
+                "use_children": False,
+            },
+        },
+        "max_threads": 8,
+        "save_logs_every_n_epochs": 50,
         "logs_path": r"C:\Piotr\AIProjects\Evolutionary_Cars\logs",
     },
     "GESMR": {

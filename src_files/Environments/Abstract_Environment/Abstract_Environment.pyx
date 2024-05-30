@@ -1,7 +1,25 @@
+from typing import Any
+
 import numpy as np
 
 
 cdef class Abstract_Environment:
+
+    def p_get_safe_data(self) -> dict[str, Any]:
+        """
+        Get the data of the environment that can be safely pickled
+        :return:
+        """
+        raise NotImplementedError("Abstract method")
+
+    def p_load_safe_data(self, data: dict[str, Any]) -> None:
+        """
+        Set the data of the environment that can be safely pickled
+        :param data:
+        :return:
+        """
+        raise NotImplementedError("Abstract method")
+
     def p_reset(self) -> None:
         """
         Reset the environment to its initial state

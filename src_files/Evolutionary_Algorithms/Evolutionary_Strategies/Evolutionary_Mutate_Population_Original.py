@@ -17,7 +17,7 @@ from src_files.Evolutionary_Algorithms.Mutation_Controllers.mutation_controllers
 from src_files.Neural_Network.Raw_Numpy.Raw_Numpy_Models.Normal.Normal_model import Normal_model
 
 
-class Evolutionary_Mutate_Population:
+class Evolutionary_Mutate_Population_Original:
     """
     Evolutionary Mutate Population - mutates population, then sorts new and old population and takes best half, then mutates again
     """
@@ -31,15 +31,13 @@ class Evolutionary_Mutate_Population:
         np.random.seed(seed)
 
         # things taken from constants_dict:
-        self.population_size = constants_dict["Evolutionary_Mutate_Population"]["population"]
-        self.epochs = constants_dict["Evolutionary_Mutate_Population"]["epochs"]
-        # self.mutation_factor = constants_dict["Evolutionary_Mutate_Population"]["mutation_factor"]
-        # self.use_safe_mutation = constants_dict["Evolutionary_Mutate_Population"]["use_safe_mutation"]
-        # self.L1 = constants_dict["Evolutionary_Mutate_Population"]["L1"]
-        # self.L2 = constants_dict["Evolutionary_Mutate_Population"]["L2"]
-        self.save_logs_every_n_epochs = constants_dict["Evolutionary_Mutate_Population"]["save_logs_every_n_epochs"]
-        self.max_evaluations = constants_dict["Evolutionary_Mutate_Population"]["max_evaluations"]
-        base_log_dir = constants_dict["Evolutionary_Mutate_Population"]["logs_path"]
+        constants = constants_dict["Evolutionary_Mutate_Population_Original"]
+        self.population_size = constants["population"]
+        self.epochs = constants["epochs"]
+        self.best_base_N = constants["best_base_N"]
+        self.save_logs_every_n_epochs = constants["save_logs_every_n_epochs"]
+        self.max_evaluations = constants["max_evaluations"]
+        base_log_dir = constants["logs_path"]
 
         self.training_environments_kwargs = [
             {
@@ -55,18 +53,17 @@ class Evolutionary_Mutate_Population:
         ]
         self.environment_class = get_environment_class(constants_dict["environment"]["name"])
         assert self.environment_class is not None
-        self.max_threads = os.cpu_count() if constants_dict["Evolutionary_Mutate_Population"]["max_threads"] <= 0 else constants_dict["Evolutionary_Mutate_Population"]["max_threads"]
+        self.max_threads = os.cpu_count() if constants["max_threads"] <= 0 else constants["max_threads"]
         # end of things taken from constants_dict
 
         # file handling
         self.log_directory = base_log_dir + "/" + "EvMuPop" + str(int(time.time())) + "/"
-        os.makedirs(self.log_directory, exist_ok=True)
+        # os.makedirs(self.log_directory, exist_ok=True)
 
         #self.logger = Timestamp_Logger(file_path=self.log_directory + "log.txt", log_mode='w', log_moment='a', separator='\t')
         self.mutation_controller = get_mutation_controller_by_name(
-            constants_dict["Evolutionary_Mutate_Population"]["mutation_controller"]["name"]
-        )(**constants_dict["Evolutionary_Mutate_Population"]["mutation_controller"]["kwargs"])
-        self.constants_dict = constants_dict
+            constants["mutation_controller"]["name"]
+        )(**constants["mutation_controller"]["kwargs"])
         self.neural_network_kwargs = constants_dict["neural_network"]
         self.population = [
             Immutable_Individual(self.neural_network_kwargs,
@@ -102,11 +99,13 @@ class Evolutionary_Mutate_Population:
             print(f"Generation {generation}")
 
             time_start = time.perf_counter()
+            best_individuals = self.population[:self.best_base_N]
+
             # multi-threading
             with ThreadPoolExecutor(max_workers=self.max_threads) as executor:
                 futures = [
-                    executor.submit(individual.copy_mutate_and_evaluate)
-                    for individual in self.population
+                    executor.submit(np.random.choice(best_individuals).copy_mutate_and_evaluate)
+                    for _ in range(self.population_size)
                 ]
                 mutated_population = [future.result() for future in futures]
             # mutated_population = [
@@ -120,46 +119,20 @@ class Evolutionary_Mutate_Population:
 
             # previous_best_fitness = self.best_individual.get_fitness()
 
-            all_population = sorted(
-                self.population + mutated_population,
+            # all_population = sorted(
+            #     self.population + mutated_population,
+            #     key=lambda individual: individual.get_fitness(),
+            #     reverse=True
+            # )
+            # self.population = all_population[:self.population_size]
+            self.population = sorted(
+                mutated_population,
                 key=lambda individual: individual.get_fitness(),
                 reverse=True
-            )
-            self.population = all_population[:self.population_size]
-            # for individual in all_population[self.population_size:]:
-            #     individual.parent = None
-            #     for child in individual.children:
-            #         child.parent = None
+            )[:self.population_size]
 
             if self.population[0].get_fitness() > self.best_individual.get_fitness():
-                # self.population[0].FIHC(self.mutation_factor, 20, self.mutation_threshold)
                 self.best_individual = self.population[0].copy()
-                save_file_path = self.log_directory + f"best_individual_{int(time.time())}_f{self.best_individual.get_fitness():.1f}.pkl"
-                saved_dict = {
-                    "universal_kwargs": self.constants_dict["environment"]["universal_kwargs"],
-                    "neural_network_params": self.best_individual.neural_network.get_parameters()
-                }
-                with open(save_file_path, "wb") as file:
-                    pickle.dump(saved_dict, file)
-                # print(self.population[0].get_fitness())
-                # if self.population[0].get_fitness() >= 1000.0:
-                #     def get_deepest_parent(individual: Immutable_Individual) -> Immutable_Individual:
-                #         while individual.parent is not None:
-                #             individual = individual.parent
-                #         return individual
-                #     def extend_lists(individuals: list[Immutable_Individual]) -> list[tuple[float, list | None]]:
-                #         return [
-                #             (individual.get_fitness(), extend_lists(individual.children) if len(individual.children) > 0 else None)
-                #             for individual in individuals
-                #         ]
-                #
-                #     deepest_parents = {get_deepest_parent(individual) for individual in self.population}
-                #     population_tree = extend_lists(list(deepest_parents))
-                #     with open(f"{self.log_directory}population_tree.pkl", "wb") as file:
-                #         pickle.dump(population_tree, file)
-
-
-
 
             fitnesses = np.array([individual.get_fitness() for individual in self.population])
             self.mutation_controller.commit_iteration(fitnesses)

@@ -2,7 +2,7 @@ from typing import Any
 
 import numpy as np
 
-from src_files.Evolutionary_Algorithms.Immutable_Individual import Immutable_Individual
+from src_files.Evolutionary_Algorithms._depracated_Immutable_Individual import Immutable_Individual
 from src_files.Evolutionary_Algorithms.Mutation_Controllers.mutation_controllers_functions import \
     Abstract_Mutation_Controller
 

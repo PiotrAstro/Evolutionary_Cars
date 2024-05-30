@@ -11,6 +11,7 @@ from src_files.Neural_Network.Raw_Numpy.Raw_Numpy_Layers.Dense_Layer.Dense_Layer
 from src_files.Neural_Network.Raw_Numpy.Raw_Numpy_Layers.Parameter_Generator import Xavier_Distribution_Generator, \
     He_Distribution_Generator
 from src_files.Neural_Network.Raw_Numpy.Raw_Numpy_Layers.Sequence_Layers.Sequence_Layers import Sequence_Layers
+from src_files.Neural_Network.Raw_Numpy.Raw_Numpy_Loss.loss import calculate_loss
 from src_files.Neural_Network.Raw_Numpy.general_functions_provider import get_activation_class
 from src_files.MyMath.cython_debug_helper import cython_debug_call
 
@@ -211,7 +212,7 @@ cdef class Normal_model:
                 self.normal_part.backward(outputs_single)
         return self.normal_part.get_safe_mutation()
 
-    def backward_SGD(self, inputs: np.ndarray, outputs: np.ndarray, learning_rate: float) -> None:
+    def backward_SGD(self, inputs: np.ndarray, labels: np.ndarray, learning_rate: float, losses: list[tuple[str, int]]) -> None:
         """
         Backward pass for the model
         :param inputs: np.float32
@@ -219,15 +220,18 @@ cdef class Normal_model:
         :return:
         """
         cdef float[:, ::1] normal_inputs = np.array(inputs, dtype=np.float32, copy=False)
-        cdef float[:, ::1] normal_outputs = np.array(outputs, dtype=np.float32, copy=False)
+        cdef float[:, ::1] normal_labels = np.array(labels, dtype=np.float32, copy=False)
+        cdef float[:, ::1] pred
+        cdef float[:, ::1] grad
         cdef float normal_learning_rate = learning_rate
-        cdef int rows = normal_outputs.shape[0]
-        cdef int out_cols = normal_outputs.shape[1]
         cdef int i, j
 
         with nogil:
-            self.normal_part.forward_grad(normal_inputs)
-            self.normal_part.backward(normal_outputs)
+            pred = self.normal_part.forward_grad(normal_inputs)
+            with gil:
+                grad = calculate_loss(pred, normal_labels, losses)
+
+            self.normal_part.backward(grad)
             self.normal_part.SGD(normal_learning_rate)
 
     cdef int get_normal_input_size(self) noexcept nogil:

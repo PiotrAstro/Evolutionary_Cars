@@ -141,8 +141,10 @@ cdef class Dense_Layer(Abstract_Parametrized_Layer):
 
         for i in range(out_cols):
             bias_grad_abs_sum_tmp = 0
+            grad_biases_cache[i] = 0
             for j in range(in_cols):
                 weight_grad_abs_sum_tmp = 0
+                grad_weights_cache[j, i] = 0
                 for k in range(rows):
                     grad_weights_cache[j, i] += grad[k, i] * prev_input[k, j]
                     grad_biases_cache[i] += grad[k, i]

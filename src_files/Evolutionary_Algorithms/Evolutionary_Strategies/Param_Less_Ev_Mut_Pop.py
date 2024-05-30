@@ -10,7 +10,7 @@ import pandas as pd
 
 from src_files.Environments.general_functions_provider import get_environment_class
 from src_files.Environments_Visualization.Basic_Environment_Visualization import run_basic_environment_visualization
-from src_files.Evolutionary_Algorithms.Individual import Individual
+from src_files.Evolutionary_Algorithms._depracated_Individual import Individual
 from src_files.Evolutionary_Algorithms.Mutation_Controllers.mutation_controllers_functions import \
     get_mutation_controller_by_name, Abstract_Mutation_Controller
 
