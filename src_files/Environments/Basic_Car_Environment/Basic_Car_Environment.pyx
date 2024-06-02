@@ -196,6 +196,8 @@ cdef class Basic_Car_Environment(Abstract_Environment):
         #     engine_power = -1.0
 
         cdef double engine_power = outputs[3]
+
+
         # TRACTION !!!
         # ADDED !!!
         engine_power -= self.car.speed / self.car.max_speed

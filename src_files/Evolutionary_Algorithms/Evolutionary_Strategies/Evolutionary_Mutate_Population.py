@@ -59,7 +59,7 @@ class Evolutionary_Mutate_Population:
         # end of things taken from constants_dict
 
         # file handling
-        self.log_directory = base_log_dir + "/" + "EvMuPop" + str(int(time.time())) + "/"
+        self.log_directory = base_log_dir + "/" + "EvMuPop" + str(int(time.time() * 1000)) + "/"
         os.makedirs(self.log_directory, exist_ok=True)
 
         #self.logger = Timestamp_Logger(file_path=self.log_directory + "log.txt", log_mode='w', log_moment='a', separator='\t')
@@ -82,7 +82,7 @@ class Evolutionary_Mutate_Population:
         self.best_individual = self.population[0].copy()
 
 
-    def run(self) -> pd.DataFrame:
+    def run(self) -> tuple[pd.DataFrame, dict[str, Any] | None]:
         """
         Runs evolutionary algorithm
         :return: pd.DataFrame with logs
@@ -90,6 +90,7 @@ class Evolutionary_Mutate_Population:
         quantile = [0.25, 0.5, 0.75, 0.9, 0.99]
         quantile_labels = [f"quantile_{q}" for q in quantile]
         log_list = []
+        final_model = None
 
         # with ThreadPoolExecutor(max_workers=self.max_threads) as executor:
         #     futures = [
@@ -100,6 +101,8 @@ class Evolutionary_Mutate_Population:
 
         for generation in range(self.epochs):
             print(f"Generation {generation}")
+            if generation > self.epochs // 2 and self.best_individual.get_fitness() > 1000.0:
+                break
 
             time_start = time.perf_counter()
             # multi-threading
@@ -134,13 +137,13 @@ class Evolutionary_Mutate_Population:
             if self.population[0].get_fitness() > self.best_individual.get_fitness():
                 # self.population[0].FIHC(self.mutation_factor, 20, self.mutation_threshold)
                 self.best_individual = self.population[0].copy()
-                save_file_path = self.log_directory + f"best_individual_{int(time.time())}_f{self.best_individual.get_fitness():.1f}.pkl"
-                saved_dict = {
+                save_file_path = self.log_directory + f"best_individual_gen{generation}_{int(time.time())}_f{self.best_individual.get_fitness():.1f}.pkl"
+                final_model = {
                     "universal_kwargs": self.constants_dict["environment"]["universal_kwargs"],
                     "neural_network_params": self.best_individual.neural_network.get_parameters()
                 }
                 with open(save_file_path, "wb") as file:
-                    pickle.dump(saved_dict, file)
+                    pickle.dump(final_model, file)
                 # print(self.population[0].get_fitness())
                 # if self.population[0].get_fitness() >= 1000.0:
                 #     def get_deepest_parent(individual: Immutable_Individual) -> Immutable_Individual:
@@ -171,8 +174,8 @@ class Evolutionary_Mutate_Population:
             evaluations = self.population_size * (2 + generation)
 
             if generation % self.save_logs_every_n_epochs == 0:
-                model = self.best_individual.neural_network
-                run_basic_environment_visualization(model)
+                # model = self.best_individual.neural_network
+                # run_basic_environment_visualization(model)
                 log_list.append(
                     {
                         "generation": generation,
@@ -190,7 +193,7 @@ class Evolutionary_Mutate_Population:
             # print(self.mutation_controller)
         log_data_frame = pd.DataFrame(log_list)
 
-        return log_data_frame
+        return log_data_frame, final_model
 
 
 class Immutable_Individual:

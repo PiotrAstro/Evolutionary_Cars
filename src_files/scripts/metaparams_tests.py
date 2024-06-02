@@ -1,6 +1,8 @@
 import copy
 import math
 import os
+import pickle
+import random
 import time
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from typing import Dict, Any, List, Tuple, Literal
@@ -14,10 +16,10 @@ from src_files.constants import CONSTANTS_DICT
 # python -m src_files.scripts.metaparams_tests
 
 POLICY_SEARCH_ALGORITHM = Evolutionary_Mutate_Population
-TESTS_TRIES = 3
-CONCURRENT_WORKERS = 1
-MAX_EVALUATIONS = 100_000
-MAX_THREADS = 8
+TESTS_TRIES = 1
+CONCURRENT_WORKERS = 6
+MAX_EVALUATIONS = 10_000_000
+MAX_THREADS = 5
 SAVE_DIR = r"logs/metaparameters_tests_" + str(int(time.time()))
 
 def gen_exp(start: float | int, end: float | int, number_of_values: int, mode: Literal["int", "float"] = "float") -> List[float | int]:
@@ -90,10 +92,10 @@ TESTED_VALUES = [
         },
         "environment": {
             "universal_kwargs": {
-                "angle_max_change": gen_exp(0.2, 3, 3),  # 1.15
+                "angle_max_change": [1.0, 2.0, 4.0],  # gen_exp(0.2, 3, 3),  # 1.15
                 "car_dimensions": [(10, 20), (20, 40), (35, 60)],  # width, height
-                "max_speed": gen_exp(1.0, 20, 3),
-                "speed_change": gen_exp(0.05, 1, 3),
+                "max_speed": [5.0, 10.0, 20.0],  # gen_exp(1.0, 20, 3),
+                "speed_change": [0.1, 0.2, 0.4]  # gen_exp(0.05, 1, 3),
             }
         },
     },
@@ -247,18 +249,22 @@ def test_one_case(basic_dict: Dict[str, Any], special_dict: Dict[str, Any], case
     dict_copy = copy.deepcopy(basic_dict)
     change_dict_value(dict_copy, special_dict)
 
-    os.makedirs(SAVE_DIR, exist_ok=True)
     saved_name = SAVE_DIR + r"/" + save_name(special_dict, case_index)
 
     method_name = list(special_dict)[0]
     searching_method = get_policy_search_class(method_name)(dict_copy)
-    logs_df = searching_method.run()
+    logs_df, final_model = searching_method.run()
 
     logs_df.to_csv(saved_name, index=False, sep=",")
+    final_model_path = saved_name.replace(".csv", ".pkl")
+    with open(final_model_path, "wb") as file:
+        pickle.dump(final_model, file)
 
 
 if __name__ == "__main__":
+    os.makedirs(SAVE_DIR, exist_ok=True)
     possible_dicts = create_all_special_dicts(TESTED_VALUES)
+    random.shuffle(possible_dicts)
 
     futures = []
     try:
@@ -269,6 +275,7 @@ if __name__ == "__main__":
                     # Submitting the task to be executed in parallel
                     future = executor.submit(test_one_case, CONSTANTS_DICT, special_dict, i)
                     futures.append(future)
+                    time.sleep(0.1)
 
             # Process the results as they are completed
             for future in as_completed(futures):

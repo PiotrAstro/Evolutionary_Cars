@@ -113,7 +113,7 @@ CONSTANTS_DICT = {
         "normal_hidden_layers": 2,
         "normal_hidden_neurons": 128,  # 64
         "normal_activation_function": "relu",  # "relu"
-        "last_activation_function": [("softmax", 3), ("tanh", 1)],#("softmax", 3)], #("tanh", 1)],
+        "last_activation_function": [("softmax", 3), ("tanh", 1)],  #("softmax", 3)], #("tanh", 1)],
     },
     "Genetic_Algorithm": {
         "population": 500,
@@ -138,7 +138,7 @@ CONSTANTS_DICT = {
     },
     "Evolutionary_Mutate_Population": {
         "population": 500,
-        "max_evaluations": 1_000_000,
+        "max_evaluations": 10_000_000,
         "epochs": 1000,
         "mutation_controller": {
             # "name": "Mut_Prob",  # "SHADE_single", "Mut_Prob", "SHADE_multiple"
@@ -161,8 +161,8 @@ CONSTANTS_DICT = {
             },
         },
         "max_threads": 8,
-        "save_logs_every_n_epochs": 50,
-        "logs_path": r"C:\Piotr\AIProjects\Evolutionary_Cars\logs",
+        "save_logs_every_n_epochs": 10,
+        "logs_path": r"logs",
     },
     "Evolutionary_Mutate_Population_Original": {
         "population": 5000,
