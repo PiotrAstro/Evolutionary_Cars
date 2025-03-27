@@ -23,7 +23,8 @@ cdef class Normal_model:
 
     def __init__(self, input_normal_size: int, out_actions_number: int = 3, normal_hidden_layers: int = 1,
                  normal_hidden_neurons: int = 64, normal_activation_function: str = "relu",
-                 last_activation_function: Union[list[tuple[str, int]], str] = "none") -> None:
+                 last_activation_function: Union[list[tuple[str, int]], str] = "none",
+                 dropout: float = 0.5) -> None:
         """
         Create a new model with the given parameters
         :param input_normal_size: size of the input for the normal part
@@ -81,7 +82,7 @@ cdef class Normal_model:
             #     },
             #     "layer creation"
             # )
-            last_sequence_layer = Sequence_Layers(Dense_Layer(current_in_neurons, current_out_neurons, parameter_generator), last_sequence_layer, layers_counter)
+            last_sequence_layer = Sequence_Layers(Dense_Layer(current_in_neurons, current_out_neurons, parameter_generator, dropout), last_sequence_layer, layers_counter)
             current_out_neurons = normal_hidden_neurons
             layers_counter += 1
 

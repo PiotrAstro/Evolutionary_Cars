@@ -23,7 +23,7 @@ extensions = [
     Extension(
         name=filepath_to_modulename(pyx_file),
         sources=[pyx_file],
-        extra_compile_args=["/Ox"],
+        extra_compile_args=["/Ox", "/fp:fast", "/arch:AVX"],  # Added extra optimization flags
     ) for pyx_file in pyx_files
 ]
 

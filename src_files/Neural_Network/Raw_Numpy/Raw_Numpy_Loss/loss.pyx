@@ -21,6 +21,9 @@ cpdef float[:, ::1] calculate_loss(float[:, ::1] pred, float[:, ::1] label, loss
         elif loss_name == 'Cross_Entropy':
             with nogil:
                 Cross_Entropy_grad(pred_part, label_part, grad_part)
+        elif loss_name == 'KL_Divergence':
+            with nogil:
+                KL_Divergence_grad(pred_part, label_part, grad_part)
         else:
             raise ValueError(f"Unknown loss function: {loss_name}")
         prev_loss_idx = new_loss_idx
@@ -58,4 +61,16 @@ cdef int Cross_Entropy_grad(float[:, ::1] pred, float[:, ::1] label, float[:, ::
     #         "grad": np.array(grad),
     #     })
 
+    return 0
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
+cdef int KL_Divergence_grad(float[:, ::1] pred, float[:, ::1] label, float[:, ::1] grad) noexcept nogil:
+    cdef int row, col
+    cdef int num_rows = pred.shape[0]
+    cdef int num_cols = pred.shape[1]
+    cdef float epsilon = 1e-8  # Small constant to avoid division by zero
+    for row in range(num_rows):
+        for col in range(num_cols):
+            grad[row, col] = -label[row, col] / (pred[row, col] + epsilon)
     return 0

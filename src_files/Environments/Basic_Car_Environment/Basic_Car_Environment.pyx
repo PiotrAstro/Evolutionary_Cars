@@ -7,6 +7,7 @@ from numpy import ndim
 from src_files.Environments.Abstract_Environment.Abstract_Environment cimport Abstract_Environment
 from src_files.MyMath.MyMath cimport round_to_int, degree_sin, degree_cos
 from src_files.MyMath.cython_debug_helper import cython_debug_call
+from src_files.Neural_Network.Raw_Numpy.Raw_Numpy_Models.Normal.Normal_model cimport Normal_model
 
 ctypedef unsigned char map_view_t
 cdef class Basic_Car_Environment(Abstract_Environment):
@@ -28,6 +29,56 @@ cdef class Basic_Car_Environment(Abstract_Environment):
 
     # cdef bint _tmp_safe_rewards
 
+    @cython.boundscheck(False)
+    @cython.wraparound(False)
+    @cython.nonecheck(False)
+    def p_get_trajectory_results(self, model: Normal_model) -> float:
+        """
+        Get the results of the trajectory
+        :param model:
+        :return:
+        """
+        cdef Normal_model model_c = model
+        cdef float[:, ::1] state_tmp = np.empty((1, model_c.normal_input_size), dtype=np.float32)
+        cdef double reward = 0.0
+        with nogil:
+            while self.is_alive():
+                state_tmp[0] = self.get_state()
+                reward += self.react(model_c.forward_pass(state_tmp)[0])
+        return reward
+
+    @cython.boundscheck(False)
+    @cython.wraparound(False)
+    @cython.nonecheck(False)
+    def p_get_trajectory_logs(self, model: Normal_model, max_steps: int = -1) -> tuple[float, np.ndarray, np.ndarray]:
+        """
+        Get the logs of the trajectory
+        :param model:
+        :param max_steps:
+        :return: (states, outputs)
+        """
+        cdef Normal_model model_c = model
+        cdef int max_steps_c = max_steps if max_steps > 0 else self.max_steps
+        cdef float[:, ::1] states = np.empty((max_steps_c, model_c.normal_input_size), dtype=np.float32)
+        cdef float[:, ::1] outputs = np.empty((max_steps_c, model_c.normal_output_size), dtype=np.float32)
+        cdef float[:, ::1] state_tmp = np.empty((1, model_c.normal_input_size), dtype=np.float32)
+        cdef float[::1] result_tmp
+        cdef double result = 0.0
+        cdef int j, row, cols
+        row = 0
+        cols = model_c.normal_input_size
+        with nogil:
+            while self.is_alive() and row < max_steps_c:
+                state_tmp[0] = self.get_state()
+                for j in range(cols):
+                    states[row, j] = state_tmp[0, j]
+                result_tmp = model_c.forward_pass(state_tmp)[0]
+                for j in range(model_c.normal_output_size):
+                    outputs[row, j] = result_tmp[j]
+                result += self.react(result_tmp)
+                row += 1
+        return result, np.array(states[:row], copy=False), np.array(outputs[:row], copy=False)
+
     def p_get_safe_data(self) -> dict[str, Any]:
         return {
             "x": self.car.x,
@@ -43,6 +94,15 @@ cdef class Basic_Car_Environment(Abstract_Environment):
         self.car.angle = safe_data["angle"]
         self.car.speed = safe_data["speed"]
         self.current_step = safe_data["current_step"]
+
+    def p_react(self, outputs: np.ndarray) -> float:
+        """
+        React to the outputs of the model
+        :param outputs: nparray of the outputs
+        :return: reward
+        """
+        cdef float[::1] outputs_c = outputs
+        return self.react(outputs_c)
 
     def get_car_position(self) -> Tuple[float, float]:
         """
@@ -185,23 +245,40 @@ cdef class Basic_Car_Environment(Abstract_Environment):
             self.car.change_angle(-self.angle_max_change)
 
 
-        # cdef double engine_power = 0.0
-        # change_index_action = 3
-        # for i in range(3, 6):
-        #     if outputs[i] > outputs[change_index_action]:
-        #         change_index_action = i
-        # if change_index_action == 4:
-        #     engine_power = 1.0
-        # elif change_index_action == 5:
-        #     engine_power = -1.0
+        cdef double engine_power = 0.0
+        change_index_action = 3
+        for i in range(3, 6):
+            if outputs[i] > outputs[change_index_action]:
+                change_index_action = i
+        if change_index_action == 4:
+            engine_power = 1.0
+        elif change_index_action == 5:
+            engine_power = -1.0
 
-        cdef double engine_power = outputs[3]
-
+        # cdef double engine_power = outputs[3]
 
         # TRACTION !!!
         # ADDED !!!
-        engine_power -= self.car.speed / self.car.max_speed
+        # engine_power -= self.car.speed / self.car.max_speed
         # END TRACTION !!!
+        # cdef double engine_power = 0.0
+        # cdef double steering_power = 0.0
+        # cdef int max_index = 0
+        # cdef int i
+        # for i in range(9):
+        #     if outputs[i] > outputs[max_index]:
+        #         max_index = i
+        # if max_index // 3 == 1:
+        #     steering_power = 1.0
+        # elif max_index // 3 == 2:
+        #     steering_power = -1.0
+        #
+        # if max_index % 3 == 1:
+        #     engine_power = 1.0
+        # elif max_index % 3 == 2:
+        #     engine_power = -1.0
+        #
+        # self.car.change_angle(self.angle_max_change * steering_power)
         self.car.change_speed(self.speed_change * engine_power)
 
         self.current_step += 1
@@ -211,10 +288,10 @@ cdef class Basic_Car_Environment(Abstract_Environment):
 
         return result
 
-    cdef bint is_alive(self) noexcept nogil:
+    cdef inline bint is_alive(self) noexcept nogil:
         return self.current_step < self.max_steps and not self.car.does_collide(self.map_view)
 
-    cdef int get_state_length(self) noexcept nogil:
+    cdef inline int get_state_length(self) noexcept nogil:
         return self.rays_degrees.shape[0] + 1
 
 

@@ -2,6 +2,7 @@ from typing import Any
 
 import numpy as np
 
+from src_files.Neural_Network.Raw_Numpy.Raw_Numpy_Models.Normal.Normal_model import Normal_model
 
 cdef class Abstract_Environment:
 
@@ -17,6 +18,23 @@ cdef class Abstract_Environment:
         Set the data of the environment that can be safely pickled
         :param data:
         :return:
+        """
+        raise NotImplementedError("Abstract method")
+
+    def p_get_trajectory_results(self, model: Normal_model) -> float:
+        """
+        Get the results of the trajectory
+        :param model:
+        :return:
+        """
+        raise NotImplementedError("Abstract method")
+
+    def p_get_trajectory_logs(self, model: Normal_model, max_steps: int) -> tuple[float, np.ndarray, np.ndarray]:
+        """
+        Get the logs of the trajectory
+        :param model:
+        :param max_steps:
+        :return: (float, states, outputs)
         """
         raise NotImplementedError("Abstract method")
 

@@ -2,3 +2,11 @@
 *.pyd
 *.c
 *.log
+
+*__pycache__*
+model_cache/*
+venv/*
+logs/*
+build/*
+.vscode/*
+.idea/*

@@ -31,13 +31,13 @@ CONSTANTS_DICT = {
     "environment": {
         "name": "Basic_Car_Environment",
         "universal_kwargs": {
-            "angle_max_change": 1.2,  # 1.15
+            "angle_max_change": 1.15,  # 1.15
             "car_dimensions": (30, 45),  # width, height
-            "initial_speed": 0,  # 1.2
-            "min_speed": -1.2,  # 1.2
+            "initial_speed": 1.2,  # 1.2
+            "min_speed": 1.2,  # 1.2
             "max_speed": 6,
             "speed_change": 0.04,
-            "rays_degrees": (-90, -45, 0, 45, 90),  # (-90, -45, 0, 45, 90),  # (-90, -67.5, -45, -22.5, 0, 22.5, 45, 67.5, 90)
+            "rays_degrees": (-90, -67.5, -45, -22.5, 0, 22.5, 45, 67.5, 90),  # (-90, -45, 0, 45, 90),  # (-90, -67.5, -45, -22.5, 0, 22.5, 45, 67.5, 90)
             "rays_distances_scale_factor": 100,
             "ray_input_clip": 5,
             "collision_reward": -100,
@@ -108,12 +108,13 @@ CONSTANTS_DICT = {
         ],
     },
     "neural_network": {
-        "input_normal_size": 6,
-        "out_actions_number": 4,
+        "input_normal_size": 10,
+        "out_actions_number": 6,
         "normal_hidden_layers": 2,
-        "normal_hidden_neurons": 128,  # 64
+        "normal_hidden_neurons": 256,  # 64
+        "dropout": 0.0,
         "normal_activation_function": "relu",  # "relu"
-        "last_activation_function": [("softmax", 3), ("tanh", 1)],  #("softmax", 3)], #("tanh", 1)],
+        "last_activation_function": [("softmax", 3), ("softmax", 3)], # [("softmax", 3), ("tanh", 1)],
     },
     "Genetic_Algorithm": {
         "population": 500,
@@ -161,7 +162,7 @@ CONSTANTS_DICT = {
             },
         },
         "max_threads": 8,
-        "save_logs_every_n_epochs": 10,
+        "save_logs_every_n_epochs": 50,
         "logs_path": r"logs",
     },
     "Evolutionary_Mutate_Population_Original": {

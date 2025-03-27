@@ -23,12 +23,14 @@ cdef class Dense_Layer(Abstract_Parametrized_Layer):
     cdef float[::1] safe_mutation_biases_cache  # sum of the gradients for the weights
     cdef float[:, ::1] grad_weights_cache  # cache for the gradients
     cdef float[::1] grad_biases_cache  # cache for the gradients
+    cdef int grad_number
     cdef int input_size
     cdef int output_size
     cdef object parameters_generator
 
-    def __init__(self, input_size: int, output_size: int, parameters_generator: Parameter_Generator):
+    def __init__(self, input_size: int, output_size: int, parameters_generator: Parameter_Generator, dropout: float):
         # only python attributes
+        self.dropout_rate = dropout
         self.input_size = input_size
         self.output_size = output_size
         self.parameters_generator = parameters_generator
@@ -51,7 +53,7 @@ cdef class Dense_Layer(Abstract_Parametrized_Layer):
         returns the parameters of the layer
         :return:
         """
-        return {"weights": np.array(self.weights, copy=True), "biases": np.array(self.biases, copy=True)}
+        return {"weight": np.array(self.weights, copy=True), "bias": np.array(self.biases, copy=True)}
 
     def set_parameters(self, parameters: Dict[str, np.ndarray]) -> None:
         """
@@ -59,11 +61,11 @@ cdef class Dense_Layer(Abstract_Parametrized_Layer):
         :param parameters:
         :return:
         """
-        if "weights" in parameters:
-            self.weights = parameters["weights"]
+        if "weight" in parameters:
+            self.weights = parameters["weight"]
 
-        if "biases" in parameters:
-            self.biases = parameters["biases"]
+        if "bias" in parameters:
+            self.biases = parameters["bias"]
 
     def generate_parameters(self) -> None:
         """
@@ -101,8 +103,8 @@ cdef class Dense_Layer(Abstract_Parametrized_Layer):
                     safe_mutation_weights_cache[i, j] = sqrt(safe_mutation_weights_cache[i, j])
             for i in range(cols):
                 safe_mutation_biases_cache[i] = sqrt(safe_mutation_biases_cache[i])
-
-        result = {"weights": np.array(self.safe_mutation_weights_cache, copy=True), "biases": np.array(self.safe_mutation_biases_cache, copy=True)}
+        # changed to singular form
+        result = {"weight": np.array(self.safe_mutation_weights_cache, copy=True), "bias": np.array(self.safe_mutation_biases_cache, copy=True)}
 
         with nogil:
             for i in range(rows):
@@ -128,7 +130,9 @@ cdef class Dense_Layer(Abstract_Parametrized_Layer):
         cdef float[:, ::1] prev_output = self.previous_outputs
         cdef float[:, ::1] grads_inputs = self.grads_inputs
         cdef float[:, ::1] weights = self.weights
+        cdef unsigned char [:, ::1] dropout_mask_here = self.dropout_mask
         cdef float[::1] biases = self.biases
+        self.grad_number = rows
         # cdef float[:, ::1] safe_mutation_abs_gradient_weights_sum_cache = self.safe_mutation_abs_gradient_weights_sum_cache
         # cdef float[::1] safe_mutation_abs_gradient_biases_sum_cache = self.safe_mutation_abs_gradient_biases_sum_cache
         # cdef float weight_grad_abs_sum_tmp
@@ -156,8 +160,9 @@ cdef class Dense_Layer(Abstract_Parametrized_Layer):
         for k in range(rows):
             for j in range(in_cols):
                 grads_inputs[k, j] = 0
-                for i in range(out_cols):
-                    grads_inputs[k, j] += grad[k, i] * weights[j, i]
+                if dropout_mask_here[k, j] == 1:
+                    for i in range(out_cols):
+                        grads_inputs[k, j] += grad[k, i] * weights[j, i]
 
         # with gil:
         #     cython_debug_call({
@@ -188,6 +193,7 @@ cdef class Dense_Layer(Abstract_Parametrized_Layer):
         cdef int i, j
         cdef int rows = weights.shape[0]
         cdef int cols = weights.shape[1]
+        learning_rate /= self.grad_number
 
         for i in range(rows):
             for j in range(cols):

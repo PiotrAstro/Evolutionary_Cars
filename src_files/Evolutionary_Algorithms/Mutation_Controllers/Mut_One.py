@@ -48,8 +48,8 @@ class Mut_One(Abstract_Mutation_Controller):
         #     if self.mutation_factor < 0.01:
         #         self.mutation_factor = 0.01
         #         self.moving_std = new_std
-        #     elif self.mutation_factor > 0.2:
-        #         self.mutation_factor = 0.2
+        #     elif self.mutation_factor > 0.15:
+        #         self.mutation_factor = 0.15
         #         self.moving_std = new_std
         # print(f"Mutation factor: {self.mutation_factor}, moving std: {self.moving_std}, new std: {new_std}")
 

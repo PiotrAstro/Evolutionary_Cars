@@ -56,11 +56,18 @@ class Car:
             state = np.array(self.environment.p_get_state(), dtype=np.float32).reshape(1, -1)
             output = self.model.p_forward_pass(state)[0]
         else:
-            output = np.zeros(3, dtype=np.float32)
+            output = np.zeros(4, dtype=np.float32)
             if keyboard.is_pressed('left'):
                 output[1] = 1
             elif keyboard.is_pressed('right'):
                 output[2] = 1
+            else:
+                output[0] = 1
+
+            if keyboard.is_pressed('up'):
+                output[3] = 1
+            elif keyboard.is_pressed('down'):
+                output[3] = -1
 
         self.environment.p_react(output)
         self.position = self.environment.get_car_position()
